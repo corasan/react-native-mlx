@@ -1,0 +1,23 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": [
+    "mlx"
+  ],
+  "ios": {
+    "iosModuleName": "Mlx"
+  },
+  "android": {
+    "androidNamespace": [
+      "mlx"
+    ],
+    "androidCxxLibName": "Mlx"
+  },
+  "autolinking": {
+    "Mlx": {
+      "swift": "HybridMlx"
+    }
+  },
+  "ignorePaths": [
+    "**/node_modules"
+  ]
+}
