@@ -1,0 +1,123 @@
+{
+  "name": "react-native-mlx",
+  "version": "0.1.0",
+  "description": "A template for Nitro Modules.",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/index.d.ts",
+  "react-native": "src/index",
+  "source": "./src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "nitrogen",
+    "cpp",
+    "ios",
+    "plugin",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "react-native.config.js",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/CMakeLists.txt",
+    "android/src",
+    "app.plugin.js",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "tsc || exit 0;",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "typescript": "tsc --noEmit false",
+    "specs": "bun nitro-codegen --logLevel=\"debug\"",
+    "build": "rm -rf lib && bun typecheck && bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "nitro",
+    "nitro-modile",
+    "expo",
+    "llm",
+    "mlx",
+    "react-native-mlx",
+    "ai"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corasan/react-native-mlx.git"
+  },
+  "author": "Henry Paulino <me@henrypl.com> (https://github.com/corasan)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corasan/react-native-mlx/issues"
+  },
+  "homepage": "https://github.com/corasan/react-native-mlx#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^9.0.10",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.3.4",
+    "nitro-codegen": "*",
+    "prettier": "^3.3.3",
+    "react": "18.3.1",
+    "react-native": "0.76.1",
+    "react-native-builder-bob": "^0.33.1",
+    "release-it": "^17.10.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  },
+  "codegenConfig": {
+    "name": "MLXSpec",
+    "type": "modules",
+    "jsSrcsDir": "./src"
+  },
+  "release-it": {
+    "npm": {
+      "publish": true
+    },
+    "git": false,
+    "github": {
+      "release": false
+    },
+    "hooks": {
+      "before:init": "bun typecheck",
+      "after:bump": "bun build"
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
+}

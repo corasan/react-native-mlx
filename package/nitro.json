@@ -4,17 +4,17 @@
     "mlx"
   ],
   "ios": {
-    "iosModuleName": "Mlx"
+    "iosModuleName": "MLX"
   },
   "android": {
     "androidNamespace": [
       "mlx"
     ],
-    "androidCxxLibName": "Mlx"
+    "androidCxxLibName": "MLX"
   },
   "autolinking": {
     "Mlx": {
-      "swift": "HybridMlx"
+      "swift": "HybridMLX"
     }
   },
   "ignorePaths": [

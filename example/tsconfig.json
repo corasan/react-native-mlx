@@ -5,6 +5,9 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "react-native-mlx": [
+        "../package/src/index"
       ]
     }
   },
