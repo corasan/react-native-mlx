@@ -1,6 +1,8 @@
 import Foundation
+import HybridRNMLXSpec
+import MLX
 
-class HybridMlx: HybridMlxSpec {
+class HybridRNMLX: HybridRNMLXSpec {
     func sum(num1: Double, num2: Double) throws -> Double {
         return num1 + num2
     }

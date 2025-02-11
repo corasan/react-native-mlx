@@ -8,13 +8,12 @@
   "react-native": "src/index",
   "source": "src/index",
   "author": "Henry Paulino <me@henrypl.com> (https://github.com/corasan)",
-  "packageManager": "bun@1.1.34",
   "scripts": {
-    "build": "rm -rf lib && bun typecheck && bob build",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf android/build node_modules/**/android/build lib android/.cxx node_modules/**/android/.cxx",
-    "release": "release-it",
-    "codegen": "bun typecheck && nitro-codegen --logLevel=\\\"debug\\\" && bun run build"
+    "typescript": "bun --filter=\"**\" typescript",
+    "clean": "rm -rf package/tsconfig.tsbuildinfo package/node_modules package/lib",
+    "specs": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
+    "build": "bun --cwd package build",
+    "release": "release-it"
   },
   "keywords": [
     "react-native"
