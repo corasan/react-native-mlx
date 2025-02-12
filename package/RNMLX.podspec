@@ -15,12 +15,14 @@ Pod::Spec.new do |s|
 
   s.source_files = [
     # Implementation (Swift)
-    "ios/**/*.{swift}",
+    "ios/source/**/*.{swift}",
     # Autolinking/Registration (Objective-C++)
-    "ios/**/*.{m,mm}",
+    "ios/source/**/*.{m,mm}",
     # Implementation (C++ objects)
     "cpp/**/*.{hpp,cpp}",
   ]
+
+  s.vendored_frameworks = "ios/RNMLX.xcframework"
 
   s.pod_target_xcconfig = {
     # C++ compiler flags, mainly for folly.
