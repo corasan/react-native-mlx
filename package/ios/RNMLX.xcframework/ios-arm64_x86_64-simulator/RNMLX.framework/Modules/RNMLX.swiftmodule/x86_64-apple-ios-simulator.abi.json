@@ -1,0 +1,90 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "RNMLX",
+    "printedName": "RNMLX",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "RNMLX",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLX",
+        "printedName": "MLX",
+        "declKind": "Import",
+        "moduleName": "RNMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLXLLM",
+        "printedName": "MLXLLM",
+        "declKind": "Import",
+        "moduleName": "RNMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLXLMCommon",
+        "printedName": "MLXLMCommon",
+        "declKind": "Import",
+        "moduleName": "RNMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLXRandom",
+        "printedName": "MLXRandom",
+        "declKind": "Import",
+        "moduleName": "RNMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/RNMLX\/RNMLX\/LLMEvaluator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 238,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/RNMLX\/RNMLX\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 269,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/RNMLX\/RNMLX\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 292,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/RNMLX\/RNMLX\/LLMEvaluator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 515,
+      "length": 1,
+      "value": "4"
+    }
+  ]
+}

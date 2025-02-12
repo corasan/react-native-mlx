@@ -1,0 +1,6 @@
+framework module RNMLX {
+  umbrella header "RNMLX.h"
+  export *
+
+  module * { export * }
+}
