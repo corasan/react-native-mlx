@@ -13,7 +13,8 @@
     "clean": "rm -rf package/tsconfig.tsbuildinfo package/node_modules package/lib",
     "specs": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
     "build": "bun --cwd package build",
-    "release": "release-it"
+    "release": "release-it",
+    "build-framework": "sh ./scripts/build-framework.sh"
   },
   "keywords": [
     "react-native"
