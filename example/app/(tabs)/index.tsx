@@ -5,7 +5,7 @@ import { Text, View } from '@/components/Themed'
 import { MLX } from 'react-native-mlx'
 
 export default function TabOneScreen() {
-  console.log(MLX.sum(2, 2))
+  console.log(MLX.sum('Hello ', 'World!'))
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
