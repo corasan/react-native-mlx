@@ -14,7 +14,7 @@ namespace RNMLX { class HybridRNMLXSpec_cxx; }
 
 
 
-
+#include <string>
 
 #include "RNMLX-Swift-Cxx-Umbrella.hpp"
 
@@ -55,8 +55,8 @@ namespace margelo::nitro::mlx {
 
   public:
     // Methods
-    inline double sum(double num1, double num2) override {
-      auto __result = _swiftPart.sum(std::forward<decltype(num1)>(num1), std::forward<decltype(num2)>(num2));
+    inline std::string sum(const std::string& str1, const std::string& str2) override {
+      auto __result = _swiftPart.sum(str1, str2);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

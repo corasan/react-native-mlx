@@ -20,6 +20,7 @@ namespace RNMLX { class HybridRNMLXSpec_cxx; }
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <string>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -39,13 +40,13 @@ namespace margelo::nitro::mlx::bridge::swift {
   using std__weak_ptr_margelo__nitro__mlx__HybridRNMLXSpec_ = std::weak_ptr<margelo::nitro::mlx::HybridRNMLXSpec>;
   inline std__weak_ptr_margelo__nitro__mlx__HybridRNMLXSpec_ weakify_std__shared_ptr_margelo__nitro__mlx__HybridRNMLXSpec_(const std::shared_ptr<margelo::nitro::mlx::HybridRNMLXSpec>& strong) { return strong; }
   
-  // pragma MARK: Result<double>
-  using Result_double_ = Result<double>;
-  inline Result_double_ create_Result_double_(double value) {
-    return Result<double>::withValue(std::move(value));
+  // pragma MARK: Result<std::string>
+  using Result_std__string_ = Result<std::string>;
+  inline Result_std__string_ create_Result_std__string_(const std::string& value) {
+    return Result<std::string>::withValue(value);
   }
-  inline Result_double_ create_Result_double_(const std::exception_ptr& error) {
-    return Result<double>::withError(error);
+  inline Result_std__string_ create_Result_std__string_(const std::exception_ptr& error) {
+    return Result<std::string>::withError(error);
   }
 
 } // namespace margelo::nitro::mlx::bridge::swift

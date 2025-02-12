@@ -16,6 +16,7 @@ namespace margelo::nitro::mlx { class HybridRNMLXSpec; }
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <string>
 
 // C++ helpers for Swift
 #include "RNMLX-Swift-Cxx-Bridge.hpp"

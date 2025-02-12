@@ -15,7 +15,7 @@
 
 
 
-
+#include <string>
 
 namespace margelo::nitro::mlx {
 
@@ -48,7 +48,7 @@ namespace margelo::nitro::mlx {
 
     public:
       // Methods
-      virtual double sum(double num1, double num2) = 0;
+      virtual std::string sum(const std::string& str1, const std::string& str2) = 0;
 
     protected:
       // Hybrid Setup

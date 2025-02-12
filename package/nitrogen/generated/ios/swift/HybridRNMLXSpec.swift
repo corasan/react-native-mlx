@@ -14,7 +14,7 @@ public protocol HybridRNMLXSpec_protocol: HybridObject {
   
 
   // Methods
-  func sum(num1: Double, num2: Double) throws -> Double
+  func sum(str1: String, str2: String) throws -> String
 }
 
 /// See ``HybridRNMLXSpec``
