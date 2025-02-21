@@ -11,12 +11,8 @@
 		BA0D25F42D684DC000F7D129 /* Bridge.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0D25EE2D684DC000F7D129 /* Bridge.h */; };
 		BA0D25F72D684DF100F7D129 /* ReactNativeMLX.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0D25F62D684DF100F7D129 /* ReactNativeMLX.swift */; };
 		BA2E64862D683FC000E860E4 /* ReactNativeMLX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */; };
+		BA96B2782D68E1C600AEFE97 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = BA96B2772D68E1C600AEFE97 /* MLXLMCommon */; };
 		BAB343382D68476200A4A615 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = BAB343372D68476200A4A615 /* MLX */; };
-		BAB3433A2D68477A00A4A615 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = BAB343392D68477A00A4A615 /* MLXLLM */; };
-		BAB3433C2D68477A00A4A615 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = BAB3433B2D68477A00A4A615 /* MLXLMCommon */; };
-		BAB3433E2D68477A00A4A615 /* MLXMNIST in Frameworks */ = {isa = PBXBuildFile; productRef = BAB3433D2D68477A00A4A615 /* MLXMNIST */; };
-		BAB343402D68477A00A4A615 /* MLXVLM in Frameworks */ = {isa = PBXBuildFile; productRef = BAB3433F2D68477A00A4A615 /* MLXVLM */; };
-		BAB343422D68477A00A4A615 /* StableDiffusion in Frameworks */ = {isa = PBXBuildFile; productRef = BAB343412D68477A00A4A615 /* StableDiffusion */; };
 		BAB343442D68481600A4A615 /* MLXOptimizers in Frameworks */ = {isa = PBXBuildFile; productRef = BAB343432D68481600A4A615 /* MLXOptimizers */; };
 		BAB343462D68481600A4A615 /* MLXRandom in Frameworks */ = {isa = PBXBuildFile; productRef = BAB343452D68481600A4A615 /* MLXRandom */; };
 		BAD5A6E92D6844710086B27C /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = BAD5A6E82D6844710086B27C /* Numerics */; };
@@ -45,13 +41,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAB3433A2D68477A00A4A615 /* MLXLLM in Frameworks */,
-				BAB343422D68477A00A4A615 /* StableDiffusion in Frameworks */,
-				BAB3433E2D68477A00A4A615 /* MLXMNIST in Frameworks */,
-				BAB343402D68477A00A4A615 /* MLXVLM in Frameworks */,
+				BA96B2782D68E1C600AEFE97 /* MLXLMCommon in Frameworks */,
 				BAB343442D68481600A4A615 /* MLXOptimizers in Frameworks */,
 				BAB343382D68476200A4A615 /* MLX in Frameworks */,
-				BAB3433C2D68477A00A4A615 /* MLXLMCommon in Frameworks */,
 				BAB343462D68481600A4A615 /* MLXRandom in Frameworks */,
 				BAD5A6E92D6844710086B27C /* Numerics in Frameworks */,
 			);
@@ -82,6 +74,7 @@
 			children = (
 				BA0D25EE2D684DC000F7D129 /* Bridge.h */,
 				BA0D25F22D684DC000F7D129 /* Source */,
+				BA96B2762D68E1C600AEFE97 /* Frameworks */,
 				BA2E647E2D683FC000E860E4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,6 +86,13 @@
 				BA2E64852D683FC000E860E4 /* ReactNativeMLXTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BA96B2762D68E1C600AEFE97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,13 +127,9 @@
 			packageProductDependencies = (
 				BAD5A6E82D6844710086B27C /* Numerics */,
 				BAB343372D68476200A4A615 /* MLX */,
-				BAB343392D68477A00A4A615 /* MLXLLM */,
-				BAB3433B2D68477A00A4A615 /* MLXLMCommon */,
-				BAB3433D2D68477A00A4A615 /* MLXMNIST */,
-				BAB3433F2D68477A00A4A615 /* MLXVLM */,
-				BAB343412D68477A00A4A615 /* StableDiffusion */,
 				BAB343432D68481600A4A615 /* MLXOptimizers */,
 				BAB343452D68481600A4A615 /* MLXRandom */,
+				BA96B2772D68E1C600AEFE97 /* MLXLMCommon */,
 			);
 			productName = ReactNativeMLX;
 			productReference = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */;
@@ -189,7 +185,7 @@
 			packageReferences = (
 				BAD5A6E72D6844710086B27C /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				BAC9106E2D6846BC00ED842F /* XCRemoteSwiftPackageReference "mlx-swift" */,
-				BAC9106F2D6846EB00ED842F /* XCRemoteSwiftPackageReference "mlx-swift-examples" */,
+				BA96B2732D686CD400AEFE97 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BA2E647E2D683FC000E860E4 /* Products */;
@@ -278,7 +274,8 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -315,7 +312,8 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -513,20 +511,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BA96B2732D686CD400AEFE97 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift-examples";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.21.2;
+			};
+		};
 		BAC9106E2D6846BC00ED842F /* XCRemoteSwiftPackageReference "mlx-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ml-explore/mlx-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.21.3;
-			};
-		};
-		BAC9106F2D6846EB00ED842F /* XCRemoteSwiftPackageReference "mlx-swift-examples" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ml-explore/mlx-swift-examples";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.21.2;
 			};
 		};
 		BAD5A6E72D6844710086B27C /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
@@ -540,35 +538,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BA96B2772D68E1C600AEFE97 /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA96B2732D686CD400AEFE97 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXLMCommon;
+		};
 		BAB343372D68476200A4A615 /* MLX */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BAC9106E2D6846BC00ED842F /* XCRemoteSwiftPackageReference "mlx-swift" */;
 			productName = MLX;
-		};
-		BAB343392D68477A00A4A615 /* MLXLLM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAC9106F2D6846EB00ED842F /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
-			productName = MLXLLM;
-		};
-		BAB3433B2D68477A00A4A615 /* MLXLMCommon */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAC9106F2D6846EB00ED842F /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
-			productName = MLXLMCommon;
-		};
-		BAB3433D2D68477A00A4A615 /* MLXMNIST */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAC9106F2D6846EB00ED842F /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
-			productName = MLXMNIST;
-		};
-		BAB3433F2D68477A00A4A615 /* MLXVLM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAC9106F2D6846EB00ED842F /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
-			productName = MLXVLM;
-		};
-		BAB343412D68477A00A4A615 /* StableDiffusion */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAC9106F2D6846EB00ED842F /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
-			productName = StableDiffusion;
 		};
 		BAB343432D68481600A4A615 /* MLXOptimizers */ = {
 			isa = XCSwiftPackageProductDependency;
