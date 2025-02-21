@@ -4,7 +4,7 @@ cd package/ios
 xcodebuild archive \
   -scheme ReactNativeMLX \
   -destination "generic/platform=iOS" \
-  -archivePath ../output/ReactNativeMLX \
+  -archivePath output/ReactNativeMLX \
   OTHER_SWIFT_FLAGS="-no-verify-emitted-module-interface" \
   SKIP_INSTALL=NO \
   BUILD_LIBRARY_FOR_DISTRIBUTION=YES
@@ -12,14 +12,14 @@ xcodebuild archive \
 xcodebuild archive \
   -scheme ReactNativeMLX \
   -destination "generic/platform=iOS Simulator" \
-  -archivePath ../output/ReactNativeMLX-simulator \
+  -archivePath output/ReactNativeMLX-simulator \
   OTHER_SWIFT_FLAGS="-no-verify-emitted-module-interface" \
   SKIP_INSTALL=NO \
   BUILD_LIBRARY_FOR_DISTRIBUTION=YES
 
-rm -rf ../ReactNativeMLX.xcframework
+rm -rf ReactNativeMLX.xcframework
 
 xcodebuild -create-xcframework \
--framework ../output/ReactNativeMLX.xcarchive/Products/Library/Frameworks/ReactNativeMLX.framework \
--framework ../output/ReactNativeMLX-simulator.xcarchive/Products/Library/Frameworks/ReactNativeMLX.framework \
--output ../ReactNativeMLX.xcframework
+-framework output/ReactNativeMLX.xcarchive/Products/Library/Frameworks/ReactNativeMLX.framework \
+-framework output/ReactNativeMLX-simulator.xcarchive/Products/Library/Frameworks/ReactNativeMLX.framework \
+-output ReactNativeMLX.xcframework

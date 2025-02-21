@@ -17,7 +17,7 @@
 
 
 
-namespace margelo::nitro::mlx {
+namespace margelo::nitro::rnmlx {
 
   using namespace margelo::nitro;
 
@@ -59,4 +59,4 @@ namespace margelo::nitro::mlx {
       static constexpr auto TAG = "MLX";
   };
 
-} // namespace margelo::nitro::mlx
+} // namespace margelo::nitro::rnmlx

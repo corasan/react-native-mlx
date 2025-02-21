@@ -19,11 +19,11 @@ import NitroModules
  */
 public class HybridMLXSpec_cxx {
   /**
-   * The Swift <> C++ bridge's namespace (`margelo::nitro::mlx::bridge::swift`)
-   * from `ReactNativeMLX-Swift-Cxx-Bridge.hpp`.
+   * The Swift <> C++ bridge's namespace (`margelo::nitro::rnmlx::bridge::swift`)
+   * from `RNMLX-Swift-Cxx-Bridge.hpp`.
    * This contains specialized C++ templates, and C++ helper functions that can be accessed from Swift.
    */
-  public typealias bridge = margelo.nitro.mlx.bridge.swift
+  public typealias bridge = margelo.nitro.rnmlx.bridge.swift
 
   /**
    * Holds an instance of the `HybridMLXSpec` Swift protocol.
@@ -33,7 +33,7 @@ public class HybridMLXSpec_cxx {
   /**
    * Holds a weak pointer to the C++ class that wraps the Swift class.
    */
-  private var __cxxPart: bridge.std__weak_ptr_margelo__nitro__mlx__HybridMLXSpec_
+  private var __cxxPart: bridge.std__weak_ptr_margelo__nitro__rnmlx__HybridMLXSpec_
 
   /**
    * Create a new `HybridMLXSpec_cxx` that wraps the given `HybridMLXSpec`.
@@ -72,15 +72,15 @@ public class HybridMLXSpec_cxx {
 
   /**
    * Gets (or creates) the C++ part of this Hybrid Object.
-   * The C++ part is a `std::shared_ptr<margelo::nitro::mlx::HybridMLXSpec>`.
+   * The C++ part is a `std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>`.
    */
-  public func getCxxPart() -> bridge.std__shared_ptr_margelo__nitro__mlx__HybridMLXSpec_ {
+  public func getCxxPart() -> bridge.std__shared_ptr_margelo__nitro__rnmlx__HybridMLXSpec_ {
     let cachedCxxPart = self.__cxxPart.lock()
     if cachedCxxPart.__convertToBool() {
       return cachedCxxPart
     } else {
-      let newCxxPart = bridge.create_std__shared_ptr_margelo__nitro__mlx__HybridMLXSpec_(self.toUnsafe())
-      __cxxPart = bridge.weakify_std__shared_ptr_margelo__nitro__mlx__HybridMLXSpec_(newCxxPart)
+      let newCxxPart = bridge.create_std__shared_ptr_margelo__nitro__rnmlx__HybridMLXSpec_(self.toUnsafe())
+      __cxxPart = bridge.weakify_std__shared_ptr_margelo__nitro__rnmlx__HybridMLXSpec_(newCxxPart)
       return newCxxPart
     }
   }
