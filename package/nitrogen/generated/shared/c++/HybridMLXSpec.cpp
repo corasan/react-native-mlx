@@ -7,7 +7,7 @@
 
 #include "HybridMLXSpec.hpp"
 
-namespace margelo::nitro::mlx {
+namespace margelo::nitro::rnmlx {
 
   void HybridMLXSpec::loadHybridMethods() {
     // load base methods/properties
@@ -18,4 +18,4 @@ namespace margelo::nitro::mlx {
     });
   }
 
-} // namespace margelo::nitro::mlx
+} // namespace margelo::nitro::rnmlx

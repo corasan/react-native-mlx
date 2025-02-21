@@ -10,15 +10,15 @@
 #include "HybridMLXSpec.hpp"
 
 // Forward declaration of `HybridMLXSpec_cxx` to properly resolve imports.
-namespace ReactNativeMLX { class HybridMLXSpec_cxx; }
+namespace RNMLX { class HybridMLXSpec_cxx; }
 
 
 
 
 
-#include "ReactNativeMLX-Swift-Cxx-Umbrella.hpp"
+#include "RNMLX-Swift-Cxx-Umbrella.hpp"
 
-namespace margelo::nitro::mlx {
+namespace margelo::nitro::rnmlx {
 
   /**
    * The C++ part of HybridMLXSpec_cxx.swift.
@@ -33,13 +33,13 @@ namespace margelo::nitro::mlx {
   class HybridMLXSpecSwift: public virtual HybridMLXSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridMLXSpecSwift(const ReactNativeMLX::HybridMLXSpec_cxx& swiftPart):
+    explicit HybridMLXSpecSwift(const RNMLX::HybridMLXSpec_cxx& swiftPart):
       HybridObject(HybridMLXSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline ReactNativeMLX::HybridMLXSpec_cxx& getSwiftPart() noexcept {
+    inline RNMLX::HybridMLXSpec_cxx& getSwiftPart() noexcept {
       return _swiftPart;
     }
 
@@ -65,7 +65,7 @@ namespace margelo::nitro::mlx {
     }
 
   private:
-    ReactNativeMLX::HybridMLXSpec_cxx _swiftPart;
+    RNMLX::HybridMLXSpec_cxx _swiftPart;
   };
 
-} // namespace margelo::nitro::mlx
+} // namespace margelo::nitro::rnmlx

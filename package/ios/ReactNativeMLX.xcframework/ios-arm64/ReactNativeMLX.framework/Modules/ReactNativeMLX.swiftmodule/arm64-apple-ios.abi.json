@@ -1,0 +1,97 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "ReactNativeMLX",
+    "printedName": "ReactNativeMLX",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLX",
+        "printedName": "MLX",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ReactNativeMLX",
+        "printedName": "ReactNativeMLX",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "sumNumbers",
+            "printedName": "sumNumbers(num1:num2:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ReactNativeMLXAAC10sumNumbers4num14num2S2d_SdtFZ",
+            "mangledName": "$s14ReactNativeMLXAAC10sumNumbers4num14num2S2d_SdtFZ",
+            "moduleName": "ReactNativeMLX",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:14ReactNativeMLXAAC",
+        "mangledName": "$s14ReactNativeMLXAAC",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": []
+}

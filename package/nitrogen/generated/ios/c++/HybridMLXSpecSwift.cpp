@@ -7,5 +7,5 @@
 
 #include "HybridMLXSpecSwift.hpp"
 
-namespace margelo::nitro::mlx {
-} // namespace margelo::nitro::mlx
+namespace margelo::nitro::rnmlx {
+} // namespace margelo::nitro::rnmlx

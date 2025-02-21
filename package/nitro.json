@@ -1,14 +1,14 @@
 {
   "$schema": "https://nitro.margelo.com/nitro.schema.json",
   "cxxNamespace": [
-    "mlx"
+    "rnmlx"
   ],
   "ios": {
-    "iosModuleName": "ReactNativeMLX"
+    "iosModuleName": "RNMLX"
   },
   "android": {
     "androidNamespace": [
-      "mlx"
+      "rnmlx"
     ],
     "androidCxxLibName": "ReactNativeMLX"
   },
