@@ -15,10 +15,10 @@
 		BA59DA302D6968370047C1C1 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = BA59DA2F2D6968370047C1C1 /* MLX */; };
 		BAFB82E92D6978ED00C96138 /* ReactNativeMLX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */; };
 		BAFB82EA2D6978ED00C96138 /* ReactNativeMLX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BAFB82EF2D697C7B00C96138 /* ModelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82EE2D697C7B00C96138 /* ModelConfiguration.swift */; };
-		BAFB82F12D697CCB00C96138 /* ModelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F02D697CCB00C96138 /* ModelLoader.swift */; };
-		BAFB82F32D697F2000C96138 /* DownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F22D697F2000C96138 /* DownloadProgress.swift */; };
 		BAFB82F72D69A95200C96138 /* RNMLXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F62D69A95200C96138 /* RNMLXError.swift */; };
+		BAFB82F92D69B27D00C96138 /* LLMEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F82D69B27D00C96138 /* LLMEvaluator.swift */; };
+		BAFB82FB2D69B2B700C96138 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = BAFB82FA2D69B2B700C96138 /* MLXLLM */; };
+		BAFB82FD2D69B2B700C96138 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = BAFB82FC2D69B2B700C96138 /* MLXLMCommon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,10 +59,8 @@
 		BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactNativeMLX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2E64852D683FC000E860E4 /* ReactNativeMLXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNativeMLXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAFB82DB2D69789F00C96138 /* MLXExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MLXExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BAFB82EE2D697C7B00C96138 /* ModelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConfiguration.swift; sourceTree = "<group>"; };
-		BAFB82F02D697CCB00C96138 /* ModelLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLoader.swift; sourceTree = "<group>"; };
-		BAFB82F22D697F2000C96138 /* DownloadProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgress.swift; sourceTree = "<group>"; };
 		BAFB82F62D69A95200C96138 /* RNMLXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMLXError.swift; sourceTree = "<group>"; };
+		BAFB82F82D69B27D00C96138 /* LLMEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMEvaluator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,7 +76,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAFB82FB2D69B2B700C96138 /* MLXLLM in Frameworks */,
 				BA59DA302D6968370047C1C1 /* MLX in Frameworks */,
+				BAFB82FD2D69B2B700C96138 /* MLXLMCommon in Frameworks */,
 				BA59DA2E2D6968320047C1C1 /* Numerics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,10 +107,8 @@
 			children = (
 				BA0D25F12D684DC000F7D129 /* ReactNativeMLX.h */,
 				BA0D25F62D684DF100F7D129 /* RNMLX.swift */,
-				BAFB82EE2D697C7B00C96138 /* ModelConfiguration.swift */,
-				BAFB82F02D697CCB00C96138 /* ModelLoader.swift */,
-				BAFB82F22D697F2000C96138 /* DownloadProgress.swift */,
 				BAFB82F62D69A95200C96138 /* RNMLXError.swift */,
+				BAFB82F82D69B27D00C96138 /* LLMEvaluator.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -175,6 +173,8 @@
 			packageProductDependencies = (
 				BA59DA2D2D6968320047C1C1 /* Numerics */,
 				BA59DA2F2D6968370047C1C1 /* MLX */,
+				BAFB82FA2D69B2B700C96138 /* MLXLLM */,
+				BAFB82FC2D69B2B700C96138 /* MLXLMCommon */,
 			);
 			productName = ReactNativeMLX;
 			productReference = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */;
@@ -300,11 +300,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAFB82F12D697CCB00C96138 /* ModelLoader.swift in Sources */,
 				BAFB82F72D69A95200C96138 /* RNMLXError.swift in Sources */,
-				BAFB82EF2D697C7B00C96138 /* ModelConfiguration.swift in Sources */,
-				BAFB82F32D697F2000C96138 /* DownloadProgress.swift in Sources */,
 				BA0D25F72D684DF100F7D129 /* RNMLX.swift in Sources */,
+				BAFB82F92D69B27D00C96138 /* LLMEvaluator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,7 +604,7 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -641,7 +639,7 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -727,6 +725,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BAC9106E2D6846BC00ED842F /* XCRemoteSwiftPackageReference "mlx-swift" */;
 			productName = MLX;
+		};
+		BAFB82FA2D69B2B700C96138 /* MLXLLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA59D94B2D6949600047C1C1 /* XCLocalSwiftPackageReference "../../../mlx-swift-examples" */;
+			productName = MLXLLM;
+		};
+		BAFB82FC2D69B2B700C96138 /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA59D94B2D6949600047C1C1 /* XCLocalSwiftPackageReference "../../../mlx-swift-examples" */;
+			productName = MLXLMCommon;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
