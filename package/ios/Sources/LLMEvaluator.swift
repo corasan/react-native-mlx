@@ -117,6 +117,7 @@ class LLMEvaluator {
                         let text = context.tokenizer.decode(tokens: tokens)
                         Task { @MainActor in
                             self.output = text
+                            self.generationHandler?(text, 0) // Send intermediate results
                         }
                     }
                     if tokens.count >= maxTokens {
@@ -127,14 +128,16 @@ class LLMEvaluator {
                 }
             }
 
-            // update the text if needed, e.g. we haven't displayed because of displayEveryNTokens
+            // update the text if needed and send final result
             if result.output != self.output {
                 self.output = result.output
+                self.generationHandler?(result.output, result.tokensPerSecond)
             }
             self.stat = " Tokens/second: \(String(format: "%.3f", result.tokensPerSecond))"
 
         } catch {
             output = "Failed: \(error)"
+            self.generationHandler?(output, 0)
         }
 
         running = false
