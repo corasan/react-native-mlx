@@ -10,48 +10,85 @@ import ReactNativeMLX
 
 struct ContentView: View {
     @StateObject private var viewModel = ModelViewModel()
+    @State private var prompt: String = ""
+    @State private var isGenerating = false
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("MLX Model Test")
-                .font(.largeTitle)
-                .padding()
-            
-            Button(action: {
-                Task {
-                    await viewModel.loadLlama()
+        ScrollView {
+            VStack(spacing: 20) {
+                Text("MLX Model Test")
+                    .font(.largeTitle)
+                    .padding()
+                
+                // Model loading button
+                Button(action: {
+                    Task {
+                        await viewModel.loadLlama()
+                    }
+                }) {
+                    Text("Llama 3.2 1B Instruct 4bit")
+                        .frame(minWidth: 200)
+                        .padding()
+                        .background(viewModel.isLoading ? Color.gray : Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-            }) {
-                Text("Llama 3.2 1B Instruct 4bit")
-                    .frame(minWidth: 200)
-                    .padding()
-                    .background(viewModel.isLoading ? Color.gray : Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                .disabled(viewModel.isLoading || isGenerating)
+                
+                if viewModel.isLoading {
+                    ProgressSection(
+                        fileName: viewModel.currentFile,
+                        progress: viewModel.downloadProgress
+                    )
+                }
+                
+                // Text generation section
+                if !viewModel.isLoading && viewModel.error.isEmpty {
+                    VStack(spacing: 16) {
+                        TextEditor(text: $prompt)
+                            .frame(height: 100)
+                            .padding(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.3))
+                            )
+                            .disabled(isGenerating)
+                        
+                        Button(action: {
+                            guard !prompt.isEmpty else { return }
+                            isGenerating = true
+                            Task {
+                                await viewModel.generate(prompt: prompt)
+                                isGenerating = false
+                            }
+                        }) {
+                            Text(isGenerating ? "Generating..." : "Generate")
+                                .frame(minWidth: 200)
+                                .padding()
+                                .background(isGenerating || prompt.isEmpty ? Color.gray : Color.green)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
+                        .disabled(isGenerating || prompt.isEmpty)
+                    }
+                    .padding(.horizontal)
+                }
+                
+                if !viewModel.output.isEmpty {
+                    GenerationOutputView(
+                        output: viewModel.output,
+                        tokensPerSecond: viewModel.tokensPerSecond
+                    )
+                }
+                
+                if !viewModel.error.isEmpty {
+                    Text(viewModel.error)
+                        .foregroundColor(.red)
+                        .padding()
+                }
             }
-            .disabled(viewModel.isLoading)
-            
-            if viewModel.isLoading {
-                ProgressSection(
-                    fileName: viewModel.currentFile,
-                    progress: viewModel.downloadProgress
-                )
-            }
-            
-            if !viewModel.output.isEmpty {
-                GenerationOutputView(
-                    output: viewModel.output,
-                    tokensPerSecond: viewModel.tokensPerSecond
-                )
-            }
-            
-            if !viewModel.error.isEmpty {
-                Text(viewModel.error)
-                    .foregroundColor(.red)
-                    .padding()
-            }
+            .padding()
         }
-        .padding()
     }
 }
 

@@ -53,6 +53,13 @@ class ModelViewModel: ObservableObject, RNMLXDelegate {
         )
     }
     
+    func generate(prompt: String) async {
+        error = ""
+        output = ""
+        tokensPerSecond = 0
+        await mlx.generate(prompt: prompt)
+    }
+    
     private func loadModel(name: String, modelId: String, repoId: String) async {
         guard !isLoading else { return }
         
@@ -62,7 +69,6 @@ class ModelViewModel: ObservableObject, RNMLXDelegate {
         
         do {
             try await mlx.load(modelId: modelId)
-//            try await mlx.generate(prompt: "Say hello!")
         } catch {
             self.error = error.localizedDescription
         }
