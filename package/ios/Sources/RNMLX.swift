@@ -8,72 +8,62 @@
 import Foundation
 internal import MLX
 
-final class WeightsContainer {
-    let weights: [String: MLXArray]
+public struct ModelState {
+    public let isLoaded: Bool
+    public let isGenerating: Bool
+    public let modelId: String
+    public let error: String?
+    public let modelInfo: String
     
-    init(weights: [String: MLXArray]) {
-        self.weights = weights
+    public init(isLoaded: Bool = false,
+                isGenerating: Bool = false,
+                modelId: String = "",
+                error: String? = nil,
+                modelInfo: String = "") {
+        self.isLoaded = isLoaded
+        self.isGenerating = isGenerating
+        self.modelId = modelId
+        self.error = error
+        self.modelInfo = modelInfo
     }
 }
 
+public protocol RNMLXDelegate: AnyObject {
+    func modelLoadingProgress(progress: Double, file: String)
+    func modelGenerationProgress(text: String, tokensPerSecond: Double)
+    func modelStateChanged(state: ModelState)
+    func modelError(_ error: Error)
+}
+
+@MainActor
 public class RNMLX {
-    private var weights: [String: MLXArray]?
-    private var config: ModelConfiguration?
-    private let modelCache = NSCache<NSString, WeightsContainer>()
-    private let modelLoader = ModelLoader()
-    private let fileManager = FileManager.default
+    public weak var delegate: RNMLXDelegate?
+    private var llm: LLMEvaluator
+    private var state = ModelState()
     
-    public init() {}
+    public init() {
+        self.llm = LLMEvaluator()
+        self.llm.progressHandler = { [weak self] progress, file in
+            self?.delegate?.modelLoadingProgress(progress: progress, file: file)
+        }
+        self.llm.generationHandler = { [weak self] text, tokensPerSecond in
+            self?.delegate?.modelGenerationProgress(text: text, tokensPerSecond: tokensPerSecond)
+        }
+    }
     
-    public func load(
-        modelId: String,
-        repoId: String,
-        progress: @escaping (DownloadProgress) -> Void
-    ) async throws -> Bool {
-        let cacheKey = NSString(string: modelId)
-        
-        // Check cache first
-        if let cachedContainer = modelCache.object(forKey: cacheKey) {
-            self.weights = cachedContainer.weights
-            return true
-        }
-        
-        // Get documents directory
-        guard let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw RNMLXError.modelLoadError("Cannot access documents directory")
-        }
-        
-        let modelDirectory = documentsPath.appendingPathComponent("mlx_models").appendingPathComponent(modelId)
-        
+    public func generate(prompt: String) async {
+        await llm.generate(prompt: prompt)
+    }
+    
+    public func load(modelId: String) async throws {
         do {
-            // Create model directory if needed
-            try fileManager.createDirectory(at: modelDirectory, withIntermediateDirectories: true)
-            
-            // Download model files if they don't exist
-            try await modelLoader.downloadModelFiles(
-                repoId: repoId,
-                modelDirectory: modelDirectory,
-                progress: progress
-            )
-            
-            // Load the configuration
-            let configPath = modelDirectory.appendingPathComponent("config.json")
-            let configData = try Data(contentsOf: configPath)
-            self.config = try JSONDecoder().decode(ModelConfiguration.self, from: configData)
-            
-            // Load safetensors weights
-            let weightsPath = modelDirectory.appendingPathComponent("model.safetensors")
-//            self.weights = try modelLoader.loadWeights(from: weightsPath.path)
-            
-            // Cache the loaded weights
-            if let loadedWeights = self.weights {
-                let container = WeightsContainer(weights: loadedWeights)
-                modelCache.setObject(container, forKey: cacheKey)
-            }
-            
-            return true
+            _ = try await llm.load()
+            state = ModelState(isLoaded: true, modelId: modelId)
         } catch {
-            throw RNMLXError.modelLoadError("Failed to load model: \(error.localizedDescription)")
+            state = ModelState(isLoaded: false, modelId: modelId, error: error.localizedDescription)
+            throw error
         }
+        
+        delegate?.modelStateChanged(state: state)
     }
 }
