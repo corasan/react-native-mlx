@@ -26,51 +26,15 @@
       },
       {
         "kind": "TypeDecl",
-        "name": "ReactNativeMLX",
-        "printedName": "ReactNativeMLX",
-        "children": [
-          {
-            "kind": "Function",
-            "name": "sumNumbers",
-            "printedName": "sumNumbers(num1:num2:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Double",
-                "printedName": "Swift.Double",
-                "usr": "s:Sd"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Double",
-                "printedName": "Swift.Double",
-                "usr": "s:Sd"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Double",
-                "printedName": "Swift.Double",
-                "usr": "s:Sd"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:14ReactNativeMLXAAC10sumNumbers4num14num2S2d_SdtFZ",
-            "mangledName": "$s14ReactNativeMLXAAC10sumNumbers4num14num2S2d_SdtFZ",
-            "moduleName": "ReactNativeMLX",
-            "static": true,
-            "declAttributes": [
-              "Final",
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
-          }
-        ],
+        "name": "LlamaModel",
+        "printedName": "LlamaModel",
         "declKind": "Class",
-        "usr": "s:14ReactNativeMLXAAC",
-        "mangledName": "$s14ReactNativeMLXAAC",
+        "usr": "s:14ReactNativeMLX10LlamaModelC",
+        "mangledName": "$s14ReactNativeMLX10LlamaModelC",
         "moduleName": "ReactNativeMLX",
         "declAttributes": [
-          "AccessControl"
+          "AccessControl",
+          "RawDocComment"
         ],
         "hasMissingDesignatedInitializers": true,
         "conformances": [
@@ -87,6 +51,89 @@
             "printedName": "Escapable",
             "usr": "s:s9EscapableP",
             "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RNMLX",
+        "printedName": "RNMLX",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RNMLX",
+                "printedName": "ReactNativeMLX.RNMLX",
+                "usr": "s:14ReactNativeMLX5RNMLXC"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:14ReactNativeMLX5RNMLXCACycfc",
+            "mangledName": "$s14ReactNativeMLX5RNMLXCACycfc",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "Custom",
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "load",
+            "printedName": "load()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ReactNativeMLX5RNMLXC4loadyyF",
+            "mangledName": "$s14ReactNativeMLX5RNMLXC4loadyyF",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:14ReactNativeMLX5RNMLXC",
+        "mangledName": "$s14ReactNativeMLX5RNMLXC",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl",
+          "Custom",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
           }
         ]
       }
