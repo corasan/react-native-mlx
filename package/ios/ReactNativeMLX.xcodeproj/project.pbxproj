@@ -18,6 +18,7 @@
 		BAFB82EF2D697C7B00C96138 /* ModelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82EE2D697C7B00C96138 /* ModelConfiguration.swift */; };
 		BAFB82F12D697CCB00C96138 /* ModelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F02D697CCB00C96138 /* ModelLoader.swift */; };
 		BAFB82F32D697F2000C96138 /* DownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F22D697F2000C96138 /* DownloadProgress.swift */; };
+		BAFB82F72D69A95200C96138 /* RNMLXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F62D69A95200C96138 /* RNMLXError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		BAFB82EE2D697C7B00C96138 /* ModelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConfiguration.swift; sourceTree = "<group>"; };
 		BAFB82F02D697CCB00C96138 /* ModelLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLoader.swift; sourceTree = "<group>"; };
 		BAFB82F22D697F2000C96138 /* DownloadProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgress.swift; sourceTree = "<group>"; };
+		BAFB82F62D69A95200C96138 /* RNMLXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMLXError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -108,6 +110,7 @@
 				BAFB82EE2D697C7B00C96138 /* ModelConfiguration.swift */,
 				BAFB82F02D697CCB00C96138 /* ModelLoader.swift */,
 				BAFB82F22D697F2000C96138 /* DownloadProgress.swift */,
+				BAFB82F62D69A95200C96138 /* RNMLXError.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAFB82F12D697CCB00C96138 /* ModelLoader.swift in Sources */,
+				BAFB82F72D69A95200C96138 /* RNMLXError.swift in Sources */,
 				BAFB82EF2D697C7B00C96138 /* ModelConfiguration.swift in Sources */,
 				BAFB82F32D697F2000C96138 /* DownloadProgress.swift in Sources */,
 				BA0D25F72D684DF100F7D129 /* RNMLX.swift in Sources */,

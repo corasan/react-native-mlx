@@ -40,7 +40,7 @@ public class RNMLX {
         
         // Get documents directory
         guard let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw MLXError.modelLoadError("Cannot access documents directory")
+            throw RNMLXError.modelLoadError("Cannot access documents directory")
         }
         
         let modelDirectory = documentsPath.appendingPathComponent("mlx_models").appendingPathComponent(modelId)
@@ -63,7 +63,7 @@ public class RNMLX {
             
             // Load safetensors weights
             let weightsPath = modelDirectory.appendingPathComponent("model.safetensors")
-            self.weights = try modelLoader.loadWeights(from: weightsPath.path)
+//            self.weights = try modelLoader.loadWeights(from: weightsPath.path)
             
             // Cache the loaded weights
             if let loadedWeights = self.weights {
@@ -73,7 +73,7 @@ public class RNMLX {
             
             return true
         } catch {
-            throw MLXError.modelLoadError("Failed to load model: \(error.localizedDescription)")
+            throw RNMLXError.modelLoadError("Failed to load model: \(error.localizedDescription)")
         }
     }
 }
