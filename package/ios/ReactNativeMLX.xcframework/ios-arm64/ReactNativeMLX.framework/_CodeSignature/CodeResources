@@ -10,11 +10,11 @@
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		UuRHjGB7NzzLrf/YA/hI+7dwI+c=
+		Uc1XPjq+/0k+Gs3KCRqqfFJBI8c=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		pFsOBdym1sBQ6wVyr9NCHsG26Gw=
+		JIWr1ek9Qfy1Lrg+pk5XoMLFHew=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -22,11 +22,11 @@
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		pFsOBdym1sBQ6wVyr9NCHsG26Gw=
+		JIWr1ek9Qfy1Lrg+pk5XoMLFHew=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		P5+pLhOkSo3myz1QQ6Db9TLlQf8=
+		nM0q8o2C4WmC6lEr4xt644WIsG0=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -35,14 +35,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tm0riXd5GHbkLj5H2qjzNlgYOz60E3g0E+nna0PKxLU=
+			vquY117O6bYUlnZHLsmtFxDBH+jZ7m/j5ifmmKbFfuY=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HXhxODmnjlKNmAyWhL5/dIWOJk8TUQ5qM9H0gpnygw0=
+			UtE/IBR5Ip+a8xZAJm5fHvM+6RU8gQcLoYt1EneLWUA=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -56,14 +56,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HXhxODmnjlKNmAyWhL5/dIWOJk8TUQ5qM9H0gpnygw0=
+			UtE/IBR5Ip+a8xZAJm5fHvM+6RU8gQcLoYt1EneLWUA=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VRFQA5xstN6cN2LNbg3d67aJS5MZAK4/j0ZKu3wpcs8=
+			MRAdm4b1+StIHiVHdEOAEv+oqt/rFt9LcmToQ6MzycM=
 			</data>
 		</dict>
 	</dict>

@@ -1,8 +1,11 @@
 import Foundation
 import ReactNativeMLX
 
+@MainActor
 class HybridMLX: HybridMLXSpec {
     func sum(num1: Double, num2: Double) throws -> Double {
-        return ReactNativeMLX.sumNumbers(num1: num1, num2: num2)
+        let rnmlx = RNMLX()
+            rnmlx.load()
+        return num1 + num2
     }
 }
