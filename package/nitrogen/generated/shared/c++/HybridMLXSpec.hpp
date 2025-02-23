@@ -19,6 +19,7 @@ namespace margelo::nitro::rnmlx { struct ModelState; }
 #include <string>
 #include "ModelState.hpp"
 #include <NitroModules/Promise.hpp>
+#include <functional>
 
 namespace margelo::nitro::rnmlx {
 
@@ -64,6 +65,7 @@ namespace margelo::nitro::rnmlx {
       // Methods
       virtual std::shared_ptr<Promise<void>> load(const std::string& modelId) = 0;
       virtual std::shared_ptr<Promise<void>> generate(const std::string& prompt) = 0;
+      virtual void listenToTokenGeneration(const std::function<void(const std::string& /* token */)>& listener) = 0;
 
     protected:
       // Hybrid Setup

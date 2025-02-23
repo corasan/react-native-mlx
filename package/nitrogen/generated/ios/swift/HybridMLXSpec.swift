@@ -21,6 +21,7 @@ public protocol HybridMLXSpec_protocol: HybridObject {
   // Methods
   func load(modelId: String) throws -> Promise<Void>
   func generate(prompt: String) throws -> Promise<Void>
+  func listenToTokenGeneration(listener: @escaping (_ token: String) -> Void) throws -> Void
 }
 
 /// See ``HybridMLXSpec``

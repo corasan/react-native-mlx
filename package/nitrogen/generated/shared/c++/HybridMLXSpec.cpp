@@ -28,6 +28,7 @@ namespace margelo::nitro::rnmlx {
       prototype.registerHybridSetter("state", &HybridMLXSpec::setState);
       prototype.registerHybridMethod("load", &HybridMLXSpec::load);
       prototype.registerHybridMethod("generate", &HybridMLXSpec::generate);
+      prototype.registerHybridMethod("listenToTokenGeneration", &HybridMLXSpec::listenToTokenGeneration);
     });
   }
 

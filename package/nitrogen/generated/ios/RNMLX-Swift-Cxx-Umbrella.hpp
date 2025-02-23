@@ -19,6 +19,7 @@ namespace margelo::nitro::rnmlx { struct ModelState; }
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>

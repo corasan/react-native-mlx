@@ -29,6 +29,14 @@ namespace margelo::nitro::rnmlx::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(const std::string& /* token */)>
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNMLX::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::string& token) mutable -> void {
+      swiftClosure.call(token);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>
   std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec> create_std__shared_ptr_margelo__nitro__rnmlx__HybridMLXSpec_(void* _Nonnull swiftUnsafePointer) {
     RNMLX::HybridMLXSpec_cxx swiftPart = RNMLX::HybridMLXSpec_cxx::fromUnsafe(swiftUnsafePointer);

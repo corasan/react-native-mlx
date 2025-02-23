@@ -19,6 +19,7 @@ namespace margelo::nitro::rnmlx { struct ModelState; }
 #include "ModelState.hpp"
 #include <optional>
 #include <NitroModules/Promise.hpp>
+#include <functional>
 
 #include "RNMLX-Swift-Cxx-Umbrella.hpp"
 
@@ -113,6 +114,12 @@ namespace margelo::nitro::rnmlx {
       }
       auto __value = std::move(__result.value());
       return __value;
+    }
+    inline void listenToTokenGeneration(const std::function<void(const std::string& /* token */)>& listener) override {
+      auto __result = _swiftPart.listenToTokenGeneration(listener);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
 
   private:

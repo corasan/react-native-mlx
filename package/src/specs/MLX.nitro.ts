@@ -20,4 +20,6 @@ export interface MLX extends HybridObject<{ ios: 'swift' }> {
   currentFile: string
   error: string
   state: ModelState
+
+  listenToTokenGeneration(listener: (token: string) => void): void
 }
