@@ -1,6 +1,6 @@
 import { type HybridObject } from 'react-native-nitro-modules'
 
-interface MLXState {
+interface ModelState {
   isLoaded: boolean;
   isGenerating: boolean;
   modelId: string;
@@ -19,5 +19,5 @@ export interface MLX extends HybridObject<{ ios: 'swift' }> {
   downloadProgress: number
   currentFile: string
   error: string
-  state: MLXState
+  state: ModelState
 }

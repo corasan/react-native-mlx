@@ -10,12 +10,12 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `HybridMLXSpec` to properly resolve imports.
 namespace margelo::nitro::rnmlx { class HybridMLXSpec; }
-// Forward declaration of `MLXState` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct MLXState; }
+// Forward declaration of `ModelState` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ModelState; }
 
 // Include C++ defined types
 #include "HybridMLXSpec.hpp"
-#include "MLXState.hpp"
+#include "ModelState.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>

@@ -13,11 +13,11 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `MLXState` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct MLXState; }
+// Forward declaration of `ModelState` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ModelState; }
 
 #include <string>
-#include "MLXState.hpp"
+#include "ModelState.hpp"
 #include <NitroModules/Promise.hpp>
 
 namespace margelo::nitro::rnmlx {
@@ -57,8 +57,8 @@ namespace margelo::nitro::rnmlx {
       virtual void setCurrentFile(const std::string& currentFile) = 0;
       virtual std::string getError() = 0;
       virtual void setError(const std::string& error) = 0;
-      virtual MLXState getState() = 0;
-      virtual void setState(const MLXState& state) = 0;
+      virtual ModelState getState() = 0;
+      virtual void setState(const ModelState& state) = 0;
 
     public:
       // Methods
