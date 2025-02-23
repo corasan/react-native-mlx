@@ -13,6 +13,7 @@
 		BA2E64862D683FC000E860E4 /* ReactNativeMLX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */; };
 		BA59DA2E2D6968320047C1C1 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = BA59DA2D2D6968320047C1C1 /* Numerics */; };
 		BA59DA302D6968370047C1C1 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = BA59DA2F2D6968370047C1C1 /* MLX */; };
+		BAF438142D6ABDAD0032B59F /* HybridMLX.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF438122D6ABDAD0032B59F /* HybridMLX.swift */; };
 		BAFB82E92D6978ED00C96138 /* ReactNativeMLX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */; };
 		BAFB82EA2D6978ED00C96138 /* ReactNativeMLX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAFB82F72D69A95200C96138 /* RNMLXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB82F62D69A95200C96138 /* RNMLXError.swift */; };
@@ -58,6 +59,7 @@
 		BA0D25F62D684DF100F7D129 /* RNMLX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMLX.swift; sourceTree = "<group>"; };
 		BA2E647D2D683FC000E860E4 /* ReactNativeMLX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactNativeMLX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2E64852D683FC000E860E4 /* ReactNativeMLXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNativeMLXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAF438122D6ABDAD0032B59F /* HybridMLX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridMLX.swift; sourceTree = "<group>"; };
 		BAFB82DB2D69789F00C96138 /* MLXExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MLXExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAFB82F62D69A95200C96138 /* RNMLXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMLXError.swift; sourceTree = "<group>"; };
 		BAFB82F82D69B27D00C96138 /* LLMEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMEvaluator.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		BA2E64732D683FC000E860E4 = {
 			isa = PBXGroup;
 			children = (
+				BAF438132D6ABDAD0032B59F /* specs */,
 				BA0D25EE2D684DC000F7D129 /* Bridge.h */,
 				BA0D25F22D684DC000F7D129 /* Sources */,
 				BAFB82DC2D69789F00C96138 /* MLXExample */,
@@ -139,6 +142,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BAF438132D6ABDAD0032B59F /* specs */ = {
+			isa = PBXGroup;
+			children = (
+				BAF438122D6ABDAD0032B59F /* HybridMLX.swift */,
+			);
+			path = specs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +313,7 @@
 			files = (
 				BAFB82F72D69A95200C96138 /* RNMLXError.swift in Sources */,
 				BA0D25F72D684DF100F7D129 /* RNMLX.swift in Sources */,
+				BAF438142D6ABDAD0032B59F /* HybridMLX.swift in Sources */,
 				BAFB82F92D69B27D00C96138 /* LLMEvaluator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
