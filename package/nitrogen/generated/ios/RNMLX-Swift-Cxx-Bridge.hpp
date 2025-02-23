@@ -97,6 +97,28 @@ namespace margelo::nitro::rnmlx::bridge::swift {
     return std::optional<std::string>(value);
   }
   
+  // pragma MARK: std::function<void(const std::string& /* token */)>
+  /**
+   * Specialized version of `std::function<void(const std::string&)>`.
+   */
+  using Func_void_std__string = std::function<void(const std::string& /* token */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::string& / * token * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__string_Wrapper final {
+  public:
+    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* token */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* token */)>>(std::move(func))) {}
+    inline void call(std::string token) const {
+      _function->operator()(token);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::string& /* token */)>> _function;
+  };
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
+    return Func_void_std__string_Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>`.
@@ -116,6 +138,15 @@ namespace margelo::nitro::rnmlx::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_void___ create_Result_std__shared_ptr_Promise_void___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<void>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<void>
+  using Result_void_ = Result<void>;
+  inline Result_void_ create_Result_void_() {
+    return Result<void>::withValue();
+  }
+  inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
+    return Result<void>::withError(error);
   }
 
 } // namespace margelo::nitro::rnmlx::bridge::swift
