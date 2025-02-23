@@ -152,7 +152,7 @@ public class HybridMLXSpec_cxx {
     }
   }
   
-  public final var state: MLXState {
+  public final var state: ModelState {
     @inline(__always)
     get {
       return self.__implementation.state

@@ -12,11 +12,11 @@
 // Forward declaration of `HybridMLXSpec_cxx` to properly resolve imports.
 namespace RNMLX { class HybridMLXSpec_cxx; }
 
-// Forward declaration of `MLXState` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct MLXState; }
+// Forward declaration of `ModelState` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ModelState; }
 
 #include <string>
-#include "MLXState.hpp"
+#include "ModelState.hpp"
 #include <optional>
 #include <NitroModules/Promise.hpp>
 
@@ -88,11 +88,11 @@ namespace margelo::nitro::rnmlx {
     inline void setError(const std::string& error) noexcept override {
       _swiftPart.setError(error);
     }
-    inline MLXState getState() noexcept override {
+    inline ModelState getState() noexcept override {
       auto __result = _swiftPart.getState();
       return __result;
     }
-    inline void setState(const MLXState& state) noexcept override {
+    inline void setState(const ModelState& state) noexcept override {
       _swiftPart.setState(state);
     }
 

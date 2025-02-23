@@ -16,7 +16,7 @@ public protocol HybridMLXSpec_protocol: HybridObject {
   var downloadProgress: Double { get set }
   var currentFile: String { get set }
   var error: String { get set }
-  var state: MLXState { get set }
+  var state: ModelState { get set }
 
   // Methods
   func load(modelId: String) throws -> Promise<Void>
