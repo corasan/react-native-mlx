@@ -16,13 +16,24 @@ Pod::Spec.new do |s|
   s.source_files = [
     # Implementation (Swift)
     "ios/specs/**/*.{swift}",
+    "ios/Sources/**/*.{swift}",
     # Autolinking/Registration (Objective-C++)
     "ios/**/*.{m,mm}",
     # Implementation (C++ objects)
     "cpp/**/*.{hpp,cpp}",
   ]
 
-  s.vendored_frameworks = "ios/ReactNativeMLX.xcframework"
+  spm_dependency(s,
+    url: "https://github.com/ml-explore/mlx-swift.git",
+    requirement: {kind: "upToNextMajorVersion", minimumVersion: "0.21.3"},
+    products: ["MLX"]
+  )
+
+  spm_dependency(s,
+    url: "https://github.com/ml-explore/mlx-swift-examples.git",
+    requirement: {kind: "upToNextMajorVersion", minimumVersion: "2.21.2"},
+    products: ["MLXLLM", "MLXLMCommon"]
+  )
 
   s.pod_target_xcconfig = {
     # C++ compiler flags, mainly for folly.
