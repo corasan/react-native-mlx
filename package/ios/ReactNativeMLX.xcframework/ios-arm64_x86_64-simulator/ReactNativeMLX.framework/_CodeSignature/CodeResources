@@ -10,11 +10,11 @@
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		Uc1XPjq+/0k+Gs3KCRqqfFJBI8c=
+		XYk+v+LOoWFd2Kt/Sixtb3QTjp8=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		akWoIV3yi+VhjUtwEtPyGLNEIM4=
+		D+3inNt59lzZ9IvsMFijOt15rH8=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -22,19 +22,19 @@
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		akWoIV3yi+VhjUtwEtPyGLNEIM4=
+		D+3inNt59lzZ9IvsMFijOt15rH8=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		xqj3onzZ9jjNy0lY5K8ni4pJIzY=
+		9KsIutiN997L9z7TBwGQHTHc/iI=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		Uc1XPjq+/0k+Gs3KCRqqfFJBI8c=
+		XYk+v+LOoWFd2Kt/Sixtb3QTjp8=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		nUdZIdrTIIqdbdMOkJIC2VA5xw0=
+		NKkX4XsboE6ec2om6hYK0o3MROc=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -42,11 +42,11 @@
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		nUdZIdrTIIqdbdMOkJIC2VA5xw0=
+		NKkX4XsboE6ec2om6hYK0o3MROc=
 		</data>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		VqhGApGHAj9APGOIR/a4V+zOX1o=
+		ZIY98BqvoypPRjoZ/J9ggntAbCs=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -55,14 +55,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vquY117O6bYUlnZHLsmtFxDBH+jZ7m/j5ifmmKbFfuY=
+			qFh11Gs3TFdT1rXEkiRUkGo7uILRAMUDtgQPHzikvrM=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			L5h1hPKn8Y3KS7H9NpWoArqMM5CgLZqnXaUVrBoqInI=
+			iJMORe/EMVi0NX1YbXncIO/GClJlYNKfykqB6idgjLc=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -76,28 +76,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			L5h1hPKn8Y3KS7H9NpWoArqMM5CgLZqnXaUVrBoqInI=
+			iJMORe/EMVi0NX1YbXncIO/GClJlYNKfykqB6idgjLc=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YHcYmZJjfSjQd47jtTqnR4Ij4nOP9J632zUHLBzyxjg=
+			SRzczbIEGL1nOEw40SWt2Xtbt/tPPSuJ2dao4l04UTs=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vquY117O6bYUlnZHLsmtFxDBH+jZ7m/j5ifmmKbFfuY=
+			qFh11Gs3TFdT1rXEkiRUkGo7uILRAMUDtgQPHzikvrM=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+8t9PRGsThGwiiFPrOum1Df9HTdtjQeQcUC3TBlVw1M=
+			o2qkthrDdgMxnQ3QhA0SX6ZuX137F0biVz5xVmicWj0=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -111,14 +111,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+8t9PRGsThGwiiFPrOum1Df9HTdtjQeQcUC3TBlVw1M=
+			o2qkthrDdgMxnQ3QhA0SX6ZuX137F0biVz5xVmicWj0=
 			</data>
 		</dict>
 		<key>Modules/ReactNativeMLX.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SNjTHKtQkblqQglhbBjuJWsWAWpJ101W2XvK2SraX00=
+			s+ZXFFKsSF3KuPQSdFDlblkYabGZI7iblk8BWezHrLE=
 			</data>
 		</dict>
 	</dict>

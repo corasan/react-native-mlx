@@ -7,12 +7,31 @@ import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-@_hasMissingDesignatedInitializers public class LlamaModel {
-  @objc deinit
+public enum RNMLXError : Swift.Error {
+  case modelLoadError(Swift.String)
+  case downloadError(Swift.String)
+  case configError(Swift.String)
+}
+public struct ModelState {
+  public let isLoaded: Swift.Bool
+  public let isGenerating: Swift.Bool
+  public let modelId: Swift.String
+  public let error: Swift.String?
+  public let modelInfo: Swift.String
+  public init(isLoaded: Swift.Bool = false, isGenerating: Swift.Bool = false, modelId: Swift.String = "", error: Swift.String? = nil, modelInfo: Swift.String = "")
+}
+public protocol RNMLXDelegate : AnyObject {
+  func modelLoadingProgress(progress: Swift.Double, file: Swift.String)
+  func modelGenerationProgress(text: Swift.String, tokensPerSecond: Swift.Double)
+  func modelStateChanged(state: ReactNativeMLX.ModelState)
+  func modelError(_ error: any Swift.Error)
 }
 @_Concurrency.MainActor public class RNMLX {
+  @_Concurrency.MainActor weak public var delegate: (any ReactNativeMLX.RNMLXDelegate)?
+  @_Concurrency.MainActor public var state: ReactNativeMLX.ModelState
   @_Concurrency.MainActor public init()
-  @_Concurrency.MainActor public func load()
+  @_Concurrency.MainActor public func generate(prompt: Swift.String) async
+  @_Concurrency.MainActor public func load(modelId: Swift.String) async throws
   @objc deinit
 }
 extension ReactNativeMLX.RNMLX : Swift.Sendable {}

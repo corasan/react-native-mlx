@@ -15,6 +15,210 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "RNMLXError",
+        "printedName": "RNMLXError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "modelLoadError",
+            "printedName": "modelLoadError",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ReactNativeMLX.RNMLXError.Type) -> (Swift.String) -> ReactNativeMLX.RNMLXError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.String) -> ReactNativeMLX.RNMLXError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXError",
+                        "printedName": "ReactNativeMLX.RNMLXError",
+                        "usr": "s:14ReactNativeMLX10RNMLXErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ReactNativeMLX.RNMLXError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXError",
+                        "printedName": "ReactNativeMLX.RNMLXError",
+                        "usr": "s:14ReactNativeMLX10RNMLXErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:14ReactNativeMLX10RNMLXErrorO14modelLoadErroryACSScACmF",
+            "mangledName": "$s14ReactNativeMLX10RNMLXErrorO14modelLoadErroryACSScACmF",
+            "moduleName": "ReactNativeMLX"
+          },
+          {
+            "kind": "Var",
+            "name": "downloadError",
+            "printedName": "downloadError",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ReactNativeMLX.RNMLXError.Type) -> (Swift.String) -> ReactNativeMLX.RNMLXError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.String) -> ReactNativeMLX.RNMLXError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXError",
+                        "printedName": "ReactNativeMLX.RNMLXError",
+                        "usr": "s:14ReactNativeMLX10RNMLXErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ReactNativeMLX.RNMLXError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXError",
+                        "printedName": "ReactNativeMLX.RNMLXError",
+                        "usr": "s:14ReactNativeMLX10RNMLXErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:14ReactNativeMLX10RNMLXErrorO13downloadErroryACSScACmF",
+            "mangledName": "$s14ReactNativeMLX10RNMLXErrorO13downloadErroryACSScACmF",
+            "moduleName": "ReactNativeMLX"
+          },
+          {
+            "kind": "Var",
+            "name": "configError",
+            "printedName": "configError",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ReactNativeMLX.RNMLXError.Type) -> (Swift.String) -> ReactNativeMLX.RNMLXError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.String) -> ReactNativeMLX.RNMLXError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXError",
+                        "printedName": "ReactNativeMLX.RNMLXError",
+                        "usr": "s:14ReactNativeMLX10RNMLXErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ReactNativeMLX.RNMLXError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXError",
+                        "printedName": "ReactNativeMLX.RNMLXError",
+                        "usr": "s:14ReactNativeMLX10RNMLXErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:14ReactNativeMLX10RNMLXErrorO11configErroryACSScACmF",
+            "mangledName": "$s14ReactNativeMLX10RNMLXErrorO11configErroryACSScACmF",
+            "moduleName": "ReactNativeMLX"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:14ReactNativeMLX10RNMLXErrorO",
+        "mangledName": "$s14ReactNativeMLX10RNMLXErrorO",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
         "kind": "Import",
         "name": "MLX",
         "printedName": "MLX",
@@ -26,17 +230,317 @@
       },
       {
         "kind": "TypeDecl",
-        "name": "LlamaModel",
-        "printedName": "LlamaModel",
-        "declKind": "Class",
-        "usr": "s:14ReactNativeMLX10LlamaModelC",
-        "mangledName": "$s14ReactNativeMLX10LlamaModelC",
+        "name": "ModelState",
+        "printedName": "ModelState",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "isLoaded",
+            "printedName": "isLoaded",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:14ReactNativeMLX10ModelStateV8isLoadedSbvp",
+            "mangledName": "$s14ReactNativeMLX10ModelStateV8isLoadedSbvp",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX10ModelStateV8isLoadedSbvg",
+                "mangledName": "$s14ReactNativeMLX10ModelStateV8isLoadedSbvg",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isGenerating",
+            "printedName": "isGenerating",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:14ReactNativeMLX10ModelStateV12isGeneratingSbvp",
+            "mangledName": "$s14ReactNativeMLX10ModelStateV12isGeneratingSbvp",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX10ModelStateV12isGeneratingSbvg",
+                "mangledName": "$s14ReactNativeMLX10ModelStateV12isGeneratingSbvg",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "modelId",
+            "printedName": "modelId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:14ReactNativeMLX10ModelStateV7modelIdSSvp",
+            "mangledName": "$s14ReactNativeMLX10ModelStateV7modelIdSSvp",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX10ModelStateV7modelIdSSvg",
+                "mangledName": "$s14ReactNativeMLX10ModelStateV7modelIdSSvg",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "error",
+            "printedName": "error",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:14ReactNativeMLX10ModelStateV5errorSSSgvp",
+            "mangledName": "$s14ReactNativeMLX10ModelStateV5errorSSSgvp",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX10ModelStateV5errorSSSgvg",
+                "mangledName": "$s14ReactNativeMLX10ModelStateV5errorSSSgvg",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "modelInfo",
+            "printedName": "modelInfo",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:14ReactNativeMLX10ModelStateV9modelInfoSSvp",
+            "mangledName": "$s14ReactNativeMLX10ModelStateV9modelInfoSSvp",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX10ModelStateV9modelInfoSSvg",
+                "mangledName": "$s14ReactNativeMLX10ModelStateV9modelInfoSSvg",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(isLoaded:isGenerating:modelId:error:modelInfo:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ModelState",
+                "printedName": "ReactNativeMLX.ModelState",
+                "usr": "s:14ReactNativeMLX10ModelStateV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "hasDefaultArg": true,
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "hasDefaultArg": true,
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:14ReactNativeMLX10ModelStateV8isLoaded0F10Generating7modelId5error0I4InfoACSb_SbS2SSgSStcfc",
+            "mangledName": "$s14ReactNativeMLX10ModelStateV8isLoaded0F10Generating7modelId5error0I4InfoACSb_SbS2SSgSStcfc",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:14ReactNativeMLX10ModelStateV",
+        "mangledName": "$s14ReactNativeMLX10ModelStateV",
         "moduleName": "ReactNativeMLX",
         "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
+          "AccessControl"
         ],
-        "hasMissingDesignatedInitializers": true,
         "conformances": [
           {
             "kind": "Conformance",
@@ -56,9 +560,352 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "RNMLXDelegate",
+        "printedName": "RNMLXDelegate",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "modelLoadingProgress",
+            "printedName": "modelLoadingProgress(progress:file:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ReactNativeMLX13RNMLXDelegateP20modelLoadingProgress8progress4fileySd_SStF",
+            "mangledName": "$s14ReactNativeMLX13RNMLXDelegateP20modelLoadingProgress8progress4fileySd_SStF",
+            "moduleName": "ReactNativeMLX",
+            "genericSig": "<τ_0_0 where τ_0_0 : ReactNativeMLX.RNMLXDelegate>",
+            "sugared_genericSig": "<Self where Self : ReactNativeMLX.RNMLXDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "modelGenerationProgress",
+            "printedName": "modelGenerationProgress(text:tokensPerSecond:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ReactNativeMLX13RNMLXDelegateP23modelGenerationProgress4text15tokensPerSecondySS_SdtF",
+            "mangledName": "$s14ReactNativeMLX13RNMLXDelegateP23modelGenerationProgress4text15tokensPerSecondySS_SdtF",
+            "moduleName": "ReactNativeMLX",
+            "genericSig": "<τ_0_0 where τ_0_0 : ReactNativeMLX.RNMLXDelegate>",
+            "sugared_genericSig": "<Self where Self : ReactNativeMLX.RNMLXDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "modelStateChanged",
+            "printedName": "modelStateChanged(state:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ModelState",
+                "printedName": "ReactNativeMLX.ModelState",
+                "usr": "s:14ReactNativeMLX10ModelStateV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ReactNativeMLX13RNMLXDelegateP17modelStateChanged5stateyAA05ModelF0V_tF",
+            "mangledName": "$s14ReactNativeMLX13RNMLXDelegateP17modelStateChanged5stateyAA05ModelF0V_tF",
+            "moduleName": "ReactNativeMLX",
+            "genericSig": "<τ_0_0 where τ_0_0 : ReactNativeMLX.RNMLXDelegate>",
+            "sugared_genericSig": "<Self where Self : ReactNativeMLX.RNMLXDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "modelError",
+            "printedName": "modelError(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Error",
+                "printedName": "any Swift.Error",
+                "usr": "s:s5ErrorP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ReactNativeMLX13RNMLXDelegateP10modelErroryys0F0_pF",
+            "mangledName": "$s14ReactNativeMLX13RNMLXDelegateP10modelErroryys0F0_pF",
+            "moduleName": "ReactNativeMLX",
+            "genericSig": "<τ_0_0 where τ_0_0 : ReactNativeMLX.RNMLXDelegate>",
+            "sugared_genericSig": "<Self where Self : ReactNativeMLX.RNMLXDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:14ReactNativeMLX13RNMLXDelegateP",
+        "mangledName": "$s14ReactNativeMLX13RNMLXDelegateP",
+        "moduleName": "ReactNativeMLX",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "RNMLX",
         "printedName": "RNMLX",
         "children": [
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any ReactNativeMLX.RNMLXDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvp",
+            "mangledName": "$s14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvp",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "HasInitialValue",
+              "Custom",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any ReactNativeMLX.RNMLXDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXDelegate",
+                        "printedName": "any ReactNativeMLX.RNMLXDelegate",
+                        "usr": "s:14ReactNativeMLX13RNMLXDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvg",
+                "mangledName": "$s14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvg",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any ReactNativeMLX.RNMLXDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RNMLXDelegate",
+                        "printedName": "any ReactNativeMLX.RNMLXDelegate",
+                        "usr": "s:14ReactNativeMLX13RNMLXDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvs",
+                "mangledName": "$s14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvs",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvM",
+                "mangledName": "$s14ReactNativeMLX5RNMLXC8delegateAA13RNMLXDelegate_pSgvM",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "state",
+            "printedName": "state",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ModelState",
+                "printedName": "ReactNativeMLX.ModelState",
+                "usr": "s:14ReactNativeMLX10ModelStateV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvp",
+            "mangledName": "$s14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvp",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "HasInitialValue",
+              "Custom",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ModelState",
+                    "printedName": "ReactNativeMLX.ModelState",
+                    "usr": "s:14ReactNativeMLX10ModelStateV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvg",
+                "mangledName": "$s14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvg",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ModelState",
+                    "printedName": "ReactNativeMLX.ModelState",
+                    "usr": "s:14ReactNativeMLX10ModelStateV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvs",
+                "mangledName": "$s14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvs",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvM",
+                "mangledName": "$s14ReactNativeMLX5RNMLXC5stateAA10ModelStateVvM",
+                "moduleName": "ReactNativeMLX",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
           {
             "kind": "Constructor",
             "name": "init",
@@ -83,24 +930,57 @@
           },
           {
             "kind": "Function",
-            "name": "load",
-            "printedName": "load()",
+            "name": "generate",
+            "printedName": "generate(prompt:)",
             "children": [
               {
                 "kind": "TypeNominal",
                 "name": "Void",
                 "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
               }
             ],
             "declKind": "Func",
-            "usr": "s:14ReactNativeMLX5RNMLXC4loadyyF",
-            "mangledName": "$s14ReactNativeMLX5RNMLXC4loadyyF",
+            "usr": "s:14ReactNativeMLX5RNMLXC8generate6promptySS_tYaF",
+            "mangledName": "$s14ReactNativeMLX5RNMLXC8generate6promptySS_tYaF",
             "moduleName": "ReactNativeMLX",
             "declAttributes": [
               "Custom",
-              "AccessControl",
-              "RawDocComment"
+              "AccessControl"
             ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "load",
+            "printedName": "load(modelId:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ReactNativeMLX5RNMLXC4load7modelIdySS_tYaKF",
+            "mangledName": "$s14ReactNativeMLX5RNMLXC4load7modelIdySS_tYaKF",
+            "moduleName": "ReactNativeMLX",
+            "declAttributes": [
+              "Custom",
+              "AccessControl"
+            ],
+            "throwing": true,
             "funcSelfKind": "NonMutating"
           }
         ],
@@ -110,8 +990,7 @@
         "moduleName": "ReactNativeMLX",
         "declAttributes": [
           "AccessControl",
-          "Custom",
-          "RawDocComment"
+          "Custom"
         ],
         "conformances": [
           {
@@ -136,9 +1015,284 @@
             "mangledName": "$ss8SendableP"
           }
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLX",
+        "printedName": "MLX",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLXLLM",
+        "printedName": "MLXLLM",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLXLMCommon",
+        "printedName": "MLXLMCommon",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "MLXRandom",
+        "printedName": "MLXRandom",
+        "declKind": "Import",
+        "moduleName": "ReactNativeMLX",
+        "declAttributes": [
+          "AccessControl"
+        ]
       }
     ],
     "json_format_version": 8
   },
-  "ConstValues": []
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/RNMLX.swift",
+      "kind": "BooleanLiteral",
+      "offset": 349,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/RNMLX.swift",
+      "kind": "BooleanLiteral",
+      "offset": 393,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/RNMLX.swift",
+      "kind": "StringLiteral",
+      "offset": 434,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/RNMLX.swift",
+      "kind": "StringLiteral",
+      "offset": 512,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 359,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 395,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 419,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 442,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 460,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "FloatLiteral",
+      "offset": 754,
+      "length": 3,
+      "value": "0.6"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 779,
+      "length": 3,
+      "value": "240"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 999,
+      "length": 1,
+      "value": "4"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1199,
+      "length": 6,
+      "value": "\"type\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1207,
+      "length": 10,
+      "value": "\"function\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1231,
+      "length": 10,
+      "value": "\"function\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1261,
+      "length": 6,
+      "value": "\"name\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1269,
+      "length": 21,
+      "value": "\"get_current_weather\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1308,
+      "length": 13,
+      "value": "\"description\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1323,
+      "length": 45,
+      "value": "\"Get the current weather in a given location\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1386,
+      "length": 12,
+      "value": "\"parameters\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1422,
+      "length": 6,
+      "value": "\"type\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1430,
+      "length": 8,
+      "value": "\"object\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1460,
+      "length": 12,
+      "value": "\"properties\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1500,
+      "length": 10,
+      "value": "\"location\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "Dictionary",
+      "offset": 1512,
+      "length": 162,
+      "value": "[(\"type\", \"string\"), (\"description\", \"The city and state, e.g. San Francisco, CA\")]"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1720,
+      "length": 6,
+      "value": "\"unit\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1758,
+      "length": 6,
+      "value": "\"type\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1766,
+      "length": 8,
+      "value": "\"string\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1804,
+      "length": 6,
+      "value": "\"enum\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "Array",
+      "offset": 1812,
+      "length": 25,
+      "value": "[\"celsius\", \"fahrenheit\"]"
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "StringLiteral",
+      "offset": 1971,
+      "length": 10,
+      "value": "\"required\""
+    },
+    {
+      "filePath": "\/Users\/henry\/Projects\/react-native-mlx\/package\/ios\/Sources\/LLMEvaluator.swift",
+      "kind": "Array",
+      "offset": 1983,
+      "length": 12,
+      "value": "[\"location\"]"
+    }
+  ]
 }
