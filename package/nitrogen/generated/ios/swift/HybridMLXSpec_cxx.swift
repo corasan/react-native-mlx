@@ -97,18 +97,108 @@ public class HybridMLXSpec_cxx {
   }
 
   // Properties
+  public final var output: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.output)
+    }
+    @inline(__always)
+    set {
+      self.__implementation.output = String(newValue)
+    }
+  }
   
+  public final var tokensPerSecond: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.tokensPerSecond
+    }
+    @inline(__always)
+    set {
+      self.__implementation.tokensPerSecond = newValue
+    }
+  }
+  
+  public final var downloadProgress: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.downloadProgress
+    }
+    @inline(__always)
+    set {
+      self.__implementation.downloadProgress = newValue
+    }
+  }
+  
+  public final var currentFile: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.currentFile)
+    }
+    @inline(__always)
+    set {
+      self.__implementation.currentFile = String(newValue)
+    }
+  }
+  
+  public final var error: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.error)
+    }
+    @inline(__always)
+    set {
+      self.__implementation.error = String(newValue)
+    }
+  }
+  
+  public final var state: MLXState {
+    @inline(__always)
+    get {
+      return self.__implementation.state
+    }
+    @inline(__always)
+    set {
+      self.__implementation.state = newValue
+    }
+  }
 
   // Methods
   @inline(__always)
-  public final func sum(num1: Double, num2: Double) -> bridge.Result_double_ {
+  public final func load(modelId: std.string) -> bridge.Result_std__shared_ptr_Promise_void___ {
     do {
-      let __result = try self.__implementation.sum(num1: num1, num2: num2)
-      let __resultCpp = __result
-      return bridge.create_Result_double_(__resultCpp)
+      let __result = try self.__implementation.load(modelId: String(modelId))
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_void__ in
+        let __promise = bridge.create_std__shared_ptr_Promise_void__()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_void__(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve() })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_void___(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_double_(__exceptionPtr)
+      return bridge.create_Result_std__shared_ptr_Promise_void___(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func generate(prompt: std.string) -> bridge.Result_std__shared_ptr_Promise_void___ {
+    do {
+      let __result = try self.__implementation.generate(prompt: String(prompt))
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_void__ in
+        let __promise = bridge.create_std__shared_ptr_Promise_void__()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_void__(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve() })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_void___(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__shared_ptr_Promise_void___(__exceptionPtr)
     }
   }
 }

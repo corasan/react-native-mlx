@@ -11,10 +11,16 @@ import NitroModules
 /// See ``HybridMLXSpec``
 public protocol HybridMLXSpec_protocol: HybridObject {
   // Properties
-  
+  var output: String { get set }
+  var tokensPerSecond: Double { get set }
+  var downloadProgress: Double { get set }
+  var currentFile: String { get set }
+  var error: String { get set }
+  var state: MLXState { get set }
 
   // Methods
-  func sum(num1: Double, num2: Double) throws -> Double
+  func load(modelId: String) throws -> Promise<Void>
+  func generate(prompt: String) throws -> Promise<Void>
 }
 
 /// See ``HybridMLXSpec``
