@@ -13,6 +13,22 @@
 
 namespace margelo::nitro::rnmlx::bridge::swift {
 
+  // pragma MARK: std::function<void()>
+  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNMLX::Func_void::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)]() mutable -> void {
+      swiftClosure.call();
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
+  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNMLX::Func_void_std__exception_ptr::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::exception_ptr& error) mutable -> void {
+      swiftClosure.call(error);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>
   std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec> create_std__shared_ptr_margelo__nitro__rnmlx__HybridMLXSpec_(void* _Nonnull swiftUnsafePointer) {
     RNMLX::HybridMLXSpec_cxx swiftPart = RNMLX::HybridMLXSpec_cxx::fromUnsafe(swiftUnsafePointer);
