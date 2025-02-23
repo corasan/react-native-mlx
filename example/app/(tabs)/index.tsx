@@ -1,19 +1,49 @@
 import EditScreenInfo from '@/components/EditScreenInfo'
 import { Text, View } from '@/components/Themed'
-import { StyleSheet } from 'react-native'
+import { useEffect, useState } from 'react'
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { MLX } from 'react-native-mlx'
 
 export default function TabOneScreen() {
-  console.log(MLX.sum(28_432.76, 343_5483))
+  const [modelLoaded, setModelLoaded] = useState(false)
+  const [prompt, setPrompt] = useState('')
+
+  useEffect(() => {
+    const loadModel = async () => {
+      await MLX.load('llama-3.1b-instruct-4bit')
+      setModelLoaded(true)
+    }
+    loadModel()
+  }, [])
+
+  console.log(MLX.state)
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      {modelLoaded && (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 10,
+            backgroundColor: '#c4c4c62f',
+            borderRadius: 10,
+          }}
+        >
+          <TextInput
+            value={prompt}
+            onChangeText={setPrompt}
+            placeholder="Enter your prompt"
+            style={{
+              flex: 1,
+            }}
+          />
+          <TouchableOpacity onPress={() => MLX.generate(prompt)}>
+            <Text>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   )
 }
@@ -23,6 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 20,
