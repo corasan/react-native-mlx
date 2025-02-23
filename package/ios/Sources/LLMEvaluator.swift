@@ -108,7 +108,7 @@ class LLMEvaluator {
                         messages: [
                             ["role": "system", "content": "You are a helpful assistant."],
                             ["role": "user", "content": prompt],
-                        ], tools: includeWeatherTool ? [currentWeatherToolSpec] : nil))
+                        ]))
                 return try MLXLMCommon.generate(
                     input: input, parameters: generateParameters, context: context
                 ) { tokens in
