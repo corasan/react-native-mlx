@@ -11,7 +11,7 @@ internal import MLX
 public protocol RNMLXDelegate: AnyObject {
     func modelLoadingProgress(progress: Double, file: String)
     func modelGenerationProgress(text: String, tokensPerSecond: Double)
-    func modelStateChanged(state: MLXState)
+    func modelStateChanged(state: ModelState)
     func modelError(_ error: Error)
 }
 
