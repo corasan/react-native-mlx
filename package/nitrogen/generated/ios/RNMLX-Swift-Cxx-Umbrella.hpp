@@ -12,10 +12,13 @@
 namespace margelo::nitro::rnmlx { class HybridMLXSpec; }
 // Forward declaration of `ModelState` to properly resolve imports.
 namespace margelo::nitro::rnmlx { struct ModelState; }
+// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
+namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
 
 // Include C++ defined types
 #include "HybridMLXSpec.hpp"
 #include "ModelState.hpp"
+#include "RNMLXEventTypes.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>

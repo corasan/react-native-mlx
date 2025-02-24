@@ -1,2 +1,4 @@
 import { NitroModules } from 'react-native-nitro-modules';
-export const MLX = NitroModules.createHybridObject('MLX');
+const MLXBase = NitroModules.createHybridObject('MLX');
+// Export the type-safe instance
+export const MLX = MLXBase;

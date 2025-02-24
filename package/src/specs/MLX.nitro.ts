@@ -5,8 +5,8 @@ export interface MLX extends HybridObject<{ ios: 'swift' }> {
   // Methods
   load(modelId: string): Promise<void>
   generate(prompt: string): Promise<void>
-  addEventListener(eventType: string, listener: (payload: EventPayloadMap[keyof typeof RNMLXEventTypes]) => void): string
-  removeEventListener(eventType: string, listenerId: string): void
+  addEventListener(eventType: RNMLXEventTypes, listener: (payload: EventPayloadMap[keyof typeof RNMLXEventTypes]) => void): string
+  removeEventListener(eventType: RNMLXEventTypes): void
 
   // Properties
   response: string

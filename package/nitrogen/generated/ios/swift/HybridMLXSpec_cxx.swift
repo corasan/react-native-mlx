@@ -203,9 +203,9 @@ public class HybridMLXSpec_cxx {
   }
   
   @inline(__always)
-  public final func addEventListener(eventType: std.string, listener: bridge.Func_void_std__variant_std__string__double__ModelState_) -> bridge.Result_std__string_ {
+  public final func addEventListener(eventType: Int32, listener: bridge.Func_void_std__variant_std__string__double__ModelState_) -> bridge.Result_std__string_ {
     do {
-      let __result = try self.__implementation.addEventListener(eventType: String(eventType), listener: { () -> (Variant_String_Double_ModelState) -> Void in
+      let __result = try self.__implementation.addEventListener(eventType: margelo.nitro.rnmlx.RNMLXEventTypes(rawValue: eventType)!, listener: { () -> (Variant_String_Double_ModelState) -> Void in
         let __wrappedFunction = bridge.wrap_Func_void_std__variant_std__string__double__ModelState_(listener)
         return { (__payload: Variant_String_Double_ModelState) -> Void in
           __wrappedFunction.call({ () -> bridge.std__variant_std__string__double__ModelState_ in
@@ -229,9 +229,9 @@ public class HybridMLXSpec_cxx {
   }
   
   @inline(__always)
-  public final func removeEventListener(eventType: std.string, listenerId: std.string) -> bridge.Result_void_ {
+  public final func removeEventListener(eventType: Int32) -> bridge.Result_void_ {
     do {
-      try self.__implementation.removeEventListener(eventType: String(eventType), listenerId: String(listenerId))
+      try self.__implementation.removeEventListener(eventType: margelo.nitro.rnmlx.RNMLXEventTypes(rawValue: eventType)!)
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

@@ -15,10 +15,13 @@
 
 // Forward declaration of `ModelState` to properly resolve imports.
 namespace margelo::nitro::rnmlx { struct ModelState; }
+// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
+namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
 
 #include <string>
 #include "ModelState.hpp"
 #include <NitroModules/Promise.hpp>
+#include "RNMLXEventTypes.hpp"
 #include <functional>
 #include <variant>
 
@@ -66,8 +69,8 @@ namespace margelo::nitro::rnmlx {
       // Methods
       virtual std::shared_ptr<Promise<void>> load(const std::string& modelId) = 0;
       virtual std::shared_ptr<Promise<void>> generate(const std::string& prompt) = 0;
-      virtual std::string addEventListener(const std::string& eventType, const std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>& listener) = 0;
-      virtual void removeEventListener(const std::string& eventType, const std::string& listenerId) = 0;
+      virtual std::string addEventListener(RNMLXEventTypes eventType, const std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>& listener) = 0;
+      virtual void removeEventListener(RNMLXEventTypes eventType) = 0;
 
     protected:
       // Hybrid Setup
