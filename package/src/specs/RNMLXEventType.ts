@@ -1,11 +1,4 @@
-export interface ModelState {
-  isLoaded: boolean;
-  isGenerating: boolean;
-  modelId: string;
-  error?: string;
-  modelInfo: string;
-}
-
+// Keep the numeric enum and ensure it's strongly typed
 export enum RNMLXEventTypes {
   onTokenGeneration,
   onModelLoadProgress,
@@ -14,35 +7,21 @@ export enum RNMLXEventTypes {
   onGenerationComplete,
 }
 
-export interface TokenGenerationEvent {
-  type: RNMLXEventTypes;
-  text: string;
+export interface ModelState {
+  isLoaded: boolean;
+  isGenerating: boolean;
+  modelId: string;
+  error?: string;
+  modelInfo: string;
 }
 
-export interface ModelLoadProgressEvent {
-  type: RNMLXEventTypes;
-  progress: number;
-  file: string;
+// Event payload types
+export type EventPayloadMap = {
+  onTokenGeneration: string;
+  onModelLoadProgress: number;
+  onStateChange: ModelState;
+  onError: string;
+  onGenerationComplete: number;
 }
 
-export interface StateChangeEvent {
-  type: RNMLXEventTypes;
-  state: ModelState;
-}
-
-export interface ErrorEvent {
-  type: RNMLXEventTypes;
-  message: string;
-}
-
-export interface GenerationCompleteEvent {
-  type: RNMLXEventTypes;
-  tokensPerSecond: number;
-}
-
-export type RNMLXEventType =
-  | TokenGenerationEvent
-  | ModelLoadProgressEvent
-  | StateChangeEvent
-  | ErrorEvent
-  | GenerationCompleteEvent;
+export type EventTypes = keyof typeof RNMLXEventTypes;

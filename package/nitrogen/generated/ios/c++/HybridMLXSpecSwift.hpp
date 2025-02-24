@@ -14,31 +14,13 @@ namespace RNMLX { class HybridMLXSpec_cxx; }
 
 // Forward declaration of `ModelState` to properly resolve imports.
 namespace margelo::nitro::rnmlx { struct ModelState; }
-// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
-namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
-// Forward declaration of `TokenGenerationEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct TokenGenerationEvent; }
-// Forward declaration of `ModelLoadProgressEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct ModelLoadProgressEvent; }
-// Forward declaration of `StateChangeEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct StateChangeEvent; }
-// Forward declaration of `ErrorEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct ErrorEvent; }
-// Forward declaration of `GenerationCompleteEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct GenerationCompleteEvent; }
 
 #include <string>
 #include "ModelState.hpp"
 #include <optional>
 #include <NitroModules/Promise.hpp>
-#include "RNMLXEventTypes.hpp"
 #include <functional>
 #include <variant>
-#include "TokenGenerationEvent.hpp"
-#include "ModelLoadProgressEvent.hpp"
-#include "StateChangeEvent.hpp"
-#include "ErrorEvent.hpp"
-#include "GenerationCompleteEvent.hpp"
 
 #include "RNMLX-Swift-Cxx-Umbrella.hpp"
 
@@ -134,16 +116,16 @@ namespace margelo::nitro::rnmlx {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::string addEventListener(RNMLXEventTypes eventType, const std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>& listener) override {
-      auto __result = _swiftPart.addEventListener(static_cast<int>(eventType), listener);
+    inline std::string addEventListener(const std::string& eventType, const std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>& listener) override {
+      auto __result = _swiftPart.addEventListener(eventType, listener);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline void removeEventListener(RNMLXEventTypes eventType, const std::string& listenerId) override {
-      auto __result = _swiftPart.removeEventListener(static_cast<int>(eventType), listenerId);
+    inline void removeEventListener(const std::string& eventType, const std::string& listenerId) override {
+      auto __result = _swiftPart.removeEventListener(eventType, listenerId);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

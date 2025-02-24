@@ -21,8 +21,8 @@ public protocol HybridMLXSpec_protocol: HybridObject {
   // Methods
   func load(modelId: String) throws -> Promise<Void>
   func generate(prompt: String) throws -> Promise<Void>
-  func addEventListener(eventType: RNMLXEventTypes, listener: @escaping (_ event: Variant_TokenGenerationEvent_ModelLoadProgressEvent_StateChangeEvent_ErrorEvent_GenerationCompleteEvent) -> Void) throws -> String
-  func removeEventListener(eventType: RNMLXEventTypes, listenerId: String) throws -> Void
+  func addEventListener(eventType: String, listener: @escaping (_ payload: Variant_String_Double_ModelState) -> Void) throws -> String
+  func removeEventListener(eventType: String, listenerId: String) throws -> Void
 }
 
 /// See ``HybridMLXSpec``

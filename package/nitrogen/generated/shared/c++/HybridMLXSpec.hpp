@@ -15,30 +15,12 @@
 
 // Forward declaration of `ModelState` to properly resolve imports.
 namespace margelo::nitro::rnmlx { struct ModelState; }
-// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
-namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
-// Forward declaration of `TokenGenerationEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct TokenGenerationEvent; }
-// Forward declaration of `ModelLoadProgressEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct ModelLoadProgressEvent; }
-// Forward declaration of `StateChangeEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct StateChangeEvent; }
-// Forward declaration of `ErrorEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct ErrorEvent; }
-// Forward declaration of `GenerationCompleteEvent` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct GenerationCompleteEvent; }
 
 #include <string>
 #include "ModelState.hpp"
 #include <NitroModules/Promise.hpp>
-#include "RNMLXEventTypes.hpp"
 #include <functional>
 #include <variant>
-#include "TokenGenerationEvent.hpp"
-#include "ModelLoadProgressEvent.hpp"
-#include "StateChangeEvent.hpp"
-#include "ErrorEvent.hpp"
-#include "GenerationCompleteEvent.hpp"
 
 namespace margelo::nitro::rnmlx {
 
@@ -84,8 +66,8 @@ namespace margelo::nitro::rnmlx {
       // Methods
       virtual std::shared_ptr<Promise<void>> load(const std::string& modelId) = 0;
       virtual std::shared_ptr<Promise<void>> generate(const std::string& prompt) = 0;
-      virtual std::string addEventListener(RNMLXEventTypes eventType, const std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>& listener) = 0;
-      virtual void removeEventListener(RNMLXEventTypes eventType, const std::string& listenerId) = 0;
+      virtual std::string addEventListener(const std::string& eventType, const std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>& listener) = 0;
+      virtual void removeEventListener(const std::string& eventType, const std::string& listenerId) = 0;
 
     protected:
       // Hybrid Setup

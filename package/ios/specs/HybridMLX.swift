@@ -1,7 +1,7 @@
 import Foundation
 import NitroModules
 
-typealias EventTypes = Variant_TokenGenerationEvent_ModelLoadProgressEvent_StateChangeEvent_ErrorEvent_GenerationCompleteEvent
+typealias EventTypes = Variant_String_Double_ModelState
 
 @MainActor
 class HybridMLX: HybridMLXSpec {
