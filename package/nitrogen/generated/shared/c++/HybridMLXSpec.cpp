@@ -14,8 +14,8 @@ namespace margelo::nitro::rnmlx {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridGetter("output", &HybridMLXSpec::getOutput);
-      prototype.registerHybridSetter("output", &HybridMLXSpec::setOutput);
+      prototype.registerHybridGetter("response", &HybridMLXSpec::getResponse);
+      prototype.registerHybridSetter("response", &HybridMLXSpec::setResponse);
       prototype.registerHybridGetter("tokensPerSecond", &HybridMLXSpec::getTokensPerSecond);
       prototype.registerHybridSetter("tokensPerSecond", &HybridMLXSpec::setTokensPerSecond);
       prototype.registerHybridGetter("downloadProgress", &HybridMLXSpec::getDownloadProgress);
@@ -28,7 +28,8 @@ namespace margelo::nitro::rnmlx {
       prototype.registerHybridSetter("state", &HybridMLXSpec::setState);
       prototype.registerHybridMethod("load", &HybridMLXSpec::load);
       prototype.registerHybridMethod("generate", &HybridMLXSpec::generate);
-      prototype.registerHybridMethod("listenToTokenGeneration", &HybridMLXSpec::listenToTokenGeneration);
+      prototype.registerHybridMethod("addEventListener", &HybridMLXSpec::addEventListener);
+      prototype.registerHybridMethod("removeEventListener", &HybridMLXSpec::removeEventListener);
     });
   }
 

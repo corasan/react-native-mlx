@@ -11,7 +11,7 @@ import NitroModules
 /// See ``HybridMLXSpec``
 public protocol HybridMLXSpec_protocol: HybridObject {
   // Properties
-  var output: String { get set }
+  var response: String { get set }
   var tokensPerSecond: Double { get set }
   var downloadProgress: Double { get set }
   var currentFile: String { get set }
@@ -21,7 +21,8 @@ public protocol HybridMLXSpec_protocol: HybridObject {
   // Methods
   func load(modelId: String) throws -> Promise<Void>
   func generate(prompt: String) throws -> Promise<Void>
-  func listenToTokenGeneration(listener: @escaping (_ token: String) -> Void) throws -> Void
+  func addEventListener(eventType: RNMLXEventTypes, listener: @escaping (_ event: Variant_TokenGenerationEvent_ModelLoadProgressEvent_StateChangeEvent_ErrorEvent_GenerationCompleteEvent) -> Void) throws -> String
+  func removeEventListener(eventType: RNMLXEventTypes, listenerId: String) throws -> Void
 }
 
 /// See ``HybridMLXSpec``

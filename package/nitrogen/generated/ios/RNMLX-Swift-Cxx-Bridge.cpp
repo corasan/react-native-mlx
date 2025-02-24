@@ -29,11 +29,11 @@ namespace margelo::nitro::rnmlx::bridge::swift {
     };
   }
   
-  // pragma MARK: std::function<void(const std::string& /* token */)>
-  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) {
-    auto swiftClosure = RNMLX::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)](const std::string& token) mutable -> void {
-      swiftClosure.call(token);
+  // pragma MARK: std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>
+  Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ create_Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNMLX::Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& event) mutable -> void {
+      swiftClosure.call(event);
     };
   }
   

@@ -8,14 +8,32 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `ErrorEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ErrorEvent; }
+// Forward declaration of `GenerationCompleteEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct GenerationCompleteEvent; }
 // Forward declaration of `HybridMLXSpec` to properly resolve imports.
 namespace margelo::nitro::rnmlx { class HybridMLXSpec; }
+// Forward declaration of `ModelLoadProgressEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ModelLoadProgressEvent; }
 // Forward declaration of `ModelState` to properly resolve imports.
 namespace margelo::nitro::rnmlx { struct ModelState; }
+// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
+namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
+// Forward declaration of `StateChangeEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct StateChangeEvent; }
+// Forward declaration of `TokenGenerationEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct TokenGenerationEvent; }
 
 // Include C++ defined types
+#include "ErrorEvent.hpp"
+#include "GenerationCompleteEvent.hpp"
 #include "HybridMLXSpec.hpp"
+#include "ModelLoadProgressEvent.hpp"
 #include "ModelState.hpp"
+#include "RNMLXEventTypes.hpp"
+#include "StateChangeEvent.hpp"
+#include "TokenGenerationEvent.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
@@ -23,6 +41,7 @@ namespace margelo::nitro::rnmlx { struct ModelState; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <variant>
 
 // C++ helpers for Swift
 #include "RNMLX-Swift-Cxx-Bridge.hpp"

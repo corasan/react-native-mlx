@@ -14,12 +14,31 @@ namespace RNMLX { class HybridMLXSpec_cxx; }
 
 // Forward declaration of `ModelState` to properly resolve imports.
 namespace margelo::nitro::rnmlx { struct ModelState; }
+// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
+namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
+// Forward declaration of `TokenGenerationEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct TokenGenerationEvent; }
+// Forward declaration of `ModelLoadProgressEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ModelLoadProgressEvent; }
+// Forward declaration of `StateChangeEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct StateChangeEvent; }
+// Forward declaration of `ErrorEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ErrorEvent; }
+// Forward declaration of `GenerationCompleteEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct GenerationCompleteEvent; }
 
 #include <string>
 #include "ModelState.hpp"
 #include <optional>
 #include <NitroModules/Promise.hpp>
+#include "RNMLXEventTypes.hpp"
 #include <functional>
+#include <variant>
+#include "TokenGenerationEvent.hpp"
+#include "ModelLoadProgressEvent.hpp"
+#include "StateChangeEvent.hpp"
+#include "ErrorEvent.hpp"
+#include "GenerationCompleteEvent.hpp"
 
 #include "RNMLX-Swift-Cxx-Umbrella.hpp"
 
@@ -56,12 +75,12 @@ namespace margelo::nitro::rnmlx {
 
   public:
     // Properties
-    inline std::string getOutput() noexcept override {
-      auto __result = _swiftPart.getOutput();
+    inline std::string getResponse() noexcept override {
+      auto __result = _swiftPart.getResponse();
       return __result;
     }
-    inline void setOutput(const std::string& output) noexcept override {
-      _swiftPart.setOutput(output);
+    inline void setResponse(const std::string& response) noexcept override {
+      _swiftPart.setResponse(response);
     }
     inline double getTokensPerSecond() noexcept override {
       return _swiftPart.getTokensPerSecond();
@@ -115,8 +134,16 @@ namespace margelo::nitro::rnmlx {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline void listenToTokenGeneration(const std::function<void(const std::string& /* token */)>& listener) override {
-      auto __result = _swiftPart.listenToTokenGeneration(listener);
+    inline std::string addEventListener(RNMLXEventTypes eventType, const std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>& listener) override {
+      auto __result = _swiftPart.addEventListener(static_cast<int>(eventType), listener);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline void removeEventListener(RNMLXEventTypes eventType, const std::string& listenerId) override {
+      auto __result = _swiftPart.removeEventListener(static_cast<int>(eventType), listenerId);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

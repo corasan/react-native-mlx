@@ -8,15 +8,36 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `ErrorEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ErrorEvent; }
+// Forward declaration of `GenerationCompleteEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct GenerationCompleteEvent; }
 // Forward declaration of `HybridMLXSpec` to properly resolve imports.
 namespace margelo::nitro::rnmlx { class HybridMLXSpec; }
+// Forward declaration of `ModelLoadProgressEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ModelLoadProgressEvent; }
+// Forward declaration of `ModelState` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct ModelState; }
+// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
+namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
+// Forward declaration of `StateChangeEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct StateChangeEvent; }
+// Forward declaration of `TokenGenerationEvent` to properly resolve imports.
+namespace margelo::nitro::rnmlx { struct TokenGenerationEvent; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridMLXSpec_cxx` to properly resolve imports.
 namespace RNMLX { class HybridMLXSpec_cxx; }
 
 // Include C++ defined types
+#include "ErrorEvent.hpp"
+#include "GenerationCompleteEvent.hpp"
 #include "HybridMLXSpec.hpp"
+#include "ModelLoadProgressEvent.hpp"
+#include "ModelState.hpp"
+#include "RNMLXEventTypes.hpp"
+#include "StateChangeEvent.hpp"
+#include "TokenGenerationEvent.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
@@ -25,6 +46,7 @@ namespace RNMLX { class HybridMLXSpec_cxx; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <variant>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -97,26 +119,73 @@ namespace margelo::nitro::rnmlx::bridge::swift {
     return std::optional<std::string>(value);
   }
   
-  // pragma MARK: std::function<void(const std::string& /* token */)>
+  // pragma MARK: std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>
   /**
-   * Specialized version of `std::function<void(const std::string&)>`.
+   * Wrapper struct for `std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>`.
+   * std::variant cannot be used in Swift because of a Swift bug.
+   * Not even specializing it works. So we create a wrapper struct.
    */
-  using Func_void_std__string = std::function<void(const std::string& /* token */)>;
+  struct std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ {
+    std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent> variant;
+    std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent> variant): variant(variant) { }
+    operator std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>() const {
+      return variant;
+    }
+    inline size_t index() const {
+      return variant.index();
+    }
+    inline TokenGenerationEvent get_0() const {
+      return std::get<0>(variant);
+    }
+    inline ModelLoadProgressEvent get_1() const {
+      return std::get<1>(variant);
+    }
+    inline StateChangeEvent get_2() const {
+      return std::get<2>(variant);
+    }
+    inline ErrorEvent get_3() const {
+      return std::get<3>(variant);
+    }
+    inline GenerationCompleteEvent get_4() const {
+      return std::get<4>(variant);
+    }
+  };
+  inline std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ create_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(const TokenGenerationEvent& value) {
+    return std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(value);
+  }
+  inline std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ create_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(const ModelLoadProgressEvent& value) {
+    return std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(value);
+  }
+  inline std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ create_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(const StateChangeEvent& value) {
+    return std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(value);
+  }
+  inline std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ create_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(const ErrorEvent& value) {
+    return std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(value);
+  }
+  inline std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ create_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(const GenerationCompleteEvent& value) {
+    return std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(value);
+  }
+  
+  // pragma MARK: std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>
   /**
-   * Wrapper class for a `std::function<void(const std::string& / * token * /)>`, this can be used from Swift.
+   * Specialized version of `std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>&)>`.
    */
-  class Func_void_std__string_Wrapper final {
+  using Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ = std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& / * event * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent__Wrapper final {
   public:
-    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* token */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* token */)>>(std::move(func))) {}
-    inline void call(std::string token) const {
-      _function->operator()(token);
+    explicit Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent__Wrapper(std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>&& func): _function(std::make_shared<std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>>(std::move(func))) {}
+    inline void call(std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent> event) const {
+      _function->operator()(event);
     }
   private:
-    std::shared_ptr<std::function<void(const std::string& /* token */)>> _function;
+    std::shared_ptr<std::function<void(const std::variant<TokenGenerationEvent, ModelLoadProgressEvent, StateChangeEvent, ErrorEvent, GenerationCompleteEvent>& /* event */)>> _function;
   };
-  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
-    return Func_void_std__string_Wrapper(std::move(value));
+  Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ create_Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent__Wrapper wrap_Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_(Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent_ value) {
+    return Func_void_std__variant_TokenGenerationEvent__ModelLoadProgressEvent__StateChangeEvent__ErrorEvent__GenerationCompleteEvent__Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>
@@ -138,6 +207,15 @@ namespace margelo::nitro::rnmlx::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_void___ create_Result_std__shared_ptr_Promise_void___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<void>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::string>
+  using Result_std__string_ = Result<std::string>;
+  inline Result_std__string_ create_Result_std__string_(const std::string& value) {
+    return Result<std::string>::withValue(value);
+  }
+  inline Result_std__string_ create_Result_std__string_(const std::exception_ptr& error) {
+    return Result<std::string>::withError(error);
   }
   
   // pragma MARK: Result<void>
