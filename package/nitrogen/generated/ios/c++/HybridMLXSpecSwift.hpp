@@ -16,6 +16,8 @@ namespace RNMLX { class HybridMLXSpec_cxx; }
 namespace margelo::nitro::rnmlx { struct ModelState; }
 // Forward declaration of `RNMLXEventTypes` to properly resolve imports.
 namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 
 #include <string>
 #include "ModelState.hpp"
@@ -23,7 +25,7 @@ namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
 #include <NitroModules/Promise.hpp>
 #include "RNMLXEventTypes.hpp"
 #include <functional>
-#include <variant>
+#include <NitroModules/AnyMap.hpp>
 
 #include "RNMLX-Swift-Cxx-Umbrella.hpp"
 
@@ -119,7 +121,7 @@ namespace margelo::nitro::rnmlx {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::string addEventListener(RNMLXEventTypes eventType, const std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>& listener) override {
+    inline std::string addEventListener(RNMLXEventTypes eventType, const std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>& listener) override {
       auto __result = _swiftPart.addEventListener(static_cast<int>(eventType), listener);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
@@ -127,8 +129,8 @@ namespace margelo::nitro::rnmlx {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline void removeEventListener(RNMLXEventTypes eventType) override {
-      auto __result = _swiftPart.removeEventListener(static_cast<int>(eventType));
+    inline void removeEventListener(const std::string& listenerId) override {
+      auto __result = _swiftPart.removeEventListener(listenerId);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

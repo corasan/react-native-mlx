@@ -1,18 +1,55 @@
 import { NitroModules } from 'react-native-nitro-modules';
 import type { MLX as MLXType } from './specs/MLX.nitro';
-import type { EventPayloadMap, EventTypes, ModelState } from './specs/RNMLXEventType';
+import { type EnhancedEventPayload, RNMLXEventTypes, type EventPayloadMap, type EventTypes, type ModelState } from './specs/RNMLXEventType';
 
-const MLXBase = NitroModules.createHybridObject('MLX') as MLXType;
+const MLXBase = NitroModules.createHybridObject<MLXType>('MLX');
 
-// Create a type-safe wrapper interface
-export interface TypedMLX extends Omit<MLXType, 'addEventListener'> {
-  addEventListener<T extends EventTypes>(
+const eventTypeToEnum: Record<string, number> = {
+  onTokenGeneration: RNMLXEventTypes.onTokenGeneration,
+  onModelLoadProgress: RNMLXEventTypes.onModelLoadProgress,
+  onStateChange: RNMLXEventTypes.onStateChange,
+  onError: RNMLXEventTypes.onError,
+  onGenerationComplete: RNMLXEventTypes.onGenerationComplete,
+};
+
+export class MLX {
+  static response = '';
+  static state: ModelState = { isGenerating: false, isLoaded: false, 'modelId': '', 'modelInfo': '' };
+
+  static async load(modelId: string) {
+    await MLXBase.load(modelId)
+  }
+
+  static async generate(prompt: string) {
+    return MLXBase.generate(prompt);
+  }
+
+  static addEventListener<T extends EventTypes>(
     eventType: T,
-    listener: (payload: EventPayloadMap[T]) => void
-  ): string;
-}
+    listener: (payload: EnhancedEventPayload[T]) => void
+  ): string {
+    const eventTypeString = String(eventType);
+    const enumValue = eventTypeToEnum[eventTypeString];
 
-// Export the type-safe instance
-export const MLX = MLXBase as TypedMLX;
+    if (enumValue === undefined) {
+      throw new Error(`Unknown event type: ${String(eventType)}`);
+    }
+
+    if (eventType === 'onTokenGeneration') {
+      return MLXBase.addEventListener(enumValue, (payload) => {
+        this.response = payload.text as any
+        listener(payload as any);
+      })
+    }
+    if (eventType === 'onStateChange') {
+      return MLXBase.addEventListener(enumValue, (payload) => {
+        this.state = payload.state as any
+        listener(payload as any);
+      })
+    }
+
+    return MLXBase.addEventListener(enumValue, listener as any);
+  }
+}
 
 export type { EventTypes, ModelState };

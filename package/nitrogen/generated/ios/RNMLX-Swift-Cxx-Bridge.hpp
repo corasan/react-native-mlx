@@ -8,10 +8,10 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 // Forward declaration of `HybridMLXSpec` to properly resolve imports.
 namespace margelo::nitro::rnmlx { class HybridMLXSpec; }
-// Forward declaration of `ModelState` to properly resolve imports.
-namespace margelo::nitro::rnmlx { struct ModelState; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridMLXSpec_cxx` to properly resolve imports.
@@ -19,7 +19,7 @@ namespace RNMLX { class HybridMLXSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridMLXSpec.hpp"
-#include "ModelState.hpp"
+#include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
@@ -28,7 +28,6 @@ namespace RNMLX { class HybridMLXSpec_cxx; }
 #include <memory>
 #include <optional>
 #include <string>
-#include <variant>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -92,6 +91,28 @@ namespace margelo::nitro::rnmlx::bridge::swift {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
+  // pragma MARK: std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>
+  /**
+   * Specialized version of `std::function<void(const std::shared_ptr<AnyMap>&)>`.
+   */
+  using Func_void_std__shared_ptr_AnyMap_ = std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::shared_ptr<AnyMap>& / * payload * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__shared_ptr_AnyMap__Wrapper final {
+  public:
+    explicit Func_void_std__shared_ptr_AnyMap__Wrapper(std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>>(std::move(func))) {}
+    inline void call(std::shared_ptr<AnyMap> payload) const {
+      _function->operator()(payload);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>> _function;
+  };
+  Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__shared_ptr_AnyMap__Wrapper wrap_Func_void_std__shared_ptr_AnyMap_(Func_void_std__shared_ptr_AnyMap_ value) {
+    return Func_void_std__shared_ptr_AnyMap__Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::optional<std::string>
   /**
    * Specialized version of `std::optional<std::string>`.
@@ -99,63 +120,6 @@ namespace margelo::nitro::rnmlx::bridge::swift {
   using std__optional_std__string_ = std::optional<std::string>;
   inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
     return std::optional<std::string>(value);
-  }
-  
-  // pragma MARK: std::variant<std::string, double, ModelState>
-  /**
-   * Wrapper struct for `std::variant<std::string, double, ModelState>`.
-   * std::variant cannot be used in Swift because of a Swift bug.
-   * Not even specializing it works. So we create a wrapper struct.
-   */
-  struct std__variant_std__string__double__ModelState_ {
-    std::variant<std::string, double, ModelState> variant;
-    std__variant_std__string__double__ModelState_(std::variant<std::string, double, ModelState> variant): variant(variant) { }
-    operator std::variant<std::string, double, ModelState>() const {
-      return variant;
-    }
-    inline size_t index() const {
-      return variant.index();
-    }
-    inline std::string get_0() const {
-      return std::get<0>(variant);
-    }
-    inline double get_1() const {
-      return std::get<1>(variant);
-    }
-    inline ModelState get_2() const {
-      return std::get<2>(variant);
-    }
-  };
-  inline std__variant_std__string__double__ModelState_ create_std__variant_std__string__double__ModelState_(const std::string& value) {
-    return std__variant_std__string__double__ModelState_(value);
-  }
-  inline std__variant_std__string__double__ModelState_ create_std__variant_std__string__double__ModelState_(double value) {
-    return std__variant_std__string__double__ModelState_(value);
-  }
-  inline std__variant_std__string__double__ModelState_ create_std__variant_std__string__double__ModelState_(const ModelState& value) {
-    return std__variant_std__string__double__ModelState_(value);
-  }
-  
-  // pragma MARK: std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>
-  /**
-   * Specialized version of `std::function<void(const std::variant<std::string, double, ModelState>&)>`.
-   */
-  using Func_void_std__variant_std__string__double__ModelState_ = std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>;
-  /**
-   * Wrapper class for a `std::function<void(const std::variant<std::string, double, ModelState>& / * payload * /)>`, this can be used from Swift.
-   */
-  class Func_void_std__variant_std__string__double__ModelState__Wrapper final {
-  public:
-    explicit Func_void_std__variant_std__string__double__ModelState__Wrapper(std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>&& func): _function(std::make_shared<std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>>(std::move(func))) {}
-    inline void call(std::variant<std::string, double, ModelState> payload) const {
-      _function->operator()(payload);
-    }
-  private:
-    std::shared_ptr<std::function<void(const std::variant<std::string, double, ModelState>& /* payload */)>> _function;
-  };
-  Func_void_std__variant_std__string__double__ModelState_ create_Func_void_std__variant_std__string__double__ModelState_(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__variant_std__string__double__ModelState__Wrapper wrap_Func_void_std__variant_std__string__double__ModelState_(Func_void_std__variant_std__string__double__ModelState_ value) {
-    return Func_void_std__variant_std__string__double__ModelState__Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>

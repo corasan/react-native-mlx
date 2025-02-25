@@ -203,21 +203,12 @@ public class HybridMLXSpec_cxx {
   }
   
   @inline(__always)
-  public final func addEventListener(eventType: Int32, listener: bridge.Func_void_std__variant_std__string__double__ModelState_) -> bridge.Result_std__string_ {
+  public final func addEventListener(eventType: Int32, listener: bridge.Func_void_std__shared_ptr_AnyMap_) -> bridge.Result_std__string_ {
     do {
-      let __result = try self.__implementation.addEventListener(eventType: margelo.nitro.rnmlx.RNMLXEventTypes(rawValue: eventType)!, listener: { () -> (Variant_String_Double_ModelState) -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void_std__variant_std__string__double__ModelState_(listener)
-        return { (__payload: Variant_String_Double_ModelState) -> Void in
-          __wrappedFunction.call({ () -> bridge.std__variant_std__string__double__ModelState_ in
-            switch __payload {
-              case .someString(let __value):
-                return bridge.create_std__variant_std__string__double__ModelState_(std.string(__value))
-              case .someDouble(let __value):
-                return bridge.create_std__variant_std__string__double__ModelState_(__value)
-              case .someModelState(let __value):
-                return bridge.create_std__variant_std__string__double__ModelState_(__value)
-            }
-          }())
+      let __result = try self.__implementation.addEventListener(eventType: margelo.nitro.rnmlx.RNMLXEventTypes(rawValue: eventType)!, listener: { () -> (AnyMapHolder) -> Void in
+        let __wrappedFunction = bridge.wrap_Func_void_std__shared_ptr_AnyMap_(listener)
+        return { (__payload: AnyMapHolder) -> Void in
+          __wrappedFunction.call(__payload.cppPart)
         }
       }())
       let __resultCpp = std.string(__result)
@@ -229,9 +220,9 @@ public class HybridMLXSpec_cxx {
   }
   
   @inline(__always)
-  public final func removeEventListener(eventType: Int32) -> bridge.Result_void_ {
+  public final func removeEventListener(listenerId: std.string) -> bridge.Result_void_ {
     do {
-      try self.__implementation.removeEventListener(eventType: margelo.nitro.rnmlx.RNMLXEventTypes(rawValue: eventType)!)
+      try self.__implementation.removeEventListener(listenerId: String(listenerId))
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

@@ -54,14 +54,35 @@ export default function TabOneScreen() {
   useEffect(() => {
     const loadModel = async () => {
       await MLX.load('llama-3.1b-instruct-4bit')
+
       setModelLoaded(true)
     }
     loadModel()
+    MLX.addEventListener('onTokenGeneration', payload => {
+      setTokens(prevTokens => [...prevTokens, payload.text])
+    })
 
-    MLX.addEventListener('onTokenGeneration', token => {
-      setTokens(prevTokens => [...prevTokens, token])
+    MLX.addEventListener('onStateChange', payload => {
+      console.log('onStateChange', payload)
+      if (!payload || !payload.state) return
+      if (payload.state?.isGenerating) {
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { id: Crypto.randomUUID(), content: '...', isUser: false },
+        ])
+      }
     })
   }, [])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: need
+  useEffect(() => {
+    if (MLX.response && !MLX.state?.isGenerating) {
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { id: Crypto.randomUUID(), content: MLX.response.trim(), isUser: false },
+      ])
+    }
+  }, [MLX.state?.isGenerating, MLX.response])
 
   return (
     <>
@@ -71,14 +92,23 @@ export default function TabOneScreen() {
         estimatedItemSize={40}
         renderItem={({ item }) => <MessageItem key={item.id} {...item} />}
         alignItemsAtEnd
-        ListFooterComponent={() => (
-          <MessageItem
-            id={Crypto.randomUUID()}
-            content={tokens.join('').trim()}
-            isUser={false}
-          />
-        )}
+        // ListFooterComponent={() => {
+        //   return (
+        //     <MessageItem
+        //       id={Crypto.randomUUID()}
+        //       content={MLX.response.trim()}
+        //       isUser={false}
+        //     />
+        //   )
+        // }}
       />
+      {MLX.state?.isGenerating && (
+        <MessageItem
+          id={Crypto.randomUUID()}
+          content={MLX.response.trim()}
+          isUser={false}
+        />
+      )}
       {modelLoaded && (
         <View
           style={{
@@ -102,6 +132,7 @@ export default function TabOneScreen() {
               flex: 1,
               fontSize: 18,
               padding: 10,
+              color: textColor,
             }}
           />
           <TouchableOpacity onPress={sendPrompt}>

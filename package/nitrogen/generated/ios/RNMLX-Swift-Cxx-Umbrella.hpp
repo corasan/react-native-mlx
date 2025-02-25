@@ -8,6 +8,8 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 // Forward declaration of `HybridMLXSpec` to properly resolve imports.
 namespace margelo::nitro::rnmlx { class HybridMLXSpec; }
 // Forward declaration of `ModelState` to properly resolve imports.
@@ -19,6 +21,7 @@ namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
 #include "HybridMLXSpec.hpp"
 #include "ModelState.hpp"
 #include "RNMLXEventTypes.hpp"
+#include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
@@ -26,7 +29,6 @@ namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
 #include <memory>
 #include <optional>
 #include <string>
-#include <variant>
 
 // C++ helpers for Swift
 #include "RNMLX-Swift-Cxx-Bridge.hpp"
