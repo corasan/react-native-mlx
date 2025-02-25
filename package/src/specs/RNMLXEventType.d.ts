@@ -19,4 +19,29 @@ export type EventPayloadMap = {
     onError: string;
     onGenerationComplete: number;
 };
+export type EnhancedEventPayload = {
+    onTokenGeneration: {
+        text: string;
+        type: 'onTokenGeneration';
+    };
+    onModelLoadProgress: {
+        progress: number;
+        type: 'onModelLoadProgress';
+    };
+    onStateChange: {
+        state: ModelState;
+        type: 'onStateChange';
+    };
+    onError: {
+        error: string;
+        type: 'onError';
+    };
+    onGenerationComplete: {
+        tokensPerSecond: number;
+        type: 'onGenerationComplete';
+    };
+};
+export interface EventPayload {
+    [key: string]: any;
+}
 export type EventTypes = keyof typeof RNMLXEventTypes;
