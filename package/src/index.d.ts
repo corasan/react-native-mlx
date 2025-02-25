@@ -1,7 +1,12 @@
-import type { MLX as MLXType } from './specs/MLX.nitro';
-import type { EventPayloadMap, EventTypes, ModelState } from './specs/RNMLXEventType';
-export interface TypedMLX extends Omit<MLXType, 'addEventListener'> {
-    addEventListener<T extends EventTypes>(eventType: T, listener: (payload: EventPayloadMap[T]) => void): string;
+import { type EnhancedEventPayload, type EventTypes, type ModelState } from './specs/RNMLXEventType';
+export declare class MLXDefault {
+    response: string;
+    isGenerating: boolean;
+    state: ModelState;
+    constructor();
+    load(modelId: string): Promise<void>;
+    generate(prompt: string): Promise<void>;
+    addEventListener<T extends EventTypes>(eventType: T, listener: (payload: EnhancedEventPayload[T]) => void): string;
 }
-export declare const MLX: TypedMLX;
+export declare const MLX: MLXDefault;
 export type { EventTypes, ModelState };

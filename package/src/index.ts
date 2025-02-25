@@ -1,6 +1,6 @@
 import { NitroModules } from 'react-native-nitro-modules';
 import type { MLX as MLXType } from './specs/MLX.nitro';
-import { type EnhancedEventPayload, RNMLXEventTypes, type EventPayloadMap, type EventTypes, type ModelState } from './specs/RNMLXEventType';
+import { type EnhancedEventPayload, RNMLXEventTypes, type EventTypes, type ModelState } from './specs/RNMLXEventType';
 
 const MLXBase = NitroModules.createHybridObject<MLXType>('MLX');
 
@@ -13,18 +13,18 @@ const eventTypeToEnum: Record<string, number> = {
 };
 
 export class MLX {
-  static response = '';
-  static state: ModelState = { isGenerating: false, isLoaded: false, 'modelId': '', 'modelInfo': '' };
+  response = '';
+  state: ModelState = { isGenerating: false, isLoaded: false, 'modelId': '', 'modelInfo': '' };
 
-  static async load(modelId: string) {
+  async load(modelId: string) {
     await MLXBase.load(modelId)
   }
 
-  static async generate(prompt: string) {
+  async generate(prompt: string) {
     return MLXBase.generate(prompt);
   }
 
-  static addEventListener<T extends EventTypes>(
+  addEventListener<T extends EventTypes>(
     eventType: T,
     listener: (payload: EnhancedEventPayload[T]) => void
   ): string {
@@ -51,5 +51,7 @@ export class MLX {
     return MLXBase.addEventListener(enumValue, listener as any);
   }
 }
+
+export const llm = new MLX()
 
 export type { EventTypes, ModelState };

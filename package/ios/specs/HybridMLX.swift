@@ -70,18 +70,14 @@ class HybridMLX: HybridMLXSpec {
         }
 
         self.llm.generationHandler = { [weak self] text, tokensPerSecond in
-            print("generationHandler -> setting generation handler")
 
             Task { @MainActor in
-                print("generationHandler -> setting progress handler")
-
                 guard let self = self else { return }
-                print("generationHandler -> setting progress handler")
-
                 if tokensPerSecond > 0 {
                     self.tokensPerSecond = tokensPerSecond
                     self.emitGenerationCompleteEvent(tokensPerSecond: tokensPerSecond)
                 } else {
+                    print(text)
                     self.response = text
                     self.emitTokenGenerationEvent(text: text)
                 }
