@@ -74,10 +74,6 @@ export default function TabOneScreen() {
 
     const tokenListener = llm.addEventListener('onTokenGeneration', payload => {
       setTokens(payload.text)
-      // Force scroll to bottom on token generation
-      // InteractionManager.runAfterInteractions(() => {
-      //   listRef.current?.scrollToEnd({ animated: false })
-      // })
     })
 
     const stateListener = llm.addEventListener('onStateChange', payload => {
