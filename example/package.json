@@ -27,6 +27,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.7",
+    "react-native-keyboard-controller": "^1.16.5",
     "react-native-mlx": "*",
     "react-native-nitro-modules": "^0.22.1",
     "react-native-reanimated": "~3.16.1",
