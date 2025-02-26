@@ -15,6 +15,8 @@ const eventTypeToEnum: Record<string, number> = {
 export class MLX {
   response = '';
   state: ModelState = { isGenerating: false, isLoaded: false, 'modelId': '', 'modelInfo': '' };
+  isGenerating = false;
+  isLoaded = false;
 
   async load(modelId: string) {
     await MLXBase.load(modelId)
@@ -42,13 +44,19 @@ export class MLX {
       })
     }
     if (eventType === 'onStateChange') {
-      return MLXBase.addEventListener(enumValue, (payload) => {
-        this.state = payload.state as any
+      return MLXBase.addEventListener(enumValue, (payload: any) => {
+        this.state = payload
+        this.isGenerating = payload.isGenerating;
+        this.isLoaded = payload.isLoaded;
         listener(payload as any);
       })
     }
 
     return MLXBase.addEventListener(enumValue, listener as any);
+  }
+
+  removeEventListener(listenerId: string) {
+    MLXBase.removeEventListener(listenerId);
   }
 }
 

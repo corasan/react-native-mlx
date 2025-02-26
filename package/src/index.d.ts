@@ -1,12 +1,13 @@
 import { type EnhancedEventPayload, type EventTypes, type ModelState } from './specs/RNMLXEventType';
-export declare class MLXDefault {
+export declare class MLX {
     response: string;
-    isGenerating: boolean;
     state: ModelState;
-    constructor();
+    isGenerating: boolean;
+    isLoaded: boolean;
     load(modelId: string): Promise<void>;
     generate(prompt: string): Promise<void>;
     addEventListener<T extends EventTypes>(eventType: T, listener: (payload: EnhancedEventPayload[T]) => void): string;
+    removeEventListener(listenerId: string): void;
 }
-export declare const MLX: MLXDefault;
+export declare const llm: MLX;
 export type { EventTypes, ModelState };

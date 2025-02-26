@@ -8,19 +8,11 @@ const eventTypeToEnum = {
     onError: RNMLXEventTypes.onError,
     onGenerationComplete: RNMLXEventTypes.onGenerationComplete,
 };
-export class MLXDefault {
+export class MLX {
     response = '';
-    isGenerating = false;
     state = { isGenerating: false, isLoaded: false, 'modelId': '', 'modelInfo': '' };
-    constructor() {
-        this.addEventListener('onTokenGeneration', (payload) => {
-            this.response = payload.text;
-        });
-        this.addEventListener('onStateChange', (payload) => {
-            this.state = payload.state;
-            this.isGenerating = payload.state.isGenerating;
-        });
-    }
+    isGenerating = false;
+    isLoaded = false;
     async load(modelId) {
         await MLXBase.load(modelId);
     }
@@ -33,17 +25,24 @@ export class MLXDefault {
         if (enumValue === undefined) {
             throw new Error(`Unknown event type: ${String(eventType)}`);
         }
-        // if (eventType === 'onTokenGeneration') {
-        //   return MLXBase.addEventListener(enumValue, (payload) => {
-        //     listener(payload as any);
-        //   })
-        // }
-        // if (eventType === 'onStateChange') {
-        //   return MLXBase.addEventListener(enumValue, (payload) => {
-        //     listener(payload as any);
-        //   })
-        // }
+        if (eventType === 'onTokenGeneration') {
+            return MLXBase.addEventListener(enumValue, (payload) => {
+                this.response = payload.text;
+                listener(payload);
+            });
+        }
+        if (eventType === 'onStateChange') {
+            return MLXBase.addEventListener(enumValue, (payload) => {
+                this.state = payload;
+                this.isGenerating = payload.isGenerating;
+                this.isLoaded = payload.isLoaded;
+                listener(payload);
+            });
+        }
         return MLXBase.addEventListener(enumValue, listener);
     }
+    removeEventListener(listenerId) {
+        MLXBase.removeEventListener(listenerId);
+    }
 }
-export const MLX = new MLXDefault();
+export const llm = new MLX();

@@ -28,8 +28,7 @@ export type EnhancedEventPayload = {
         progress: number;
         type: 'onModelLoadProgress';
     };
-    onStateChange: {
-        state: ModelState;
+    onStateChange: ModelState & {
         type: 'onStateChange';
     };
     onError: {
