@@ -1,15 +1,19 @@
 import { Text, View } from '@/components/Themed'
-import { LegendList } from '@legendapp/list'
+import { LegendList, type LegendListRef } from '@legendapp/list'
 import * as Crypto from 'expo-crypto'
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
-  ScrollView,
+  InteractionManager,
+  Platform,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   useColorScheme,
 } from 'react-native'
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
 import { MLX } from 'react-native-mlx'
+import type { FlatList } from 'react-native-reanimated/lib/typescript/Animated'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 type Message = {
   id: string
@@ -24,154 +28,179 @@ const MessageItem = ({ id, content, isUser }: Message) => {
   if (isUser) {
     return (
       <View style={styles.userMessage}>
-        <Text style={{ color: textColor }}>{content}</Text>
+        <Text style={[styles.messageText, { color: textColor }]}>{content}</Text>
       </View>
     )
   }
   return (
     <View style={styles.message}>
-      <Text style={{ color: textColor }}>{content}</Text>
+      <Text style={[styles.messageText, { color: textColor }]}>{content}</Text>
     </View>
   )
 }
 
+const llm = new MLX()
+
 export default function TabOneScreen() {
   const [modelLoaded, setModelLoaded] = useState(false)
-  const [prompt, setPrompt] = useState('')
-  const [tokens, setTokens] = useState<string[]>([])
+  const [prompt, setPrompt] = useState('Why is the sky blue?')
+  const [tokens, setTokens] = useState<string>('')
   const colorScheme = useColorScheme()
   const textColor = colorScheme === 'dark' ? 'white' : 'black'
+  const bgColor = colorScheme === 'dark' ? 'black' : 'white'
   const [messages, setMessages] = useState<Message[]>([])
+  const [, setIsGenerating] = useState(false)
+  const [disableScrollOnSizeChange, setDisableScrollOnSizeChange] = useState(false)
+  const listRef = useRef<LegendListRef>(null)
 
   const sendPrompt = async () => {
     if (!modelLoaded) return
     const id = Crypto.randomUUID()
     const message = { id, content: prompt, isUser: true }
     setMessages(prevMessages => [...prevMessages, message])
-    await MLX.generate(prompt)
+    await llm.generate(prompt)
   }
 
   useEffect(() => {
     const loadModel = async () => {
-      await MLX.load('llama-3.1b-instruct-4bit')
+      await llm.load('llama-3.1b-instruct-4bit')
 
       setModelLoaded(true)
     }
     loadModel()
-    MLX.addEventListener('onTokenGeneration', payload => {
-      setTokens(prevTokens => [...prevTokens, payload.text])
+
+    const tokenListener = llm.addEventListener('onTokenGeneration', payload => {
+      setTokens(payload.text)
+      // Force scroll to bottom on token generation
+      // InteractionManager.runAfterInteractions(() => {
+      //   listRef.current?.scrollToEnd({ animated: false })
+      // })
     })
 
-    MLX.addEventListener('onStateChange', payload => {
-      console.log('onStateChange', payload)
-      if (!payload || !payload.state) return
-      if (payload.state?.isGenerating) {
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { id: Crypto.randomUUID(), content: '...', isUser: false },
-        ])
-      }
+    const stateListener = llm.addEventListener('onStateChange', payload => {
+      setIsGenerating(payload.isGenerating)
     })
+
+    return () => {
+      llm.removeEventListener(tokenListener)
+      llm.removeEventListener(stateListener)
+    }
   }, [])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: need
   useEffect(() => {
-    if (MLX.response && !MLX.state?.isGenerating) {
+    if (llm.response && !llm.isGenerating) {
       setMessages(prevMessages => [
         ...prevMessages,
-        { id: Crypto.randomUUID(), content: MLX.response.trim(), isUser: false },
+        { id: Crypto.randomUUID(), content: llm.response.trim(), isUser: false },
       ])
     }
-  }, [MLX.state?.isGenerating, MLX.response])
+  }, [llm.isGenerating, llm.response])
 
   return (
-    <>
-      <LegendList
-        data={messages}
-        keyExtractor={(i, k) => k.toString()}
-        estimatedItemSize={40}
-        renderItem={({ item }) => <MessageItem key={item.id} {...item} />}
-        alignItemsAtEnd
-        // ListFooterComponent={() => {
-        //   return (
-        //     <MessageItem
-        //       id={Crypto.randomUUID()}
-        //       content={MLX.response.trim()}
-        //       isUser={false}
-        //     />
-        //   )
-        // }}
-      />
-      {MLX.state?.isGenerating && (
-        <MessageItem
-          id={Crypto.randomUUID()}
-          content={MLX.response.trim()}
-          isUser={false}
-        />
-      )}
-      {modelLoaded && (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            backgroundColor: '#c4c4c62f',
-            borderRadius: 10,
-            width: '100%',
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: bgColor }]}
+      edges={['bottom']}
+    >
+      <KeyboardAvoidingView
+        style={[styles.container, { backgroundColor: bgColor }]}
+        behavior="padding"
+        keyboardVerticalOffset={Platform.select({ ios: 120, default: 95 })}
+      >
+        <LegendList
+          ref={listRef}
+          data={messages}
+          keyExtractor={(i, k) => k.toString()}
+          estimatedItemSize={100}
+          renderItem={({ item }) => <MessageItem key={item.id} {...item} />}
+          alignItemsAtEnd
+          maintainScrollAtEnd
+          maintainVisibleContentPosition
+          onContentSizeChange={() => {
+            if (llm.isGenerating) {
+              listRef?.current?.scrollToEnd({ animated: false })
+            }
           }}
-        >
-          <TextInput
-            value={prompt}
-            onChangeText={setPrompt}
-            placeholder="Enter your prompt"
+          onScrollBeginDrag={() => {
+            setDisableScrollOnSizeChange(true)
+          }}
+          onScrollEndDrag={() => {
+            setTimeout(() => {
+              setDisableScrollOnSizeChange(false)
+            }, 2_500)
+          }}
+          ListFooterComponent={() => {
+            if (!llm.isGenerating) return null
+            return (
+              <>
+                <MessageItem
+                  id={Crypto.randomUUID()}
+                  content={tokens.trim()}
+                  isUser={false}
+                />
+                <View style={{ height: 30 }} />
+              </>
+            )
+          }}
+        />
+
+        {modelLoaded && (
+          <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: '#c4c4c62f',
               borderRadius: 10,
-              flex: 1,
-              fontSize: 18,
-              padding: 10,
-              color: textColor,
+              width: '100%',
             }}
-          />
-          <TouchableOpacity onPress={sendPrompt}>
-            <Text
+          >
+            <TextInput
+              value={prompt}
+              onChangeText={setPrompt}
+              placeholder="Enter your prompt"
               style={{
-                color: 'black',
-                padding: 10,
-                backgroundColor: 'white',
-                borderTopRightRadius: 10,
-                borderBottomRightRadius: 10,
-                borderWidth: 1,
-                borderColor: '#c4c4c62f',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 10,
                 flex: 1,
+                fontSize: 18,
+                padding: 10,
+                color: textColor,
               }}
-            >
-              Submit
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </>
+            />
+            <TouchableOpacity onPress={sendPrompt}>
+              <Text
+                style={{
+                  color: 'black',
+                  padding: 10,
+                  backgroundColor: 'white',
+                  borderTopRightRadius: 10,
+                  borderBottomRightRadius: 10,
+                  borderWidth: 1,
+                  borderColor: '#c4c4c62f',
+                  flex: 1,
+                  fontSize: 16,
+                }}
+              >
+                Send
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
+    backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  messageText: {
+    fontSize: 16,
   },
   message: {
     padding: 18,
