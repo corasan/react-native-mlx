@@ -31,6 +31,7 @@
         "react": "18.3.1",
         "react-dom": "18.3.1",
         "react-native": "0.76.7",
+        "react-native-keyboard-controller": "^1.16.5",
         "react-native-mlx": "*",
         "react-native-nitro-modules": "^0.22.1",
         "react-native-reanimated": "~3.16.1",
@@ -1726,6 +1727,8 @@
     "react-native-helmet-async": ["react-native-helmet-async@2.0.4", "", { "dependencies": { "invariant": "^2.2.4", "react-fast-compare": "^3.2.2", "shallowequal": "^1.1.0" }, "peerDependencies": { "react": "^16.6.0 || ^17.0.0 || ^18.0.0" } }, "sha512-m3CkXWss6B1dd6mCMleLpzDCJJGGaHOLQsUzZv8kAASJmMfmVT4d2fx375iXKTRWT25ThBfae3dECuX5cq/8hg=="],
 
     "react-native-is-edge-to-edge": ["react-native-is-edge-to-edge@1.1.6", "", { "peerDependencies": { "react": ">=18.2.0", "react-native": ">=0.73.0" } }, "sha512-1pHnFTlBahins6UAajXUqeCOHew9l9C2C8tErnpGC3IyLJzvxD+TpYAixnCbrVS52f7+NvMttbiSI290XfwN0w=="],
+
+    "react-native-keyboard-controller": ["react-native-keyboard-controller@1.16.5", "", { "dependencies": { "react-native-is-edge-to-edge": "^1.1.6" }, "peerDependencies": { "react": "*", "react-native": "*", "react-native-reanimated": ">=3.0.0" } }, "sha512-YYiw6lETHIi+66z+n6Q1GeL9hrrlvniFuGTnWDUaTnMq4dOQAeBcbdSXLp371nbrWlrgkb+2HC84xihtRqrwzA=="],
 
     "react-native-mlx": ["react-native-mlx@workspace:package"],
 
