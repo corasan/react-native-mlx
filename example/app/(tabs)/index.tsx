@@ -52,11 +52,14 @@ export default function TabOneScreen() {
   const [, setIsGenerating] = useState(false)
   const [disableScrollOnSizeChange, setDisableScrollOnSizeChange] = useState(false)
   const listRef = useRef<LegendListRef>(null)
+  const inputRef = useRef<TextInput>(null)
 
   const sendPrompt = async () => {
     if (!modelLoaded) return
     const id = Crypto.randomUUID()
     const message = { id, content: prompt, isUser: true }
+    setPrompt('')
+    inputRef.current?.blur()
     setMessages(prevMessages => [...prevMessages, message])
     await llm.generate(prompt)
   }
@@ -159,6 +162,7 @@ export default function TabOneScreen() {
               value={prompt}
               onChangeText={setPrompt}
               placeholder="Enter your prompt"
+              ref={inputRef}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
