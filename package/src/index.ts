@@ -1,5 +1,5 @@
-import type { EventTypes, ModelState } from './specs/RNMLXEventType'
+import type { EventTypes, ModelState } from './specs/LLMEvaluatorEventType'
 
 export * from './hooks'
-export * from './MLX'
+export * from './LLMEvaluator'
 export type { EventTypes, ModelState }

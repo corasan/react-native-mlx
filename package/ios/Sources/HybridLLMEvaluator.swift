@@ -2,9 +2,10 @@ import Foundation
 import NitroModules
 
 @MainActor
-class HybridMLX: HybridMLXSpec {
+class HybridLLMEvaluator: HybridLLMEvaluatorSpec {
     private var llm = LLMEvaluator()
-    private var eventListeners: [String: (eventType: RNMLXEventTypes, listener: (AnyMapHolder) -> Void)] = [:]
+    private var eventListeners:
+        [String: (eventType: LLMEvaluatorEventTypes, listener: (AnyMapHolder) -> Void)] = [:]
 
     var response: String = ""
     var tokensPerSecond: Double = 0
@@ -85,7 +86,9 @@ class HybridMLX: HybridMLXSpec {
         }
     }
 
-    func addEventListener(eventType: RNMLXEventTypes, listener: @escaping (AnyMapHolder) -> Void) throws -> String {
+    func addEventListener(
+        eventType: LLMEvaluatorEventTypes, listener: @escaping (AnyMapHolder) -> Void
+    ) throws -> String {
         let listenerId = UUID().uuidString
         self.eventListeners[listenerId] = (eventType: eventType, listener: listener)
         return listenerId
@@ -94,9 +97,9 @@ class HybridMLX: HybridMLXSpec {
     func removeEventListener(listenerId: String) throws {
         self.eventListeners.removeValue(forKey: listenerId)
     }
-    
+
     // MARK: Private event functions
-    private func emitEvent(_ eventType: RNMLXEventTypes, payload: AnyMapHolder) {
+    private func emitEvent(_ eventType: LLMEvaluatorEventTypes, payload: AnyMapHolder) {
         for (_, listenerInfo) in eventListeners where listenerInfo.eventType == eventType {
             listenerInfo.listener(payload)
         }
@@ -108,7 +111,7 @@ class HybridMLX: HybridMLXSpec {
         payload.setString(key: "type", value: eventTypeToString(.ontokengeneration))
         emitEvent(.ontokengeneration, payload: payload)
     }
-    
+
     private func emitModelLoadProgressEvent(progress: Double, file: String) {
         let payload = AnyMapHolder()
         payload.setDouble(key: "progress", value: progress)
@@ -116,7 +119,7 @@ class HybridMLX: HybridMLXSpec {
         payload.setString(key: "type", value: eventTypeToString(.onmodelloadprogress))
         emitEvent(.onmodelloadprogress, payload: payload)
     }
-    
+
     private func emitStateChangeEvent() {
         let payload = AnyMapHolder()
         payload.setBoolean(key: "isLoaded", value: state.isLoaded)
@@ -129,23 +132,23 @@ class HybridMLX: HybridMLXSpec {
         payload.setString(key: "type", value: eventTypeToString(.onstatechange))
         emitEvent(.onstatechange, payload: payload)
     }
-    
+
     private func emitErrorEvent(_ message: String) {
         let payload = AnyMapHolder()
         payload.setString(key: "message", value: message)
         payload.setString(key: "type", value: eventTypeToString(.onerror))
         emitEvent(.onerror, payload: payload)
     }
-    
+
     private func emitGenerationCompleteEvent(tokensPerSecond: Double) {
         let payload = AnyMapHolder()
         payload.setDouble(key: "tokensPerSecond", value: tokensPerSecond)
         payload.setString(key: "type", value: eventTypeToString(.ongenerationcomplete))
         emitEvent(.ongenerationcomplete, payload: payload)
     }
-    
+
     // Helper to convert event type enum to string
-    private func eventTypeToString(_ eventType: RNMLXEventTypes) -> String {
+    private func eventTypeToString(_ eventType: LLMEvaluatorEventTypes) -> String {
         switch eventType {
         case .ontokengeneration:
             return "onTokenGeneration"

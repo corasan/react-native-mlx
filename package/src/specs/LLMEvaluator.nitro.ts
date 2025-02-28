@@ -1,7 +1,7 @@
 import type { AnyMap, HybridObject } from 'react-native-nitro-modules'
-import type { ModelState, RNMLXEventTypes } from './RNMLXEventType'
+import type { LLMEvaluatorEventTypes, ModelState } from './LLMEvaluatorEventType'
 
-export interface MLX extends HybridObject<{ ios: 'swift' }> {
+export interface LLMEvaluator extends HybridObject<{ ios: 'swift' }> {
   /**
    * Loads model with given id
    * @param modelId
@@ -13,7 +13,7 @@ export interface MLX extends HybridObject<{ ios: 'swift' }> {
   * @param eventType
   * @param listener
   */
-  addEventListener(eventType: RNMLXEventTypes, listener: (payload: AnyMap) => void): string
+  addEventListener(eventType: LLMEvaluatorEventTypes, listener: (payload: AnyMap) => void): string
   /**
   * Removes event listener by id
   * @param listenerId

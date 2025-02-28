@@ -1,6 +1,6 @@
 import { type AnyMap, NitroModules } from 'react-native-nitro-modules';
-import type { MLX as MLXType } from './specs/MLX.nitro';
-import { type EnhancedEventPayload, type EventTypes, type ModelState, RNMLXEventTypes } from './specs/RNMLXEventType'
+import type { LLMEvaluator as LLMEvaluatorSpec } from './specs/LLMEvaluator.nitro';
+import { type EnhancedEventPayload, type EventTypes, LLMEvaluatorEventTypes, type ModelState } from './specs/LLMEvaluatorEventType'
 
 export interface MLXOptions {
   model: string;
@@ -8,17 +8,17 @@ export interface MLXOptions {
   systemPrompt?: string;
 }
 
-const MLXBase = NitroModules.createHybridObject<MLXType>('MLX');
+const LLMEvaluatorSpecBase = NitroModules.createHybridObject<LLMEvaluatorSpec>('LLMEvaluator');
 
 const eventTypeToEnum: Record<string, number> = {
-  onTokenGeneration: RNMLXEventTypes.onTokenGeneration,
-  onModelLoadProgress: RNMLXEventTypes.onModelLoadProgress,
-  onStateChange: RNMLXEventTypes.onStateChange,
-  onError: RNMLXEventTypes.onError,
-  onGenerationComplete: RNMLXEventTypes.onGenerationComplete,
+  onTokenGeneration: LLMEvaluatorEventTypes.onTokenGeneration,
+  onModelLoadProgress: LLMEvaluatorEventTypes.onModelLoadProgress,
+  onStateChange: LLMEvaluatorEventTypes.onStateChange,
+  onError: LLMEvaluatorEventTypes.onError,
+  onGenerationComplete: LLMEvaluatorEventTypes.onGenerationComplete,
 };
 
-export class MLX {
+export class LLMEvaluator {
   response = ''
   state: ModelState = { isGenerating: false, isLoaded: false, modelId: '', modelInfo: '' }
   isGenerating = false
@@ -44,11 +44,11 @@ export class MLX {
       // Future enhancement: handle context and systemPrompt
     }
 
-    await MLXBase.load(modelId)
+    await LLMEvaluatorSpecBase.load(modelId)
   }
 
   async generate(prompt: string): Promise<string> {
-    await MLXBase.generate(prompt)
+    await LLMEvaluatorSpecBase.generate(prompt)
     return this.response
   }
 
@@ -64,13 +64,13 @@ export class MLX {
     }
 
     if (eventType === 'onTokenGeneration') {
-      return MLXBase.addEventListener(enumValue, payload => {
+      return LLMEvaluatorSpecBase.addEventListener(enumValue, payload => {
         this.response = payload.text as unknown as string
         listener(payload as unknown as EnhancedEventPayload[T])
       })
     }
     if (eventType === 'onStateChange') {
-      return MLXBase.addEventListener(enumValue, (payload) => {
+      return LLMEvaluatorSpecBase.addEventListener(enumValue, (payload) => {
         const p = payload as unknown as EnhancedEventPayload['onStateChange']
         this.state = p
         this.isGenerating = p.isGenerating
@@ -79,10 +79,10 @@ export class MLX {
       })
     }
 
-    return MLXBase.addEventListener(enumValue, listener as (p: AnyMap) => void)
+    return LLMEvaluatorSpecBase.addEventListener(enumValue, listener as (p: AnyMap) => void)
   }
 
   removeEventListener(listenerId: string) {
-    MLXBase.removeEventListener(listenerId)
+    LLMEvaluatorSpecBase.removeEventListener(listenerId)
   }
 }
