@@ -16,7 +16,7 @@ import { LLMEvaluator, type MLXOptions } from './LLMEvaluator';
  * console.log(llm.response)
  * ```
  */
-export function useMLX(options: MLXOptions) {
+export function useLLMEvaluator(options: MLXOptions) {
   const [instance] = useState(() => new LLMEvaluator());
   const [, setIsLoading] = useState(false);
 
