@@ -3,7 +3,6 @@ import { LegendList, type LegendListRef } from '@legendapp/list'
 import * as Crypto from 'expo-crypto'
 import { useEffect, useRef, useState } from 'react'
 import {
-  InteractionManager,
   Platform,
   StyleSheet,
   TextInput,
@@ -11,8 +10,7 @@ import {
   useColorScheme,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { MLX } from 'react-native-mlx'
-import type { FlatList } from 'react-native-reanimated/lib/typescript/Animated'
+import { useMLX } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 type Message = {
@@ -39,9 +37,10 @@ const MessageItem = ({ id, content, isUser }: Message) => {
   )
 }
 
-const llm = new MLX()
-
 export default function TabOneScreen() {
+  const llm = useMLX({
+    model: "llama-3.2",
+  })
   const [modelLoaded, setModelLoaded] = useState(false)
   const [prompt, setPrompt] = useState('Why is the sky blue?')
   const [tokens, setTokens] = useState<string>('')
@@ -116,7 +115,7 @@ export default function TabOneScreen() {
           maintainScrollAtEnd
           maintainVisibleContentPosition
           onContentSizeChange={() => {
-            if (llm.isGenerating) {
+            if (llm.isGenerating || (messages.length > 0 && !disableScrollOnSizeChange)) {
               listRef?.current?.scrollToEnd({ animated: false })
             }
           }}
