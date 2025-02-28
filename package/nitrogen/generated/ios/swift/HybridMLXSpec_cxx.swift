@@ -97,14 +97,14 @@ public class HybridMLXSpec_cxx {
   }
 
   // Properties
-  public final var output: std.string {
+  public final var response: std.string {
     @inline(__always)
     get {
-      return std.string(self.__implementation.output)
+      return std.string(self.__implementation.response)
     }
     @inline(__always)
     set {
-      self.__implementation.output = String(newValue)
+      self.__implementation.response = String(newValue)
     }
   }
   
@@ -203,14 +203,26 @@ public class HybridMLXSpec_cxx {
   }
   
   @inline(__always)
-  public final func listenToTokenGeneration(listener: bridge.Func_void_std__string) -> bridge.Result_void_ {
+  public final func addEventListener(eventType: Int32, listener: bridge.Func_void_std__shared_ptr_AnyMap_) -> bridge.Result_std__string_ {
     do {
-      try self.__implementation.listenToTokenGeneration(listener: { () -> (String) -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void_std__string(listener)
-        return { (__token: String) -> Void in
-          __wrappedFunction.call(std.string(__token))
+      let __result = try self.__implementation.addEventListener(eventType: margelo.nitro.rnmlx.RNMLXEventTypes(rawValue: eventType)!, listener: { () -> (AnyMapHolder) -> Void in
+        let __wrappedFunction = bridge.wrap_Func_void_std__shared_ptr_AnyMap_(listener)
+        return { (__payload: AnyMapHolder) -> Void in
+          __wrappedFunction.call(__payload.cppPart)
         }
       }())
+      let __resultCpp = std.string(__result)
+      return bridge.create_Result_std__string_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__string_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func removeEventListener(listenerId: std.string) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.removeEventListener(listenerId: String(listenerId))
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

@@ -29,11 +29,11 @@ namespace margelo::nitro::rnmlx::bridge::swift {
     };
   }
   
-  // pragma MARK: std::function<void(const std::string& /* token */)>
-  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) {
-    auto swiftClosure = RNMLX::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)](const std::string& token) mutable -> void {
-      swiftClosure.call(token);
+  // pragma MARK: std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>
+  Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNMLX::Func_void_std__shared_ptr_AnyMap_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<AnyMap>& payload) mutable -> void {
+      swiftClosure.call(payload);
     };
   }
   

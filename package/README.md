@@ -1,23 +1,66 @@
 # react-native-mlx
-
-## Requirements
-
-- React Native v0.76.0 or higher
-- Node 18.0.0 or higher
-
-> [!IMPORTANT]  
-> To Support `Nitro Views` you need to install React Native version v0.78.0 or higher.
-
+------------------------------------------------------------------------
 ## Installation
 
-```bash
-bun add react-native-mlx react-native-nitro-modules
+```
+bun add react-native-mlx
+yarn add react-native-mlx
+npm install react-native-mlx
 ```
 
-## Credits
+If you are using Expo add the plugin to your `app.json`
 
-Bootstrapped with [create-nitro-module](https://github.com/patrickkabwe/create-nitro-module).
+```json
+"plugins": [
+  // other plugins
+  "react-native-mlx"
+]
+```
 
-## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Usage
+
+#### Hooks approach
+
+This package includes a convenient hook, simply use it like this:
+
+```ts
+const llm = useMLX({
+	model: "llama-3.2",
+	context: "...",
+	systemPrompt: ""
+})
+
+await llm.generate(prompt)
+console.log(llm.response)
+```
+
+#### Direct usage
+
+If you want more control you can create an instance of the MLX class
+
+```ts
+const llm = new MLX()
+
+export default function App() {
+	const [text, setText] = useState('')
+	const [prompt, setPrompt] = useState('')
+
+	useEffec(() => {
+		const loadLlm = async () => {
+			await llm.load({ model: "llama-3.2" })
+		}
+
+		loadLlm()
+	}, [])
+
+	const generate = async () => {
+		await llm.generate(prompt)
+	}
+
+	console.log(llm.response)
+
+	return (...)
+}
+
+```

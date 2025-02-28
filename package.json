@@ -9,8 +9,8 @@
 	"source": "src/index",
 	"author": "Henry Paulino <me@henrypl.com> (https://github.com/corasan)",
 	"scripts": {
-		"postinstall": "tsc -p ./package || exit 0;",
-		"typescript": "bun --filter=\"**\" typescript",
+		"postinstall": "tsc -p ./package --noEmit || exit 0;",
+		"typescript": "bun tsc -p ./package --noEmit",
 		"clean": "rm -rf package/tsconfig.tsbuildinfo package/node_modules package/lib",
 		"specs": "bun --cwd ./package specs",
 		"specs:pod": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
