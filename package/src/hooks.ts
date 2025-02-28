@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MLX, type MLXOptions } from './MLX';
+import { LLMEvaluator, type MLXOptions } from './LLMEvaluator';
 
 /**
  * Hook for easily using MLX in React components
@@ -17,7 +17,7 @@ import { MLX, type MLXOptions } from './MLX';
  * ```
  */
 export function useMLX(options: MLXOptions) {
-  const [instance] = useState(() => new MLX());
+  const [instance] = useState(() => new LLMEvaluator());
   const [, setIsLoading] = useState(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
