@@ -4,7 +4,7 @@
     "rnmlx"
   ],
   "ios": {
-    "iosModuleName": "RNMLX"
+    "iosModuleName": "ReactNativeMLX"
   },
   "android": {
     "androidNamespace": [
@@ -13,8 +13,8 @@
     "androidCxxLibName": "ReactNativeMLX"
   },
   "autolinking": {
-    "MLX": {
-      "swift": "HybridMLX"
+    "LLMEvaluator": {
+      "swift": "HybridLLMEvaluator"
     }
   },
   "ignorePaths": [
