@@ -15,11 +15,17 @@
 
 // Forward declaration of `ModelState` to properly resolve imports.
 namespace margelo::nitro::rnmlx { struct ModelState; }
+// Forward declaration of `RNMLXEventTypes` to properly resolve imports.
+namespace margelo::nitro::rnmlx { enum class RNMLXEventTypes; }
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 
 #include <string>
 #include "ModelState.hpp"
 #include <NitroModules/Promise.hpp>
+#include "RNMLXEventTypes.hpp"
 #include <functional>
+#include <NitroModules/AnyMap.hpp>
 
 namespace margelo::nitro::rnmlx {
 
@@ -48,8 +54,8 @@ namespace margelo::nitro::rnmlx {
 
     public:
       // Properties
-      virtual std::string getOutput() = 0;
-      virtual void setOutput(const std::string& output) = 0;
+      virtual std::string getResponse() = 0;
+      virtual void setResponse(const std::string& response) = 0;
       virtual double getTokensPerSecond() = 0;
       virtual void setTokensPerSecond(double tokensPerSecond) = 0;
       virtual double getDownloadProgress() = 0;
@@ -65,7 +71,8 @@ namespace margelo::nitro::rnmlx {
       // Methods
       virtual std::shared_ptr<Promise<void>> load(const std::string& modelId) = 0;
       virtual std::shared_ptr<Promise<void>> generate(const std::string& prompt) = 0;
-      virtual void listenToTokenGeneration(const std::function<void(const std::string& /* token */)>& listener) = 0;
+      virtual std::string addEventListener(RNMLXEventTypes eventType, const std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>& listener) = 0;
+      virtual void removeEventListener(const std::string& listenerId) = 0;
 
     protected:
       // Hybrid Setup

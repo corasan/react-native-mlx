@@ -8,6 +8,8 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 // Forward declaration of `HybridMLXSpec` to properly resolve imports.
 namespace margelo::nitro::rnmlx { class HybridMLXSpec; }
 
@@ -17,6 +19,7 @@ namespace RNMLX { class HybridMLXSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridMLXSpec.hpp"
+#include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
@@ -88,6 +91,28 @@ namespace margelo::nitro::rnmlx::bridge::swift {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
+  // pragma MARK: std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>
+  /**
+   * Specialized version of `std::function<void(const std::shared_ptr<AnyMap>&)>`.
+   */
+  using Func_void_std__shared_ptr_AnyMap_ = std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::shared_ptr<AnyMap>& / * payload * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__shared_ptr_AnyMap__Wrapper final {
+  public:
+    explicit Func_void_std__shared_ptr_AnyMap__Wrapper(std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>>(std::move(func))) {}
+    inline void call(std::shared_ptr<AnyMap> payload) const {
+      _function->operator()(payload);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::shared_ptr<AnyMap>& /* payload */)>> _function;
+  };
+  Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__shared_ptr_AnyMap__Wrapper wrap_Func_void_std__shared_ptr_AnyMap_(Func_void_std__shared_ptr_AnyMap_ value) {
+    return Func_void_std__shared_ptr_AnyMap__Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::optional<std::string>
   /**
    * Specialized version of `std::optional<std::string>`.
@@ -95,28 +120,6 @@ namespace margelo::nitro::rnmlx::bridge::swift {
   using std__optional_std__string_ = std::optional<std::string>;
   inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
     return std::optional<std::string>(value);
-  }
-  
-  // pragma MARK: std::function<void(const std::string& /* token */)>
-  /**
-   * Specialized version of `std::function<void(const std::string&)>`.
-   */
-  using Func_void_std__string = std::function<void(const std::string& /* token */)>;
-  /**
-   * Wrapper class for a `std::function<void(const std::string& / * token * /)>`, this can be used from Swift.
-   */
-  class Func_void_std__string_Wrapper final {
-  public:
-    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* token */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* token */)>>(std::move(func))) {}
-    inline void call(std::string token) const {
-      _function->operator()(token);
-    }
-  private:
-    std::shared_ptr<std::function<void(const std::string& /* token */)>> _function;
-  };
-  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
-    return Func_void_std__string_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::rnmlx::HybridMLXSpec>
@@ -138,6 +141,15 @@ namespace margelo::nitro::rnmlx::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_void___ create_Result_std__shared_ptr_Promise_void___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<void>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::string>
+  using Result_std__string_ = Result<std::string>;
+  inline Result_std__string_ create_Result_std__string_(const std::string& value) {
+    return Result<std::string>::withValue(value);
+  }
+  inline Result_std__string_ create_Result_std__string_(const std::exception_ptr& error) {
+    return Result<std::string>::withError(error);
   }
   
   // pragma MARK: Result<void>

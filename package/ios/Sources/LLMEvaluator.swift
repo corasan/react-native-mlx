@@ -79,13 +79,16 @@ class LLMEvaluator {
                 Task { @MainActor in
                     let p = progress.fractionCompleted * 100
                     self.progressHandler?(p, modelConfiguration.name)
+                    print("Loading model. Progress: \(progress)")
                 }
             }
             
             loadState = .loaded(modelContainer)
+            print("Model loaded!")
             return modelContainer
 
         case .loaded(let modelContainer):
+            print("Model already loaded!")
             return modelContainer
         }
     }

@@ -1,5 +1,5 @@
-import { NitroModules } from 'react-native-nitro-modules'
-import type { MLX as MLXSpec } from './specs/MLX.nitro'
+import type { EventTypes, ModelState } from './specs/RNMLXEventType'
 
-export const MLX =
-  NitroModules.createHybridObject<MLXSpec>('MLX')
+export * from './hooks'
+export * from './MLX'
+export type { EventTypes, ModelState }

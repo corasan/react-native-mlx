@@ -18,7 +18,7 @@ const withDynamicFrameworks = (config) => {
         src: podfileContents,
         newSrc: `  pre_install do |installer|
     installer.pod_targets.each do |pod|
-      if pod.name.eql?('RNReanimated')
+      if pod.name.eql?('RNReanimated') || pod.name.eql?('react-native-keyboard-controller')
         def pod.build_type
           Pod::BuildType.static_library
         end
