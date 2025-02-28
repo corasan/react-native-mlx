@@ -10,7 +10,7 @@ import {
   useColorScheme,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { useMLX } from 'react-native-mlx'
+import { useLLMEvaluator } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 type Message = {
@@ -38,7 +38,7 @@ const MessageItem = ({ id, content, isUser }: Message) => {
 }
 
 export default function TabOneScreen() {
-  const llm = useMLX({
+  const llm = useLLMEvaluator({
     model: "llama-3.2",
   })
   const [modelLoaded, setModelLoaded] = useState(false)
