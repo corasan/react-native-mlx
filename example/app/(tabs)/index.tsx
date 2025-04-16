@@ -39,7 +39,7 @@ const MessageItem = ({ id, content, isUser }: Message) => {
 
 export default function TabOneScreen() {
   const llm = useLLMEvaluator({
-    model: "llama-3.2",
+    model: 'llama-3.2',
   })
   const [modelLoaded, setModelLoaded] = useState(false)
   const [prompt, setPrompt] = useState('Why is the sky blue?')
