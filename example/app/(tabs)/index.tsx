@@ -63,6 +63,7 @@ export default function TabOneScreen() {
     await llm.generate(prompt)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no need
   useEffect(() => {
     const loadModel = async () => {
       await llm.load('llama-3.1b-instruct-4bit')
@@ -85,7 +86,6 @@ export default function TabOneScreen() {
     }
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: need
   useEffect(() => {
     if (llm.response && !llm.isGenerating) {
       setMessages(prevMessages => [
@@ -108,7 +108,7 @@ export default function TabOneScreen() {
         <LegendList
           ref={listRef}
           data={messages}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           estimatedItemSize={100}
           renderItem={({ item }) => <MessageItem key={item.id} {...item} />}
           alignItemsAtEnd
