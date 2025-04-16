@@ -108,6 +108,7 @@ export function useMLXGeneration(options: MLXOptions) {
           setText(fullText);
         },
         onComplete: (result) => {
+          setText(result.text); // Ensure text is up to date
           setStats({ tokensPerSecond: result.tokensPerSecond });
         },
         onError: (err) => {

@@ -108,7 +108,7 @@ export default function TabOneScreen() {
         <LegendList
           ref={listRef}
           data={messages}
-          keyExtractor={(i, k) => k.toString()}
+          keyExtractor={(item) => item.id}
           estimatedItemSize={100}
           renderItem={({ item }) => <MessageItem key={item.id} {...item} />}
           alignItemsAtEnd
