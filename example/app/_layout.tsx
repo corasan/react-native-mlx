@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import 'react-native-reanimated'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
+import { MLXProvider } from 'react-native-mlx'
 
 import { useColorScheme } from '@/components/useColorScheme'
 
@@ -52,10 +53,19 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <KeyboardProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
+        <MLXProvider
+          models={{
+            'chat': { model: 'llama-3.1b-instruct-4bit' }
+          }}
+          defaultOptions={{
+            // Global options
+          }}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          </Stack>
+        </MLXProvider>
       </KeyboardProvider>
     </ThemeProvider>
   )

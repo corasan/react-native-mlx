@@ -1,118 +1,126 @@
 {
-	"name": "react-native-mlx",
-	"version": "0.1.0",
-	"description": "Nitro module package",
-	"main": "./lib/commonjs/index.js",
-	"module": "./lib/module/index.js",
-	"types": "./lib/typescript/src/index.d.ts",
-	"react-native": "src/index",
-	"source": "src/index",
-	"author": "Henry Paulino <me@henrypl.com> (https://github.com/corasan)",
-	"scripts": {
-		"postinstall": "tsc -p ./package --noEmit || exit 0;",
-		"typescript": "bun tsc -p ./package --noEmit",
-		"clean": "rm -rf package/tsconfig.tsbuildinfo package/node_modules package/lib",
-		"specs": "bun --cwd ./package specs",
-		"specs:pod": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
-		"build": "bun --cwd package build",
-		"release": "release-it",
-		"build-framework": "sh ./scripts/build-framework.sh"
-	},
-	"keywords": ["react-native"],
-	"workspaces": ["package", "example"],
-	"files": [
-		"src",
-		"react-native.config.js",
-		"lib",
-		"nitrogen",
-		"cpp",
-		"android/build.gradle",
-		"android/gradle.properties",
-		"android/CMakeLists.txt",
-		"android/src",
-		"ios/**/*.h",
-		"ios/**/*.m",
-		"ios/**/*.mm",
-		"ios/**/*.cpp",
-		"ios/**/*.swift",
-		"app.plugin.js",
-		"*.podspec",
-		"README.md"
-	],
-	"repository": "https://github.com/henrypaulino/react-native-mlx.git",
-	"license": "MIT",
-	"bugs": "https://github.com/henrypaulino/react-native-mlx/issues",
-	"homepage": "https://github.com/henrypaulino/react-native-mlx#readme",
-	"publishConfig": {
-		"registry": "https://registry.npmjs.org/",
-		"provenance": true
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@release-it-plugins/workspaces": "^4.2.0",
-		"@release-it/bumper": "^6.0.1",
-		"@release-it/conventional-changelog": "^9.0.3",
-		"typescript": "^5.7.3"
-	},
-	"release-it": {
-		"npm": {
-			"publish": false,
-			"versionArgs": ["--allow-same-version"]
-		},
-		"github": {
-			"release": true,
-			"releaseName": "${version}"
-		},
-		"hooks": {
-			"after:bump": "bun specs",
-			"before:release": "bun run build"
-		},
-		"git": {
-			"commitMessage": "chore: release ${version}",
-			"tagName": "v${version}",
-			"requireCleanWorkingDir": false
-		},
-		"plugins": {
-			"@release-it/bumper": {
-				"out": [
-					{
-						"file": "package/package.json",
-						"path": "version"
-					},
-					{
-						"file": "example/package.json",
-						"path": "version"
-					}
-				]
-			},
-			"@release-it-plugins/workspaces": true,
-			"@release-it/conventional-changelog": {
-				"preset": {
-					"name": "conventionalcommits",
-					"types": [
-						{
-							"type": "feat",
-							"section": "✨ Features"
-						},
-						{
-							"type": "fix",
-							"section": "🐞 Fixes"
-						},
-						{
-							"type": "chore(deps)",
-							"section": "🛠️ Dependency Upgrades"
-						},
-						{
-							"type": "perf",
-							"section": "🏎️ Performance Improvements"
-						},
-						{
-							"type": "docs",
-							"section": "📚 Documentation"
-						}
-					]
-				}
-			}
-		}
-	}
+  "name": "react-native-mlx",
+  "version": "0.1.0",
+  "description": "Nitro module package",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "author": "Henry Paulino <me@henrypl.com> (https://github.com/corasan)",
+  "scripts": {
+    "postinstall": "tsc -p ./package --noEmit || exit 0;",
+    "typescript": "bun tsc -p ./package --noEmit",
+    "clean": "rm -rf package/tsconfig.tsbuildinfo package/node_modules package/lib",
+    "specs": "bun --cwd ./package specs",
+    "specs:pod": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
+    "build": "bun --cwd package build",
+    "release": "release-it",
+    "build-framework": "sh ./scripts/build-framework.sh"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "workspaces": [
+    "package",
+    "example"
+  ],
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib",
+    "nitrogen",
+    "cpp",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "app.plugin.js",
+    "*.podspec",
+    "README.md"
+  ],
+  "repository": "https://github.com/henrypaulino/react-native-mlx.git",
+  "license": "MIT",
+  "bugs": "https://github.com/henrypaulino/react-native-mlx/issues",
+  "homepage": "https://github.com/henrypaulino/react-native-mlx#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@release-it-plugins/workspaces": "^4.2.0",
+    "@release-it/bumper": "^7.0.2",
+    "@release-it/conventional-changelog": "^10.0.0",
+    "release-it": "^18.1.2",
+    "typescript": "^5.7.3"
+  },
+  "release-it": {
+    "npm": {
+      "publish": false,
+      "versionArgs": [
+        "--allow-same-version"
+      ]
+    },
+    "github": {
+      "release": true,
+      "releaseName": "${version}"
+    },
+    "hooks": {
+      "after:bump": "bun specs",
+      "before:release": "bun run build"
+    },
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}",
+      "requireCleanWorkingDir": false
+    },
+    "plugins": {
+      "@release-it/bumper": {
+        "out": [
+          {
+            "file": "package/package.json",
+            "path": "version"
+          },
+          {
+            "file": "example/package.json",
+            "path": "version"
+          }
+        ]
+      },
+      "@release-it-plugins/workspaces": true,
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "fix",
+              "section": "🐞 Fixes"
+            },
+            {
+              "type": "chore(deps)",
+              "section": "🛠️ Dependency Upgrades"
+            },
+            {
+              "type": "perf",
+              "section": "🏎️ Performance Improvements"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            }
+          ]
+        }
+      }
+    }
+  }
 }
