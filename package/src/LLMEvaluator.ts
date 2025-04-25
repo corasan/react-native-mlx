@@ -55,7 +55,6 @@ export class LLMEvaluator {
   }
 
   private _setupDefaultListeners() {
-    // Set up default listeners to update internal state
     this.addEventListener('onTokenGeneration', () => { })
     this.addEventListener('onStateChange', () => { })
   }
@@ -67,7 +66,6 @@ export class LLMEvaluator {
       modelId = options
     } else {
       modelId = options.model
-      // Future enhancement: handle context and systemPrompt
     }
 
     await LLMEvaluatorSpecBase.load(modelId)
@@ -82,114 +80,90 @@ export class LLMEvaluator {
     await LLMEvaluatorSpecBase.generate(prompt)
     return this.response
   }
-  
+
   /**
-   * Generate a response with detailed control and streaming capabilities
-   * @param prompt The input prompt to generate from
-   * @param callbacks Optional callbacks for streaming tokens and completion
-   * @returns A promise that resolves to the final generation result
-   */
-  /**
-   * Generate a response with detailed control and streaming capabilities
+   * Generate a response
    * @param prompt The input prompt to generate from
    * @param callbacks Optional callbacks for streaming tokens and completion
    * @param options Optional generation parameters
    * @returns A promise that resolves to the final generation result
    */
   async generateWithCallbacks(
-    prompt: string, 
+    prompt: string,
     callbacks?: GenerationCallbacks,
     options?: GenerationOptions
   ): Promise<GenerationResult> {
-    // Track any listeners we need to clean up
     const listenerIds: string[] = []
-    
-    // Support for cancellation
+
     if (this.abortController) {
-      // Cancel any existing generation
       this.abortController.abort()
     }
-    
-    // Create new abort controller or use the one from options
+
     let localAbortController: AbortController | undefined
     if (!options?.signal) {
       localAbortController = new AbortController()
       this.abortController = localAbortController
     }
-    
+
     const signal = options?.signal || localAbortController?.signal
-    
-    // Create a promise that will resolve when generation is complete
+
     return new Promise((resolve, reject) => {
-      // Set up abort handler
       if (signal) {
         signal.addEventListener('abort', () => {
           // TODO: Call native abort method when implemented
-          // Clean up listeners
           listenerIds.forEach(id => this.removeEventListener(id))
           reject(new Error('Generation aborted'))
         }, { once: true })
       }
-      
-      // Set up token listener if needed
+
       if (callbacks?.onToken) {
         const tokenListener = this.addEventListener('onTokenGeneration', (payload) => {
           callbacks.onToken?.(payload.text, this.response)
         })
         listenerIds.push(tokenListener)
       }
-      
-      // Set up completion listener
+
       const completeListener = this.addEventListener('onGenerationComplete', (payload) => {
-        // Clean up all listeners
         listenerIds.forEach(id => this.removeEventListener(id))
-        
-        // Clear abort controller reference
         if (localAbortController === this.abortController) {
           this.abortController = undefined
         }
-        
-        const result = { 
+
+        const result = {
           text: this.response,
           tokensPerSecond: payload.tokensPerSecond
         }
-        
+
         callbacks?.onComplete?.(result)
         resolve(result)
       })
       listenerIds.push(completeListener)
-      
-      // Set up error listener
+
       const errorListener = this.addEventListener('onError', (payload) => {
-        // Clean up all listeners
         listenerIds.forEach(id => this.removeEventListener(id))
-        
-        // Clear abort controller reference
+
         if (localAbortController === this.abortController) {
           this.abortController = undefined
         }
-        
+
         const error = new Error(payload.error)
         callbacks?.onError?.(error)
         reject(error)
       })
       listenerIds.push(errorListener)
-      
-      // Start generation
+
       LLMEvaluatorSpecBase.generate(prompt).catch(error => {
-        // Clean up all listeners on error
         listenerIds.forEach(id => this.removeEventListener(id))
-        
-        // Clear abort controller reference
+
         if (localAbortController === this.abortController) {
           this.abortController = undefined
         }
-        
+
         reject(error)
       })
     })
   }
-  
+
   /**
    * Abort the current generation
    */
