@@ -20,7 +20,6 @@ export function useLLMEvaluator(options: MLXOptions) {
   const [instance] = useState(() => new LLMEvaluator());
   const [, setIsLoading] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     const loadModel = async () => {
       setIsLoading(true);
@@ -35,7 +34,6 @@ export function useLLMEvaluator(options: MLXOptions) {
 
     loadModel();
 
-    // Set up listeners for state changes
     const stateListener = instance.addEventListener('onStateChange', () => {
       // State is already updated in the instance
     });
@@ -58,8 +56,8 @@ export function useLLMEvaluator(options: MLXOptions) {
  * });
  *
  * // Text will update in real-time as tokens are generated
- * <button onClick={() => generate("Tell me about React")}>Generate</button>
- * <div>{text}</div>
+ * <Button onClick={() => generate("Tell me about React")}>Generate</Button>
+ * <Text>{text}</Text>
  * ```
  */
 export function useMLXGeneration(options: MLXOptions) {
@@ -70,7 +68,6 @@ export function useMLXGeneration(options: MLXOptions) {
   const [error, setError] = useState<Error | null>(null);
   const [stats, setStats] = useState<{ tokensPerSecond?: number }>({});
 
-  // Load model when hook is initialized
   useEffect(() => {
     const loadModel = async () => {
       setIsLoading(true);
@@ -97,7 +94,6 @@ export function useMLXGeneration(options: MLXOptions) {
     };
   }, [options.model]);
 
-  // Generate function with streaming updates
   const generate = useCallback(async (prompt: string) => {
     setText('');
     setError(null);
@@ -108,7 +104,7 @@ export function useMLXGeneration(options: MLXOptions) {
           setText(fullText);
         },
         onComplete: (result) => {
-          setText(result.text); // Ensure text is up to date
+          setText(result.text);
           setStats({ tokensPerSecond: result.tokensPerSecond });
         },
         onError: (err) => {
@@ -136,8 +132,6 @@ export function useMLXGeneration(options: MLXOptions) {
   };
 }
 
-// MLX Context Provider
-
 interface MLXModels {
   [key: string]: MLXOptions;
 }
@@ -164,7 +158,6 @@ export interface MLXProviderProps {
  * <MLXProvider
  *   models={{
  *     chat: { model: "llama-3.2" },
- *     completion: { model: "phi-3" }
  *   }}
  *   defaultOptions={{ temperature: 0.7 }}
  * >
@@ -173,21 +166,17 @@ export interface MLXProviderProps {
  * ```
  */
 export function MLXProvider({ children, models, defaultOptions = {} }: MLXProviderProps) {
-  // Track all initialized models
   const [modelInstances, setModelInstances] = useState<Record<string, LLMEvaluator>>({});
   const [loadedModels, setLoadedModels] = useState<Record<string, boolean>>({});
 
-  // Initialize models on mount
   useEffect(() => {
     const instances: Record<string, LLMEvaluator> = {};
 
-    // Create instances for each model
     Object.entries(models).forEach(([key, options]) => {
       const mergedOptions = { ...defaultOptions, ...options };
       const instance = new LLMEvaluator();
       instances[key] = instance;
 
-      // Load the model
       instance.load(mergedOptions).then(() => {
         setLoadedModels(prev => ({ ...prev, [key]: true }));
       }).catch(err => {
@@ -195,7 +184,6 @@ export function MLXProvider({ children, models, defaultOptions = {} }: MLXProvid
         setLoadedModels(prev => ({ ...prev, [key]: false }));
       });
 
-      // Set up state listener to track loading state
       instance.addEventListener('onStateChange', (state) => {
         if (state.isLoaded) {
           setLoadedModels(prev => ({ ...prev, [key]: true }));
@@ -204,14 +192,8 @@ export function MLXProvider({ children, models, defaultOptions = {} }: MLXProvid
     });
 
     setModelInstances(instances);
-
-    // Cleanup function
-    return () => {
-      // No explicit cleanup needed for model instances
-    };
   }, []);
 
-  // Create context value with helper methods
   const contextValue = useMemo<MLXContextValue>(() => ({
     getModel: (modelKey: string) => modelInstances[modelKey],
     isModelLoaded: (modelKey: string) => !!loadedModels[modelKey],
@@ -221,7 +203,6 @@ export function MLXProvider({ children, models, defaultOptions = {} }: MLXProvid
         throw new Error(`Model with key "${modelKey}" not found`);
       }
 
-      // Create a promise to track result
       return new Promise((resolve, reject) => {
         const callbacks: GenerationCallbacks = {
           onComplete: (result) => {
@@ -268,15 +249,15 @@ export function useMLX() {
 }
 
 /**
- * Hook to access a specific MLX model from the context with streaming capabilities
+ * Hook to access a specific MLX model from the context
  *
  * @example
  * ```tsx
  * const { text, generate, isGenerating } = useMLXModel('chat');
  *
  * // Text updates in real-time as tokens are generated
- * <button onClick={() => generate('Tell me about React')}>Generate</button>
- * <div>{text}</div>
+ * <Button onClick={() => generate('Tell me about React')}>Generate</Button>
+ * <Text>{text}</Text>
  * ```
  */
 export function useMLXModel(modelKey: string) {
@@ -295,7 +276,6 @@ export function useMLXModel(modelKey: string) {
   useEffect(() => {
     if (!model) return;
 
-    // Set up listeners for token generation and state changes
     const tokenListener = model.addEventListener('onTokenGeneration', () => {
       setText(model.response);
     });
