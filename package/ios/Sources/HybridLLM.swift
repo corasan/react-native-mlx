@@ -15,9 +15,19 @@ class HybridLLM: HybridLLMSpec {
 
     func load(modelId: String) throws -> Promise<Void> {
         return Promise.async { [self] in
-            let model = try await loadModel(id: modelId)
-            self.session = ChatSession(model)
+            let modelDir = await ModelDownloader.shared.getModelDirectory(modelId: modelId)
+            print("[LLM] Loading from directory: \(modelDir.path)")
+
+            let config = ModelConfiguration(directory: modelDir)
+            let container = try await LLMModelFactory.shared.loadContainer(
+                configuration: config
+            ) { progress in
+                print("[LLM] Load progress: \(progress.fractionCompleted)")
+            }
+
+            self.session = ChatSession(container)
             self.modelId = modelId
+            print("[LLM] Model loaded successfully")
         }
     }
 
