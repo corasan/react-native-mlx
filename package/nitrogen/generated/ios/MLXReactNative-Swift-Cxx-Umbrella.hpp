@@ -10,11 +10,14 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `HybridLLMSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridLLMSpec; }
+// Forward declaration of `HybridModelManagerSpec` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { class HybridModelManagerSpec; }
 // Forward declaration of `LLMEvents` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { enum class LLMEvents; }
 
 // Include C++ defined types
 #include "HybridLLMSpec.hpp"
+#include "HybridModelManagerSpec.hpp"
 #include "LLMEvents.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
@@ -22,6 +25,7 @@ namespace margelo::nitro::mlxreactnative { enum class LLMEvents; }
 #include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 // C++ helpers for Swift
 #include "MLXReactNative-Swift-Cxx-Bridge.hpp"
@@ -35,6 +39,8 @@ namespace margelo::nitro::mlxreactnative { enum class LLMEvents; }
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridLLMSpec_cxx` to properly resolve imports.
 namespace MLXReactNative { class HybridLLMSpec_cxx; }
+// Forward declaration of `HybridModelManagerSpec_cxx` to properly resolve imports.
+namespace MLXReactNative { class HybridModelManagerSpec_cxx; }
 
 // Include Swift defined types
 #if __has_include("MLXReactNative-Swift.h")

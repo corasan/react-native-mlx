@@ -11,6 +11,9 @@
   "autolinking": {
     "LLM": {
       "swift": "HybridLLM"
+    },
+    "ModelManager": {
+      "swift": "HybridModelManager"
     }
   },
   "ignorePaths": ["**/node_modules"]

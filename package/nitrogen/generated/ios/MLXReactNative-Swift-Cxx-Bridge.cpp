@@ -9,6 +9,7 @@
 
 // Include C++ implementation defined types
 #include "HybridLLMSpecSwift.hpp"
+#include "HybridModelManagerSpecSwift.hpp"
 #include "MLXReactNative-Swift-Cxx-Umbrella.hpp"
 #include <NitroModules/NitroDefines.hpp>
 
@@ -51,6 +52,46 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
     }
     #endif
     MLXReactNative::HybridLLMSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
+  }
+  
+  // pragma MARK: std::function<void(double /* progress */)>
+  Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = MLXReactNative::Func_void_double::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](double progress) mutable -> void {
+      swiftClosure.call(progress);
+    };
+  }
+  
+  // pragma MARK: std::function<void(bool /* result */)>
+  Func_void_bool create_Func_void_bool(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = MLXReactNative::Func_void_bool::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](bool result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::vector<std::string>& /* result */)>
+  Func_void_std__vector_std__string_ create_Func_void_std__vector_std__string_(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = MLXReactNative::Func_void_std__vector_std__string_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::vector<std::string>& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
+  // pragma MARK: std::shared_ptr<HybridModelManagerSpec>
+  std::shared_ptr<HybridModelManagerSpec> create_std__shared_ptr_HybridModelManagerSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
+    MLXReactNative::HybridModelManagerSpec_cxx swiftPart = MLXReactNative::HybridModelManagerSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::mlxreactnative::HybridModelManagerSpecSwift>(swiftPart);
+  }
+  void* NON_NULL get_std__shared_ptr_HybridModelManagerSpec_(std__shared_ptr_HybridModelManagerSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::mlxreactnative::HybridModelManagerSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::mlxreactnative::HybridModelManagerSpecSwift>(cppType);
+    #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridModelManagerSpec\" is not implemented in Swift!");
+    }
+    #endif
+    MLXReactNative::HybridModelManagerSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
     return swiftPart.toUnsafe();
   }
 
