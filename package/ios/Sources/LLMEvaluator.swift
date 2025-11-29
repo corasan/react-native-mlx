@@ -1,6 +1,6 @@
 //
 //  LLMEvaluator.swift
-//  ReactNativeMLX
+//  MLXReactNative
 //
 //  Created by Henry on 2/22/25.
 //

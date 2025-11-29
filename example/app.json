@@ -41,7 +41,8 @@
             "useFrameworks": "dynamic"
           }
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

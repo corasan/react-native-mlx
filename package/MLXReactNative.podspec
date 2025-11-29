@@ -3,7 +3,7 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
-  s.name         = "ReactNativeMLX"
+  s.name         = "MLXReactNative"
   s.version      = package["version"]
   s.summary      = package["description"]
   s.homepage     = package["homepage"]
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
     "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) FOLLY_NO_CONFIG FOLLY_CFG_NO_COROUTINES"
   }
 
-  load 'nitrogen/generated/ios/ReactNativeMLX+autolinking.rb'
+  load 'nitrogen/generated/ios/MLXReactNative+autolinking.rb'
   add_nitrogen_files(s)
 
   s.dependency 'React-jsi'

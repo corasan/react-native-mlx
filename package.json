@@ -11,7 +11,7 @@
   "scripts": {
     "postinstall": "tsc -p ./package --noEmit || exit 0;",
     "typescript": "bun tsc -p ./package --noEmit",
-    "clean": "rm -rf package/tsconfig.tsbuildinfo package/node_modules package/lib",
+    "clean": "rm -rf package/tsconfig.tsbuildinfo node_modules example/node_modules example/ios package/node_modules package/lib example/.expo",
     "specs": "bun --cwd ./package specs",
     "specs:pod": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
     "build": "bun --cwd package build",
@@ -53,12 +53,12 @@
     "provenance": true
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@release-it-plugins/workspaces": "^4.2.0",
-    "@release-it/bumper": "^7.0.2",
-    "@release-it/conventional-changelog": "^10.0.0",
-    "release-it": "^18.1.2",
-    "typescript": "^5.7.3"
+    "@biomejs/biome": "^2.3.8",
+    "@release-it-plugins/workspaces": "^4.2.1",
+    "@release-it/bumper": "^6.0.1",
+    "@release-it/conventional-changelog": "^9.0.4",
+    "release-it": "^19.0.6 ",
+    "typescript": "^5.9.3"
   },
   "release-it": {
     "npm": {
