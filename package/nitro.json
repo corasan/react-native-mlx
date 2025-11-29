@@ -9,8 +9,8 @@
     "androidCxxLibName": "MLXReactNative"
   },
   "autolinking": {
-    "LLMEvaluator": {
-      "swift": "HybridLLMEvaluator"
+    "LLM": {
+      "swift": "HybridLLM"
     }
   },
   "ignorePaths": ["**/node_modules"]

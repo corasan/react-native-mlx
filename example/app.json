@@ -31,18 +31,15 @@
     },
     "plugins": [
       "expo-router",
-      "react-native-mlx",
-      "./plugins/withDynamicFrameworks",
       [
         "expo-build-properties",
         {
           "ios": {
-            "deploymentTarget": "16.0",
+            "deploymentTarget": "26.0",
             "useFrameworks": "dynamic"
           }
         }
-      ],
-      "expo-web-browser"
+      ]
     ],
     "experiments": {
       "typedRoutes": true

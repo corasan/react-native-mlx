@@ -1,16 +1,16 @@
-import { Text, View } from '@/components/Themed'
 import { LegendList, type LegendListRef } from '@legendapp/list'
 import * as Crypto from 'expo-crypto'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import {
   Platform,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
   useColorScheme,
+  View,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { useLLMEvaluator } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 type Message = {
@@ -19,7 +19,7 @@ type Message = {
   isUser: boolean
 }
 
-const MessageItem = ({ id, content, isUser }: Message) => {
+const MessageItem = ({ content, isUser }: Message) => {
   const colorScheme = useColorScheme()
   const textColor = colorScheme === 'dark' ? 'white' : 'black'
 
@@ -38,9 +38,6 @@ const MessageItem = ({ id, content, isUser }: Message) => {
 }
 
 export default function TabOneScreen() {
-  const llm = useLLMEvaluator({
-    model: 'llama-3.2',
-  })
   const [modelLoaded, setModelLoaded] = useState(false)
   const [prompt, setPrompt] = useState('Why is the sky blue?')
   const [tokens, setTokens] = useState<string>('')
@@ -48,7 +45,6 @@ export default function TabOneScreen() {
   const textColor = colorScheme === 'dark' ? 'white' : 'black'
   const bgColor = colorScheme === 'dark' ? 'black' : 'white'
   const [messages, setMessages] = useState<Message[]>([])
-  const [, setIsGenerating] = useState(false)
   const [disableScrollOnSizeChange, setDisableScrollOnSizeChange] = useState(false)
   const listRef = useRef<LegendListRef>(null)
   const inputRef = useRef<TextInput>(null)
@@ -60,40 +56,7 @@ export default function TabOneScreen() {
     setPrompt('')
     inputRef.current?.blur()
     setMessages(prevMessages => [...prevMessages, message])
-    await llm.generate(prompt)
   }
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: no need
-  useEffect(() => {
-    const loadModel = async () => {
-      await llm.load('llama-3.1b-instruct-4bit')
-
-      setModelLoaded(true)
-    }
-    loadModel()
-
-    const tokenListener = llm.addEventListener('onTokenGeneration', payload => {
-      setTokens(payload.text)
-    })
-
-    const stateListener = llm.addEventListener('onStateChange', payload => {
-      setIsGenerating(payload.isGenerating)
-    })
-
-    return () => {
-      llm.removeEventListener(tokenListener)
-      llm.removeEventListener(stateListener)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (llm.response && !llm.isGenerating) {
-      setMessages(prevMessages => [
-        ...prevMessages,
-        { id: Crypto.randomUUID(), content: llm.response.trim(), isUser: false },
-      ])
-    }
-  }, [llm.isGenerating, llm.response])
 
   return (
     <SafeAreaView
@@ -105,7 +68,7 @@ export default function TabOneScreen() {
         behavior="padding"
         keyboardVerticalOffset={Platform.select({ ios: 120, default: 95 })}
       >
-        <LegendList
+        <LegendList<Message>
           ref={listRef}
           data={messages}
           keyExtractor={item => item.id}
@@ -114,11 +77,11 @@ export default function TabOneScreen() {
           alignItemsAtEnd
           maintainScrollAtEnd
           maintainVisibleContentPosition
-          onContentSizeChange={() => {
-            if (llm.isGenerating || (messages.length > 0 && !disableScrollOnSizeChange)) {
-              listRef?.current?.scrollToEnd({ animated: false })
-            }
-          }}
+          // onContentSizeChange={() => {
+          //   if (llm.isGenerating || (messages.length > 0 && !disableScrollOnSizeChange)) {
+          //     listRef?.current?.scrollToEnd({ animated: false })
+          //   }
+          // }}
           onScrollBeginDrag={() => {
             setDisableScrollOnSizeChange(true)
           }}
@@ -127,19 +90,19 @@ export default function TabOneScreen() {
               setDisableScrollOnSizeChange(false)
             }, 2_500)
           }}
-          ListFooterComponent={() => {
-            if (!llm.isGenerating) return null
-            return (
-              <>
-                <MessageItem
-                  id={Crypto.randomUUID()}
-                  content={tokens.trim()}
-                  isUser={false}
-                />
-                <View style={{ height: 30 }} />
-              </>
-            )
-          }}
+          // ListFooterComponent={() => {
+          //   if (!llm.isGenerating) return null
+          //   return (
+          //     <>
+          //       <MessageItem
+          //         id={Crypto.randomUUID()}
+          //         content={tokens.trim()}
+          //         isUser={false}
+          //       />
+          //       <View style={{ height: 30 }} />
+          //     </>
+          //   )
+          // }}
         />
 
         {modelLoaded && (

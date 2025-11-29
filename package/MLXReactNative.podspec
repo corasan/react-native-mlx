@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => min_ios_version_supported, :visionos => 1.0 }
+  s.platforms    = { :ios => 26.0, :visionos => 1.0 }
   s.source       = { :git => "https://github.com/corasan/react-native-mlx.git", :tag => "#{s.version}" }
 
   s.source_files = [
@@ -23,14 +23,8 @@ Pod::Spec.new do |s|
   ]
 
   spm_dependency(s,
-    url: "https://github.com/ml-explore/mlx-swift.git",
-    requirement: {kind: "upToNextMajorVersion", minimumVersion: "0.21.3"},
-    products: ["MLX"]
-  )
-
-  spm_dependency(s,
-    url: "https://github.com/ml-explore/mlx-swift-examples.git",
-    requirement: {kind: "upToNextMajorVersion", minimumVersion: "2.21.2"},
+    url: "https://github.com/ml-explore/mlx-swift-lm.git",
+    requirement: {kind: "upToNextMinorVersion", minimumVersion: "2.29.1"},
     products: ["MLXLLM", "MLXLMCommon"]
   )
 
