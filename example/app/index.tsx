@@ -58,7 +58,7 @@ const MessageItem = ({ content, thinking, isThinking, isUser }: Message) => {
   if (isUser) {
     return (
       <View style={styles.userMessage}>
-        <Text style={[styles.messageText, { color: textColor }]}>{content}</Text>
+        <Text style={[styles.messageText, { color: 'white' }]}>{content}</Text>
       </View>
     )
   }
