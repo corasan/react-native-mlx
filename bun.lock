@@ -48,7 +48,6 @@
       "version": "0.1.0",
       "devDependencies": {
         "@expo/config-plugins": "^9.0.10",
-        "@types/react": "^19.0.0",
         "nitrogen": "^0.31.10",
         "react-native-builder-bob": "^0.40.13",
       },
