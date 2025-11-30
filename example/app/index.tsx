@@ -4,6 +4,7 @@ import { router, useFocusEffect } from 'expo-router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
+  LayoutAnimation,
   Platform,
   StyleSheet,
   Text,
@@ -13,18 +14,44 @@ import {
   View,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { createLLM, createModelManager, LLMEvents } from 'react-native-mlx'
+import { createLLM, createModelManager } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const MODEL_ID = 'mlx-community/SmolLM-135M-Instruct-4bit'
+const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
 
 type Message = {
   id: string
   content: string
+  thinking?: string
+  isThinking?: boolean
   isUser: boolean
 }
 
-const MessageItem = ({ content, isUser }: Message) => {
+const ThinkingBlock = ({ thinking }: { thinking: string }) => {
+  const [expanded, setExpanded] = useState(false)
+  const colorScheme = useColorScheme()
+  const textColor = colorScheme === 'dark' ? '#aaa' : '#666'
+
+  const toggleExpanded = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    setExpanded(!expanded)
+  }
+
+  return (
+    <TouchableOpacity onPress={toggleExpanded} style={styles.thinkingBlock}>
+      <View style={styles.thinkingHeader}>
+        <Text style={[styles.thinkingLabel, { color: textColor }]}>
+          {expanded ? '▼' : '▶'} Thinking
+        </Text>
+      </View>
+      {expanded && (
+        <Text style={[styles.thinkingText, { color: textColor }]}>{thinking}</Text>
+      )}
+    </TouchableOpacity>
+  )
+}
+
+const MessageItem = ({ content, thinking, isThinking, isUser }: Message) => {
   const colorScheme = useColorScheme()
   const textColor = colorScheme === 'dark' ? 'white' : 'black'
 
@@ -35,9 +62,21 @@ const MessageItem = ({ content, isUser }: Message) => {
       </View>
     )
   }
+
   return (
     <View style={styles.message}>
-      <Text style={[styles.messageText, { color: textColor }]}>{content}</Text>
+      {isThinking && !content && (
+        <View style={styles.thinkingIndicator}>
+          <ActivityIndicator size="small" color="#888" />
+          <Text style={[styles.thinkingIndicatorText, { color: textColor }]}>
+            Thinking...
+          </Text>
+        </View>
+      )}
+      {thinking && <ThinkingBlock thinking={thinking} />}
+      {content ? (
+        <Text style={[styles.messageText, { color: textColor }]}>{content}</Text>
+      ) : null}
     </View>
   )
 }
@@ -48,7 +87,6 @@ export default function ChatScreen() {
   const [isLoading, setIsLoading] = useState(false)
   const [isReady, setIsReady] = useState(false)
   const [prompt, setPrompt] = useState('')
-  const [currentResponse, setCurrentResponse] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
   const colorScheme = useColorScheme()
   const textColor = colorScheme === 'dark' ? 'white' : 'black'
@@ -83,19 +121,7 @@ export default function ChatScreen() {
     const loadModel = async () => {
       setIsLoading(true)
       try {
-        const llm = llmRef.current
-        llm.addEventListener(LLMEvents.onToken, token => {
-          setCurrentResponse(prev => prev + token)
-        })
-        llm.addEventListener(LLMEvents.onComplete, () => {
-          setIsGenerating(false)
-        })
-        llm.addEventListener(LLMEvents.onError, error => {
-          console.error('LLM Error:', error)
-          setIsGenerating(false)
-        })
-
-        await llm.load(MODEL_ID)
+        await llmRef.current.load(MODEL_ID)
         setIsReady(true)
       } catch (error) {
         console.error('Error loading model:', error)
@@ -107,18 +133,6 @@ export default function ChatScreen() {
     loadModel()
   }, [isDownloaded, isReady])
 
-  useEffect(() => {
-    if (!isGenerating && currentResponse) {
-      const assistantMessage: Message = {
-        id: Crypto.randomUUID(),
-        content: currentResponse.trim(),
-        isUser: false,
-      }
-      setMessages(prev => [...prev, assistantMessage])
-      setCurrentResponse('')
-    }
-  }, [isGenerating, currentResponse])
-
   const sendPrompt = async () => {
     if (!isReady || !prompt.trim() || isGenerating) return
 
@@ -128,16 +142,62 @@ export default function ChatScreen() {
       isUser: true,
     }
 
-    setMessages(prev => [...prev, userMessage])
+    const assistantMessageId = Crypto.randomUUID()
+    const assistantMessage: Message = {
+      id: assistantMessageId,
+      content: '',
+      thinking: '',
+      isThinking: false,
+      isUser: false,
+    }
+
+    setMessages(prev => [...prev, userMessage, assistantMessage])
     setPrompt('')
     inputRef.current?.blur()
     setIsGenerating(true)
-    setCurrentResponse('')
+
+    let fullText = ''
+    let isInThinkingBlock = false
 
     try {
-      await llmRef.current.generate(prompt)
+      await llmRef.current.stream(prompt, token => {
+        fullText += token
+
+        const thinkStart = fullText.indexOf('<think>')
+        const thinkEnd = fullText.indexOf('</think>')
+
+        let thinkingContent = ''
+        let responseContent = ''
+
+        if (thinkStart !== -1) {
+          if (thinkEnd !== -1) {
+            thinkingContent = fullText.slice(thinkStart + 7, thinkEnd).trim()
+            responseContent = fullText.slice(thinkEnd + 8).trim()
+            isInThinkingBlock = false
+          } else {
+            thinkingContent = fullText.slice(thinkStart + 7).trim()
+            isInThinkingBlock = true
+          }
+        } else {
+          responseContent = fullText.trim()
+        }
+
+        setMessages(prev =>
+          prev.map(msg =>
+            msg.id === assistantMessageId
+              ? {
+                  ...msg,
+                  thinking: thinkingContent,
+                  content: responseContent,
+                  isThinking: isInThinkingBlock,
+                }
+              : msg,
+          ),
+        )
+      })
     } catch (error) {
       console.error('Error generating:', error)
+    } finally {
       setIsGenerating(false)
     }
   }
@@ -221,16 +281,6 @@ export default function ChatScreen() {
           alignItemsAtEnd
           maintainScrollAtEnd
           maintainVisibleContentPosition
-          ListFooterComponent={() => {
-            if (!isGenerating || !currentResponse) return null
-            return (
-              <View style={styles.message}>
-                <Text style={[styles.messageText, { color: textColor }]}>
-                  {currentResponse.trim()}
-                </Text>
-              </View>
-            )
-          }}
         />
 
         <View style={styles.inputContainer}>
@@ -369,5 +419,36 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+  },
+  thinkingIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
+  },
+  thinkingIndicatorText: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    opacity: 0.7,
+  },
+  thinkingBlock: {
+    backgroundColor: '#8881',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 8,
+  },
+  thinkingHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  thinkingLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  thinkingText: {
+    fontSize: 13,
+    lineHeight: 18,
+    marginTop: 8,
+    fontStyle: 'italic',
   },
 })
