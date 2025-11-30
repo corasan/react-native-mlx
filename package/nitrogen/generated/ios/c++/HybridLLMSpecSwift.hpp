@@ -12,12 +12,10 @@
 // Forward declaration of `HybridLLMSpec_cxx` to properly resolve imports.
 namespace MLXReactNative { class HybridLLMSpec_cxx; }
 
-// Forward declaration of `LLMEvents` to properly resolve imports.
-namespace margelo::nitro::mlxreactnative { enum class LLMEvents; }
+
 
 #include <string>
 #include <NitroModules/Promise.hpp>
-#include "LLMEvents.hpp"
 #include <functional>
 
 #include "MLXReactNative-Swift-Cxx-Umbrella.hpp"
@@ -89,22 +87,16 @@ namespace margelo::nitro::mlxreactnative {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline void stop() override {
-      auto __result = _swiftPart.stop();
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-    }
-    inline std::string addEventListener(LLMEvents eventType, const std::function<void(const std::string& /* payload */)>& listener) override {
-      auto __result = _swiftPart.addEventListener(static_cast<int>(eventType), listener);
+    inline std::shared_ptr<Promise<std::string>> stream(const std::string& prompt, const std::function<void(const std::string& /* token */)>& onToken) override {
+      auto __result = _swiftPart.stream(prompt, onToken);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline void removeEventListener(const std::string& listenerId) override {
-      auto __result = _swiftPart.removeEventListener(listenerId);
+    inline void stop() override {
+      auto __result = _swiftPart.stop();
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

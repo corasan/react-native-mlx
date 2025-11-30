@@ -12,13 +12,10 @@
 namespace margelo::nitro::mlxreactnative { class HybridLLMSpec; }
 // Forward declaration of `HybridModelManagerSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridModelManagerSpec; }
-// Forward declaration of `LLMEvents` to properly resolve imports.
-namespace margelo::nitro::mlxreactnative { enum class LLMEvents; }
 
 // Include C++ defined types
 #include "HybridLLMSpec.hpp"
 #include "HybridModelManagerSpec.hpp"
-#include "LLMEvents.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>

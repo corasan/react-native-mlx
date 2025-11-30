@@ -18,9 +18,8 @@ public protocol HybridLLMSpec_protocol: HybridObject {
   // Methods
   func load(modelId: String) throws -> Promise<Void>
   func generate(prompt: String) throws -> Promise<String>
+  func stream(prompt: String, onToken: @escaping (_ token: String) -> Void) throws -> Promise<String>
   func stop() throws -> Void
-  func addEventListener(eventType: LLMEvents, listener: @escaping (_ payload: String) -> Void) throws -> String
-  func removeEventListener(listenerId: String) throws -> Void
 }
 
 public extension HybridLLMSpec_protocol {

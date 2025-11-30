@@ -19,9 +19,8 @@ namespace margelo::nitro::mlxreactnative {
       prototype.registerHybridGetter("modelId", &HybridLLMSpec::getModelId);
       prototype.registerHybridMethod("load", &HybridLLMSpec::load);
       prototype.registerHybridMethod("generate", &HybridLLMSpec::generate);
+      prototype.registerHybridMethod("stream", &HybridLLMSpec::stream);
       prototype.registerHybridMethod("stop", &HybridLLMSpec::stop);
-      prototype.registerHybridMethod("addEventListener", &HybridLLMSpec::addEventListener);
-      prototype.registerHybridMethod("removeEventListener", &HybridLLMSpec::removeEventListener);
     });
   }
 

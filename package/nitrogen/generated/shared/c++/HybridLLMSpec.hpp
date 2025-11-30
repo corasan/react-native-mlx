@@ -13,12 +13,10 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `LLMEvents` to properly resolve imports.
-namespace margelo::nitro::mlxreactnative { enum class LLMEvents; }
+
 
 #include <string>
 #include <NitroModules/Promise.hpp>
-#include "LLMEvents.hpp"
 #include <functional>
 
 namespace margelo::nitro::mlxreactnative {
@@ -56,9 +54,8 @@ namespace margelo::nitro::mlxreactnative {
       // Methods
       virtual std::shared_ptr<Promise<void>> load(const std::string& modelId) = 0;
       virtual std::shared_ptr<Promise<std::string>> generate(const std::string& prompt) = 0;
+      virtual std::shared_ptr<Promise<std::string>> stream(const std::string& prompt, const std::function<void(const std::string& /* token */)>& onToken) = 0;
       virtual void stop() = 0;
-      virtual std::string addEventListener(LLMEvents eventType, const std::function<void(const std::string& /* payload */)>& listener) = 0;
-      virtual void removeEventListener(const std::string& listenerId) = 0;
 
     protected:
       // Hybrid Setup

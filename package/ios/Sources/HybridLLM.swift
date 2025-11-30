@@ -7,7 +7,6 @@ internal import MLXLMCommon
 class HybridLLM: HybridLLMSpec {
     private var session: ChatSession?
     private var currentTask: Task<String, Error>?
-    private var eventListeners: [String: (eventType: LLMEvents, listener: (String) -> Void)] = [:]
 
     var isLoaded: Bool { session != nil }
     var isGenerating: Bool { currentTask != nil }
@@ -38,13 +37,9 @@ class HybridLLM: HybridLLMSpec {
 
         return Promise.async { [self] in
             let task = Task<String, Error> {
-                var result = ""
-                for try await chunk in session.streamResponse(to: prompt) {
-                    if Task.isCancelled { break }
-                    result += chunk
-                    self.emitEvent(.ontoken, payload: chunk)
-                }
-                self.emitEvent(.oncomplete, payload: result)
+                print("[LLM] Generating response for: \(prompt.prefix(50))...")
+                let result = try await session.respond(to: prompt)
+                print("[LLM] Generation complete")
                 return result
             }
 
@@ -56,7 +51,37 @@ class HybridLLM: HybridLLMSpec {
                 return result
             } catch {
                 self.currentTask = nil
-                self.emitEvent(.onerror, payload: error.localizedDescription)
+                throw error
+            }
+        }
+    }
+
+    func stream(prompt: String, onToken: @escaping (String) -> Void) throws -> Promise<String> {
+        guard let session = session else {
+            throw LLMError.notLoaded
+        }
+
+        return Promise.async { [self] in
+            let task = Task<String, Error> {
+                var result = ""
+                print("[LLM] Streaming response for: \(prompt.prefix(50))...")
+                for try await chunk in session.streamResponse(to: prompt) {
+                    if Task.isCancelled { break }
+                    result += chunk
+                    onToken(chunk)
+                }
+                print("[LLM] Stream complete")
+                return result
+            }
+
+            self.currentTask = task
+
+            do {
+                let result = try await task.value
+                self.currentTask = nil
+                return result
+            } catch {
+                self.currentTask = nil
                 throw error
             }
         }
@@ -65,21 +90,5 @@ class HybridLLM: HybridLLMSpec {
     func stop() throws {
         currentTask?.cancel()
         currentTask = nil
-    }
-
-    func addEventListener(eventType: LLMEvents, listener: @escaping (String) -> Void) throws -> String {
-        let listenerId = UUID().uuidString
-        eventListeners[listenerId] = (eventType: eventType, listener: listener)
-        return listenerId
-    }
-
-    func removeEventListener(listenerId: String) throws {
-        eventListeners.removeValue(forKey: listenerId)
-    }
-
-    private func emitEvent(_ eventType: LLMEvents, payload: String) {
-        for (_, listenerInfo) in eventListeners where listenerInfo.eventType == eventType {
-            listenerInfo.listener(payload)
-        }
     }
 }
