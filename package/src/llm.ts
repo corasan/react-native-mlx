@@ -11,8 +11,8 @@ function getInstance(): LLMSpec {
 }
 
 export const LLM = {
-  load(modelId: string): Promise<void> {
-    return getInstance().load(modelId)
+  load(modelId: string, onProgress: (progress: number) => void): Promise<void> {
+    return getInstance().load(modelId, onProgress)
   },
 
   generate(prompt: string): Promise<string> {

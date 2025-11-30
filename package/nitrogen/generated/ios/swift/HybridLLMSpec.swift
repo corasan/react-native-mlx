@@ -17,7 +17,7 @@ public protocol HybridLLMSpec_protocol: HybridObject {
   var debug: Bool { get set }
 
   // Methods
-  func load(modelId: String) throws -> Promise<Void>
+  func load(modelId: String, onProgress: @escaping (_ progress: Double) -> Void) throws -> Promise<Void>
   func generate(prompt: String) throws -> Promise<String>
   func stream(prompt: String, onToken: @escaping (_ token: String) -> Void) throws -> Promise<String>
   func stop() throws -> Void

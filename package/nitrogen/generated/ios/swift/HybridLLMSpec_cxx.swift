@@ -148,9 +148,14 @@ open class HybridLLMSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func load(modelId: std.string) -> bridge.Result_std__shared_ptr_Promise_void___ {
+  public final func load(modelId: std.string, onProgress: bridge.Func_void_double) -> bridge.Result_std__shared_ptr_Promise_void___ {
     do {
-      let __result = try self.__implementation.load(modelId: String(modelId))
+      let __result = try self.__implementation.load(modelId: String(modelId), onProgress: { () -> (Double) -> Void in
+        let __wrappedFunction = bridge.wrap_Func_void_double(onProgress)
+        return { (__progress: Double) -> Void in
+          __wrappedFunction.call(__progress)
+        }
+      }())
       let __resultCpp = { () -> bridge.std__shared_ptr_Promise_void__ in
         let __promise = bridge.create_std__shared_ptr_Promise_void__()
         let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_void__(__promise)

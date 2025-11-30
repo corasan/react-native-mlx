@@ -77,8 +77,8 @@ namespace margelo::nitro::mlxreactnative {
 
   public:
     // Methods
-    inline std::shared_ptr<Promise<void>> load(const std::string& modelId) override {
-      auto __result = _swiftPart.load(modelId);
+    inline std::shared_ptr<Promise<void>> load(const std::string& modelId, const std::function<void(double /* progress */)>& onProgress) override {
+      auto __result = _swiftPart.load(modelId, onProgress);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

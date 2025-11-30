@@ -85,6 +85,7 @@ export default function ChatScreen() {
   const [isChecking, setIsChecking] = useState(true)
   const [isDownloaded, setIsDownloaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [loadProgress, setLoadProgress] = useState(0)
   const [isReady, setIsReady] = useState(false)
   const [prompt, setPrompt] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
@@ -120,8 +121,9 @@ export default function ChatScreen() {
 
     const loadModel = async () => {
       setIsLoading(true)
+      setLoadProgress(0)
       try {
-        await LLM.load(MODEL_ID)
+        await LLM.load(MODEL_ID, setLoadProgress)
         setIsReady(true)
       } catch (error) {
         console.error('Error loading model:', error)
@@ -245,7 +247,9 @@ export default function ChatScreen() {
     return (
       <SafeAreaView style={[styles.centered, { backgroundColor: bgColor }]}>
         <ActivityIndicator size="large" />
-        <Text style={[styles.statusText, { color: textColor }]}>Loading model...</Text>
+        <Text style={[styles.statusText, { color: textColor }]}>
+          Loading model... {(loadProgress * 100).toFixed(0)}%
+        </Text>
       </SafeAreaView>
     )
   }

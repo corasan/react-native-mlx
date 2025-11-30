@@ -15,11 +15,11 @@ class HybridLLM: HybridLLMSpec {
 
     private func log(_ message: String) {
         if debug {
-            print("[MLXReactNative.LLM] \(message)")
+            print("[MLXReactNative.HybridLLM] \(message)")
         }
     }
 
-    func load(modelId: String) throws -> Promise<Void> {
+    func load(modelId: String, onProgress: @escaping (Double) -> Void) throws -> Promise<Void> {
         return Promise.async { [self] in
             let modelDir = await ModelDownloader.shared.getModelDirectory(modelId: modelId)
             log("Loading from directory: \(modelDir.path)")
@@ -27,8 +27,8 @@ class HybridLLM: HybridLLMSpec {
             let config = ModelConfiguration(directory: modelDir)
             let container = try await LLMModelFactory.shared.loadContainer(
                 configuration: config
-            ) { [self] progress in
-                log("Load progress: \(progress.fractionCompleted)")
+            ) { progress in
+                onProgress(progress.fractionCompleted)
             }
 
             self.session = ChatSession(container)

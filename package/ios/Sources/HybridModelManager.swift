@@ -13,7 +13,7 @@ class HybridModelManager: HybridModelManagerSpec {
 
     private func log(_ message: String) {
         if debug {
-            print("[MLXReactNative.ModelManager] \(message)")
+            print("[MLXReactNative.HybridModelManager] \(message)")
         }
     }
 

@@ -93,6 +93,28 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
+  // pragma MARK: std::function<void(double /* progress */)>
+  /**
+   * Specialized version of `std::function<void(double)>`.
+   */
+  using Func_void_double = std::function<void(double /* progress */)>;
+  /**
+   * Wrapper class for a `std::function<void(double / * progress * /)>`, this can be used from Swift.
+   */
+  class Func_void_double_Wrapper final {
+  public:
+    explicit Func_void_double_Wrapper(std::function<void(double /* progress */)>&& func): _function(std::make_unique<std::function<void(double /* progress */)>>(std::move(func))) {}
+    inline void call(double progress) const noexcept {
+      _function->operator()(progress);
+    }
+  private:
+    std::unique_ptr<std::function<void(double /* progress */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept;
+  inline Func_void_double_Wrapper wrap_Func_void_double(Func_void_double value) noexcept {
+    return Func_void_double_Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<Promise<std::string>>
   /**
    * Specialized version of `std::shared_ptr<Promise<std::string>>`.
@@ -164,28 +186,6 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
   }
   inline Result_void_ create_Result_void_(const std::exception_ptr& error) noexcept {
     return Result<void>::withError(error);
-  }
-  
-  // pragma MARK: std::function<void(double /* progress */)>
-  /**
-   * Specialized version of `std::function<void(double)>`.
-   */
-  using Func_void_double = std::function<void(double /* progress */)>;
-  /**
-   * Wrapper class for a `std::function<void(double / * progress * /)>`, this can be used from Swift.
-   */
-  class Func_void_double_Wrapper final {
-  public:
-    explicit Func_void_double_Wrapper(std::function<void(double /* progress */)>&& func): _function(std::make_unique<std::function<void(double /* progress */)>>(std::move(func))) {}
-    inline void call(double progress) const noexcept {
-      _function->operator()(progress);
-    }
-  private:
-    std::unique_ptr<std::function<void(double /* progress */)>> _function;
-  } SWIFT_NONCOPYABLE;
-  Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept;
-  inline Func_void_double_Wrapper wrap_Func_void_double(Func_void_double value) noexcept {
-    return Func_void_double_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<Promise<bool>>

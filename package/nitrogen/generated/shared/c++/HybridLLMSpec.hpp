@@ -54,7 +54,7 @@ namespace margelo::nitro::mlxreactnative {
 
     public:
       // Methods
-      virtual std::shared_ptr<Promise<void>> load(const std::string& modelId) = 0;
+      virtual std::shared_ptr<Promise<void>> load(const std::string& modelId, const std::function<void(double /* progress */)>& onProgress) = 0;
       virtual std::shared_ptr<Promise<std::string>> generate(const std::string& prompt) = 0;
       virtual std::shared_ptr<Promise<std::string>> stream(const std::string& prompt, const std::function<void(const std::string& /* token */)>& onToken) = 0;
       virtual void stop() = 0;
