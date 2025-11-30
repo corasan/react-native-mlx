@@ -1,23 +1,20 @@
 {
   "$schema": "https://nitro.margelo.com/nitro.schema.json",
-  "cxxNamespace": [
-    "rnmlx"
-  ],
+  "cxxNamespace": ["mlxreactnative"],
   "ios": {
-    "iosModuleName": "ReactNativeMLX"
+    "iosModuleName": "MLXReactNative"
   },
   "android": {
-    "androidNamespace": [
-      "rnmlx"
-    ],
-    "androidCxxLibName": "ReactNativeMLX"
+    "androidNamespace": ["mlxreactnative"],
+    "androidCxxLibName": "MLXReactNative"
   },
   "autolinking": {
-    "LLMEvaluator": {
-      "swift": "HybridLLMEvaluator"
+    "LLM": {
+      "swift": "HybridLLM"
+    },
+    "ModelManager": {
+      "swift": "HybridModelManager"
     }
   },
-  "ignorePaths": [
-    "**/node_modules"
-  ]
+  "ignorePaths": ["**/node_modules"]
 }

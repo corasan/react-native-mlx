@@ -1,0 +1,102 @@
+import { router } from 'expo-router'
+import { useEffect, useState } from 'react'
+import { ActivityIndicator, StyleSheet, Text, useColorScheme, View } from 'react-native'
+import { createModelManager } from 'react-native-mlx'
+
+const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
+
+export default function DownloadModal() {
+  const [progress, setProgress] = useState(0)
+  const [status, setStatus] = useState('Starting download...')
+  const colorScheme = useColorScheme()
+  const textColor = colorScheme === 'dark' ? 'white' : 'black'
+  const bgColor = colorScheme === 'dark' ? 'black' : 'white'
+
+  useEffect(() => {
+    const downloadModel = async () => {
+      const modelManager = createModelManager()
+
+      try {
+        setStatus('Downloading model...')
+        await modelManager.download(MODEL_ID, p => {
+          setProgress(p)
+        })
+        setStatus('Download complete!')
+        setTimeout(() => {
+          router.back()
+        }, 500)
+      } catch (error) {
+        setStatus(`Error: ${error}`)
+      }
+    }
+
+    downloadModel()
+  }, [])
+
+  return (
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
+      <View style={styles.content}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text style={[styles.title, { color: textColor }]}>Downloading Model</Text>
+        <Text style={[styles.modelName, { color: textColor }]}>{MODEL_ID}</Text>
+
+        <View style={styles.progressContainer}>
+          <View style={[styles.progressBar, { width: `${progress * 100}%` }]} />
+        </View>
+
+        <Text style={[styles.progressText, { color: textColor }]}>
+          {(progress * 100).toFixed(1)}%
+        </Text>
+
+        <Text style={[styles.status, { color: textColor }]}>{status}</Text>
+      </View>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  content: {
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 300,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 8,
+  },
+  modelName: {
+    fontSize: 12,
+    opacity: 0.7,
+    marginBottom: 24,
+  },
+  progressContainer: {
+    width: '100%',
+    height: 8,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: '#007AFF',
+    borderRadius: 4,
+  },
+  progressText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 16,
+  },
+  status: {
+    fontSize: 14,
+    marginTop: 8,
+    opacity: 0.7,
+  },
+})

@@ -5,6 +5,7 @@
 /// Copyright © 2025 Marc Rousavy @ Margelo
 ///
 
+import Foundation
 import NitroModules
 
 /**
@@ -12,7 +13,7 @@ import NitroModules
  * This class can be used from C++, e.g. to wrap the Swift closure as a `std::function`.
  */
 public final class Func_void {
-  public typealias bridge = margelo.nitro.rnmlx.bridge.swift
+  public typealias bridge = margelo.nitro.mlxreactnative.bridge.swift
 
   private let closure: () -> Void
 

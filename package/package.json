@@ -2,9 +2,9 @@
   "name": "react-native-mlx",
   "version": "0.1.0",
   "description": "Nitro module package",
-  "main": "./lib/commonjs/index.js",
+  "main": "./lib/module/index.js",
   "module": "./lib/module/index.js",
-  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "types": "./lib/typescript/src/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
   "scripts": {
@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib android/.cxx node_modules/**/android/.cxx",
     "release": "release-it",
-    "specs": "bun typecheck && nitro-codegen --logLevel=\\\"debug\\\" && bun run build",
+    "specs": "bun typecheck && nitrogen --logLevel=\\\"debug\\\" && bun run build",
     "specs:pod": "bun specs && bun --cwd ../example pod"
   },
   "keywords": [
@@ -57,8 +57,8 @@
   },
   "devDependencies": {
     "@expo/config-plugins": "^9.0.10",
-    "nitro-codegen": "^0.22.1",
-    "react-native-builder-bob": "^0.35.2"
+    "nitrogen": "^0.31.10",
+    "react-native-builder-bob": "^0.40.13"
   },
   "peerDependencies": {
     "react": "*",
@@ -83,27 +83,12 @@
     "output": "lib",
     "targets": [
       [
-        "commonjs",
-        {
-          "esm": true
-        }
-      ],
-      [
         "module",
         {
           "esm": true
         }
       ],
-      [
-        "typescript",
-        {
-          "esm": true
-        }
-      ]
+      "typescript"
     ]
-  },
-  "eslintIgnore": [
-    "node_modules/",
-    "lib/"
-  ]
+  }
 }
