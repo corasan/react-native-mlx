@@ -49,6 +49,8 @@ namespace margelo::nitro::mlxreactnative {
       virtual bool getIsLoaded() = 0;
       virtual bool getIsGenerating() = 0;
       virtual std::string getModelId() = 0;
+      virtual bool getDebug() = 0;
+      virtual void setDebug(bool debug) = 0;
 
     public:
       // Methods

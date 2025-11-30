@@ -6,4 +6,6 @@ export interface ModelManager extends HybridObject<{ ios: 'swift' }> {
   getDownloadedModels(): Promise<string[]>
   deleteModel(modelId: string): Promise<void>
   getModelPath(modelId: string): Promise<string>
+
+  debug: boolean
 }

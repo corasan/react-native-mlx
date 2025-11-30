@@ -9,4 +9,6 @@ export interface LLM extends HybridObject<{ ios: 'swift' }> {
   readonly isLoaded: boolean
   readonly isGenerating: boolean
   readonly modelId: string
+
+  debug: boolean
 }

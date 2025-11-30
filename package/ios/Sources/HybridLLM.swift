@@ -11,22 +11,29 @@ class HybridLLM: HybridLLMSpec {
     var isLoaded: Bool { session != nil }
     var isGenerating: Bool { currentTask != nil }
     var modelId: String = ""
+    var debug: Bool = false
+
+    private func log(_ message: String) {
+        if debug {
+            print("[MLXReactNative.LLM] \(message)")
+        }
+    }
 
     func load(modelId: String) throws -> Promise<Void> {
         return Promise.async { [self] in
             let modelDir = await ModelDownloader.shared.getModelDirectory(modelId: modelId)
-            print("[LLM] Loading from directory: \(modelDir.path)")
+            log("Loading from directory: \(modelDir.path)")
 
             let config = ModelConfiguration(directory: modelDir)
             let container = try await LLMModelFactory.shared.loadContainer(
                 configuration: config
-            ) { progress in
-                print("[LLM] Load progress: \(progress.fractionCompleted)")
+            ) { [self] progress in
+                log("Load progress: \(progress.fractionCompleted)")
             }
 
             self.session = ChatSession(container)
             self.modelId = modelId
-            print("[LLM] Model loaded successfully")
+            log("Model loaded successfully")
         }
     }
 
@@ -37,9 +44,9 @@ class HybridLLM: HybridLLMSpec {
 
         return Promise.async { [self] in
             let task = Task<String, Error> {
-                print("[LLM] Generating response for: \(prompt.prefix(50))...")
+                log("Generating response for: \(prompt.prefix(50))...")
                 let result = try await session.respond(to: prompt)
-                print("[LLM] Generation complete")
+                log("Generation complete")
                 return result
             }
 
@@ -64,13 +71,13 @@ class HybridLLM: HybridLLMSpec {
         return Promise.async { [self] in
             let task = Task<String, Error> {
                 var result = ""
-                print("[LLM] Streaming response for: \(prompt.prefix(50))...")
+                log("Streaming response for: \(prompt.prefix(50))...")
                 for try await chunk in session.streamResponse(to: prompt) {
                     if Task.isCancelled { break }
                     result += chunk
                     onToken(chunk)
                 }
-                print("[LLM] Stream complete")
+                log("Stream complete")
                 return result
             }
 

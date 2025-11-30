@@ -68,6 +68,12 @@ namespace margelo::nitro::mlxreactnative {
       auto __result = _swiftPart.getModelId();
       return __result;
     }
+    inline bool getDebug() noexcept override {
+      return _swiftPart.getDebug();
+    }
+    inline void setDebug(bool debug) noexcept override {
+      _swiftPart.setDebug(std::forward<decltype(debug)>(debug));
+    }
 
   public:
     // Methods

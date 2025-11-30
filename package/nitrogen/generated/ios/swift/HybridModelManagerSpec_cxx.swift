@@ -114,7 +114,16 @@ open class HybridModelManagerSpec_cxx {
   }
 
   // Properties
-  
+  public final var debug: Bool {
+    @inline(__always)
+    get {
+      return self.__implementation.debug
+    }
+    @inline(__always)
+    set {
+      self.__implementation.debug = newValue
+    }
+  }
 
   // Methods
   @inline(__always)

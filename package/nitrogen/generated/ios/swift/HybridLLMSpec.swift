@@ -14,6 +14,7 @@ public protocol HybridLLMSpec_protocol: HybridObject {
   var isLoaded: Bool { get }
   var isGenerating: Bool { get }
   var modelId: String { get }
+  var debug: Bool { get set }
 
   // Methods
   func load(modelId: String) throws -> Promise<Void>

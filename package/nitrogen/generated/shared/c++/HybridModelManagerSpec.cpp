@@ -14,6 +14,8 @@ namespace margelo::nitro::mlxreactnative {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
+      prototype.registerHybridGetter("debug", &HybridModelManagerSpec::getDebug);
+      prototype.registerHybridSetter("debug", &HybridModelManagerSpec::setDebug);
       prototype.registerHybridMethod("download", &HybridModelManagerSpec::download);
       prototype.registerHybridMethod("isDownloaded", &HybridModelManagerSpec::isDownloaded);
       prototype.registerHybridMethod("getDownloadedModels", &HybridModelManagerSpec::getDownloadedModels);

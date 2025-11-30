@@ -97,6 +97,8 @@ export default function ChatScreen() {
   const llmRef = useRef(createLLM())
   const modelManagerRef = useRef(createModelManager())
 
+  llmRef.current.debug = true
+
   const checkDownloaded = useCallback(async () => {
     setIsChecking(true)
     try {
