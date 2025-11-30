@@ -14,7 +14,7 @@ import {
   View,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { createLLM, createModelManager } from 'react-native-mlx'
+import { LLM, ModelManager } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
@@ -94,15 +94,13 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([])
   const listRef = useRef<LegendListRef>(null)
   const inputRef = useRef<TextInput>(null)
-  const llmRef = useRef(createLLM())
-  const modelManagerRef = useRef(createModelManager())
 
-  llmRef.current.debug = true
+  LLM.debug = true
 
   const checkDownloaded = useCallback(async () => {
     setIsChecking(true)
     try {
-      const downloaded = await modelManagerRef.current.isDownloaded(MODEL_ID)
+      const downloaded = await ModelManager.isDownloaded(MODEL_ID)
       setIsDownloaded(downloaded)
     } catch (error) {
       console.error('Error checking download:', error)
@@ -123,7 +121,7 @@ export default function ChatScreen() {
     const loadModel = async () => {
       setIsLoading(true)
       try {
-        await llmRef.current.load(MODEL_ID)
+        await LLM.load(MODEL_ID)
         setIsReady(true)
       } catch (error) {
         console.error('Error loading model:', error)
@@ -162,7 +160,7 @@ export default function ChatScreen() {
     let isInThinkingBlock = false
 
     try {
-      await llmRef.current.stream(prompt, token => {
+      await LLM.stream(prompt, token => {
         fullText += token
 
         const thinkStart = fullText.indexOf('<think>')
@@ -210,7 +208,7 @@ export default function ChatScreen() {
 
   const deleteModel = async () => {
     try {
-      await modelManagerRef.current.deleteModel(MODEL_ID)
+      await ModelManager.deleteModel(MODEL_ID)
       setIsDownloaded(false)
       setIsReady(false)
       setMessages([])
