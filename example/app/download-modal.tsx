@@ -10,6 +10,7 @@ export default function DownloadModal() {
   const [status, setStatus] = useState('Starting download...')
   const colorScheme = useColorScheme()
   const textColor = colorScheme === 'dark' ? 'white' : 'black'
+  const bgColor = colorScheme === 'dark' ? 'black' : 'white'
 
   useEffect(() => {
     const downloadModel = async () => {
@@ -33,7 +34,7 @@ export default function DownloadModal() {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
       <View style={styles.content}>
         <ActivityIndicator size="large" color="#007AFF" />
         <Text style={[styles.title, { color: textColor }]}>Downloading Model</Text>

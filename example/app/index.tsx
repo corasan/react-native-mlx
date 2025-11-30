@@ -146,6 +146,17 @@ export default function ChatScreen() {
     router.push('/download-modal')
   }
 
+  const deleteModel = async () => {
+    try {
+      await modelManagerRef.current.deleteModel(MODEL_ID)
+      setIsDownloaded(false)
+      setIsReady(false)
+      setMessages([])
+    } catch (error) {
+      console.error('Error deleting model:', error)
+    }
+  }
+
   if (isChecking) {
     return (
       <SafeAreaView style={[styles.centered, { backgroundColor: bgColor }]}>
@@ -182,12 +193,12 @@ export default function ChatScreen() {
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: bgColor }]}
-      edges={['bottom']}
+      edges={['bottom', 'top']}
     >
       <KeyboardAvoidingView
         style={[styles.container, { backgroundColor: bgColor }]}
         behavior="padding"
-        keyboardVerticalOffset={Platform.select({ ios: 60, default: 0 })}
+        keyboardVerticalOffset={Platform.select({ ios: 0, default: 0 })}
       >
         <View
           style={[
@@ -196,6 +207,9 @@ export default function ChatScreen() {
           ]}
         >
           <Text style={[styles.headerTitle, { color: textColor }]}>MLX Chat</Text>
+          <TouchableOpacity style={styles.deleteButton} onPress={deleteModel}>
+            <Text style={styles.deleteButtonText}>Delete Model</Text>
+          </TouchableOpacity>
         </View>
 
         <LegendList<Message>
@@ -261,9 +275,22 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomWidth: 1,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   headerTitle: {
     fontSize: 18,
+    fontWeight: '600',
+  },
+  deleteButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: '#FF3B30',
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontSize: 12,
     fontWeight: '600',
   },
   title: {
