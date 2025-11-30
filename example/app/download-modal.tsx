@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, useColorScheme, View } from 'react-native'
 import { createModelManager } from 'react-native-mlx'
 
-const MODEL_ID = 'mlx-community/SmolLM-135M-Instruct-4bit'
+const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
 
 export default function DownloadModal() {
   const [progress, setProgress] = useState(0)
