@@ -13,6 +13,7 @@ class HybridLLM: HybridLLMSpec {
         timeToFirstToken: 0,
         totalTime: 0
     )
+    private var modelFactory: ModelFactory = LLMModelFactory.shared
 
     var isLoaded: Bool { session != nil }
     var isGenerating: Bool { currentTask != nil }
@@ -32,7 +33,7 @@ class HybridLLM: HybridLLMSpec {
             log("Loading from directory: \(modelDir.path)")
 
             let config = ModelConfiguration(directory: modelDir)
-            let container = try await LLMModelFactory.shared.loadContainer(
+            let container = try await modelFactory.loadContainer(
                 configuration: config
             ) { progress in
                 onProgress(progress.fractionCompleted)

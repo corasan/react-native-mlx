@@ -1,5 +1,5 @@
 import { NitroModules } from 'react-native-nitro-modules'
-import type { LLM as LLMSpec, GenerationStats } from './specs/LLM.nitro'
+import type { GenerationStats, LLM as LLMSpec } from './specs/LLM.nitro'
 
 let instance: LLMSpec | null = null
 
@@ -10,39 +10,89 @@ function getInstance(): LLMSpec {
   return instance
 }
 
+/**
+ * LLM text generation using MLX on Apple Silicon.
+ *
+ * @example
+ * ```ts
+ * import { LLM } from 'react-native-mlx'
+ *
+ * // Load a model
+ * await LLM.load('mlx-community/Qwen3-0.6B-4bit', progress => {
+ *   console.log(`Loading: ${(progress * 100).toFixed(0)}%`)
+ * })
+ *
+ * // Stream a response
+ * await LLM.stream('Hello!', token => {
+ *   process.stdout.write(token)
+ * })
+ *
+ * // Get generation stats
+ * const stats = LLM.getLastGenerationStats()
+ * console.log(`${stats.tokensPerSecond} tokens/sec`)
+ * ```
+ */
 export const LLM = {
+  /**
+   * Load a model into memory. Downloads the model from HuggingFace if not already cached.
+   * @param modelId - HuggingFace model ID (e.g., 'mlx-community/Qwen3-0.6B-4bit')
+   * @param onProgress - Callback invoked with loading progress (0-1)
+   */
   load(modelId: string, onProgress: (progress: number) => void): Promise<void> {
     return getInstance().load(modelId, onProgress)
   },
 
+  /**
+   * Generate a complete response for a prompt. Blocks until generation is complete.
+   * For streaming responses, use `stream()` instead.
+   * @param prompt - The input text to generate a response for
+   * @returns The complete generated text
+   */
   generate(prompt: string): Promise<string> {
     return getInstance().generate(prompt)
   },
 
+  /**
+   * Stream a response token by token.
+   * @param prompt - The input text to generate a response for
+   * @param onToken - Callback invoked for each generated token
+   * @returns The complete generated text
+   */
   stream(prompt: string, onToken: (token: string) => void): Promise<string> {
     return getInstance().stream(prompt, onToken)
   },
 
+  /**
+   * Stop the current generation. Safe to call even if not generating.
+   */
   stop(): void {
     getInstance().stop()
   },
 
+  /**
+   * Get statistics from the last generation.
+   * @returns Statistics including token count, tokens/sec, TTFT, and total time
+   */
   getLastGenerationStats(): GenerationStats {
     return getInstance().getLastGenerationStats()
   },
 
+  /** Whether a model is currently loaded and ready for generation */
   get isLoaded(): boolean {
     return getInstance().isLoaded
   },
 
+  /** Whether text is currently being generated */
   get isGenerating(): boolean {
     return getInstance().isGenerating
   },
 
+  /** The ID of the currently loaded model, or empty string if none */
   get modelId(): string {
     return getInstance().modelId
   },
 
+  /** Enable debug logging to console */
   get debug(): boolean {
     return getInstance().debug
   },
@@ -51,6 +101,11 @@ export const LLM = {
     getInstance().debug = value
   },
 
+  /**
+   * System prompt used when loading the model.
+   * Set this before calling `load()`. Changes require reloading the model.
+   * @default "You are a helpful assistant."
+   */
   get systemPrompt(): string {
     return getInstance().systemPrompt
   },
