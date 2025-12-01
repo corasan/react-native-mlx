@@ -1,6 +1,6 @@
 {
   "name": "react-native-nitro-mlx",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nitro module package",
   "main": "./lib/module/index.js",
   "module": "./lib/module/index.js",
@@ -59,7 +59,6 @@
   },
   "devDependencies": {
     "@expo/config-plugins": "^9.0.10",
-    "@release-it-plugins/workspaces": "^5.0.3",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.1",
     "nitrogen": "^0.31.10",
