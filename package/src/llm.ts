@@ -1,5 +1,5 @@
 import { NitroModules } from 'react-native-nitro-modules'
-import type { LLM as LLMSpec } from './specs/LLM.nitro'
+import type { LLM as LLMSpec, GenerationStats } from './specs/LLM.nitro'
 
 let instance: LLMSpec | null = null
 
@@ -27,6 +27,10 @@ export const LLM = {
     getInstance().stop()
   },
 
+  getLastGenerationStats(): GenerationStats {
+    return getInstance().getLastGenerationStats()
+  },
+
   get isLoaded(): boolean {
     return getInstance().isLoaded
   },
@@ -45,5 +49,13 @@ export const LLM = {
 
   set debug(value: boolean) {
     getInstance().debug = value
+  },
+
+  get systemPrompt(): string {
+    return getInstance().systemPrompt
+  },
+
+  set systemPrompt(value: string) {
+    getInstance().systemPrompt = value
   },
 }

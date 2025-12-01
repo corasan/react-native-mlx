@@ -15,14 +15,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.henrypaulino.example"
+      "bundleIdentifier": "com.reactnative.mlx.example"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.henrypaulino.example"
+      "package": "com.reactnative.mlx.example"
     },
     "web": {
       "bundler": "metro",
@@ -36,7 +36,7 @@
         {
           "ios": {
             "deploymentTarget": "26.0",
-            "useFrameworks": "dynamic"
+            "networkInspector": true
           }
         }
       ]
@@ -46,3 +46,4 @@
     }
   }
 }
+

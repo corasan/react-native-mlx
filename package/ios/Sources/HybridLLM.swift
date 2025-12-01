@@ -7,11 +7,18 @@ internal import MLXLMCommon
 class HybridLLM: HybridLLMSpec {
     private var session: ChatSession?
     private var currentTask: Task<String, Error>?
+    private var lastStats: GenerationStats = GenerationStats(
+        tokenCount: 0,
+        tokensPerSecond: 0,
+        timeToFirstToken: 0,
+        totalTime: 0
+    )
 
     var isLoaded: Bool { session != nil }
     var isGenerating: Bool { currentTask != nil }
     var modelId: String = ""
     var debug: Bool = false
+    var systemPrompt: String = "You are a helpful assistant."
 
     private func log(_ message: String) {
         if debug {
@@ -31,9 +38,9 @@ class HybridLLM: HybridLLMSpec {
                 onProgress(progress.fractionCompleted)
             }
 
-            self.session = ChatSession(container)
+            self.session = ChatSession(container, instructions: self.systemPrompt)
             self.modelId = modelId
-            log("Model loaded successfully")
+            log("Model loaded with system prompt: \(self.systemPrompt.prefix(50))...")
         }
     }
 
@@ -71,13 +78,35 @@ class HybridLLM: HybridLLMSpec {
         return Promise.async { [self] in
             let task = Task<String, Error> {
                 var result = ""
+                var tokenCount = 0
+                let startTime = Date()
+                var firstTokenTime: Date?
+
                 log("Streaming response for: \(prompt.prefix(50))...")
                 for try await chunk in session.streamResponse(to: prompt) {
                     if Task.isCancelled { break }
+
+                    if firstTokenTime == nil {
+                        firstTokenTime = Date()
+                    }
+                    tokenCount += 1
                     result += chunk
                     onToken(chunk)
                 }
-                log("Stream complete")
+
+                let endTime = Date()
+                let totalTime = endTime.timeIntervalSince(startTime) * 1000
+                let timeToFirstToken = (firstTokenTime ?? endTime).timeIntervalSince(startTime) * 1000
+                let tokensPerSecond = totalTime > 0 ? Double(tokenCount) / (totalTime / 1000) : 0
+
+                self.lastStats = GenerationStats(
+                    tokenCount: Double(tokenCount),
+                    tokensPerSecond: tokensPerSecond,
+                    timeToFirstToken: timeToFirstToken,
+                    totalTime: totalTime
+                )
+
+                log("Stream complete - \(tokenCount) tokens, \(String(format: "%.1f", tokensPerSecond)) tokens/s")
                 return result
             }
 
@@ -97,5 +126,9 @@ class HybridLLM: HybridLLMSpec {
     func stop() throws {
         currentTask?.cancel()
         currentTask = nil
+    }
+
+    func getLastGenerationStats() throws -> GenerationStats {
+        return lastStats
     }
 }

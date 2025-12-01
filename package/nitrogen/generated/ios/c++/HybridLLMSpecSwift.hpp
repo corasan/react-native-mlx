@@ -12,11 +12,13 @@
 // Forward declaration of `HybridLLMSpec_cxx` to properly resolve imports.
 namespace MLXReactNative { class HybridLLMSpec_cxx; }
 
-
+// Forward declaration of `GenerationStats` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 
 #include <string>
 #include <NitroModules/Promise.hpp>
 #include <functional>
+#include "GenerationStats.hpp"
 
 #include "MLXReactNative-Swift-Cxx-Umbrella.hpp"
 
@@ -74,6 +76,13 @@ namespace margelo::nitro::mlxreactnative {
     inline void setDebug(bool debug) noexcept override {
       _swiftPart.setDebug(std::forward<decltype(debug)>(debug));
     }
+    inline std::string getSystemPrompt() noexcept override {
+      auto __result = _swiftPart.getSystemPrompt();
+      return __result;
+    }
+    inline void setSystemPrompt(const std::string& systemPrompt) noexcept override {
+      _swiftPart.setSystemPrompt(systemPrompt);
+    }
 
   public:
     // Methods
@@ -106,6 +115,14 @@ namespace margelo::nitro::mlxreactnative {
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+    }
+    inline GenerationStats getLastGenerationStats() override {
+      auto __result = _swiftPart.getLastGenerationStats();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:

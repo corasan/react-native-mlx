@@ -16,6 +16,7 @@ import {
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
 import { LLM, ModelManager } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useBenchmark } from '../components/benchmark-context'
 
 const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
 
@@ -95,8 +96,13 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([])
   const listRef = useRef<LegendListRef>(null)
   const inputRef = useRef<TextInput>(null)
+  const { addResult } = useBenchmark()
 
   LLM.debug = true
+
+  const openSettings = () => {
+    router.push('/settings-modal')
+  }
 
   const checkDownloaded = useCallback(async () => {
     setIsChecking(true)
@@ -197,6 +203,15 @@ export default function ChatScreen() {
           ),
         )
       })
+
+      const stats = LLM.getLastGenerationStats()
+      addResult({
+        tokensPerSecond: stats.tokensPerSecond,
+        timeToFirstToken: stats.timeToFirstToken,
+        totalTokens: stats.tokenCount,
+        totalTime: stats.totalTime,
+        timestamp: new Date(),
+      })
     } catch (error) {
       console.error('Error generating:', error)
     } finally {
@@ -270,9 +285,12 @@ export default function ChatScreen() {
             { borderBottomColor: colorScheme === 'dark' ? '#333' : '#eee' },
           ]}
         >
+          <TouchableOpacity onPress={openSettings}>
+            <Text style={[styles.headerButton, { color: '#007AFF' }]}>Benchmark</Text>
+          </TouchableOpacity>
           <Text style={[styles.headerTitle, { color: textColor }]}>MLX Chat</Text>
           <TouchableOpacity style={styles.deleteButton} onPress={deleteModel}>
-            <Text style={styles.deleteButtonText}>Delete Model</Text>
+            <Text style={styles.deleteButtonText}>Delete</Text>
           </TouchableOpacity>
         </View>
 
@@ -335,6 +353,10 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
+  },
+  headerButton: {
+    fontSize: 14,
+    fontWeight: '500',
   },
   deleteButton: {
     paddingHorizontal: 12,

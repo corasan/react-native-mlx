@@ -8,6 +8,8 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `GenerationStats` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 // Forward declaration of `HybridLLMSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridLLMSpec; }
 // Forward declaration of `HybridModelManagerSpec` to properly resolve imports.
@@ -20,6 +22,7 @@ namespace MLXReactNative { class HybridLLMSpec_cxx; }
 namespace MLXReactNative { class HybridModelManagerSpec_cxx; }
 
 // Include C++ defined types
+#include "GenerationStats.hpp"
 #include "HybridLLMSpec.hpp"
 #include "HybridModelManagerSpec.hpp"
 #include <NitroModules/Promise.hpp>
@@ -186,6 +189,15 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
   }
   inline Result_void_ create_Result_void_(const std::exception_ptr& error) noexcept {
     return Result<void>::withError(error);
+  }
+  
+  // pragma MARK: Result<GenerationStats>
+  using Result_GenerationStats_ = Result<GenerationStats>;
+  inline Result_GenerationStats_ create_Result_GenerationStats_(const GenerationStats& value) noexcept {
+    return Result<GenerationStats>::withValue(value);
+  }
+  inline Result_GenerationStats_ create_Result_GenerationStats_(const std::exception_ptr& error) noexcept {
+    return Result<GenerationStats>::withError(error);
   }
   
   // pragma MARK: std::shared_ptr<Promise<bool>>
