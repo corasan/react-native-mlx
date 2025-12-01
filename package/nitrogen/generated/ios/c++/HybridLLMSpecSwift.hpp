@@ -12,11 +12,13 @@
 // Forward declaration of `HybridLLMSpec_cxx` to properly resolve imports.
 namespace MLXReactNative { class HybridLLMSpec_cxx; }
 
-
+// Forward declaration of `GenerationStats` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 
 #include <string>
 #include <NitroModules/Promise.hpp>
 #include <functional>
+#include "GenerationStats.hpp"
 
 #include "MLXReactNative-Swift-Cxx-Umbrella.hpp"
 
@@ -68,11 +70,24 @@ namespace margelo::nitro::mlxreactnative {
       auto __result = _swiftPart.getModelId();
       return __result;
     }
+    inline bool getDebug() noexcept override {
+      return _swiftPart.getDebug();
+    }
+    inline void setDebug(bool debug) noexcept override {
+      _swiftPart.setDebug(std::forward<decltype(debug)>(debug));
+    }
+    inline std::string getSystemPrompt() noexcept override {
+      auto __result = _swiftPart.getSystemPrompt();
+      return __result;
+    }
+    inline void setSystemPrompt(const std::string& systemPrompt) noexcept override {
+      _swiftPart.setSystemPrompt(systemPrompt);
+    }
 
   public:
     // Methods
-    inline std::shared_ptr<Promise<void>> load(const std::string& modelId) override {
-      auto __result = _swiftPart.load(modelId);
+    inline std::shared_ptr<Promise<void>> load(const std::string& modelId, const std::function<void(double /* progress */)>& onProgress) override {
+      auto __result = _swiftPart.load(modelId, onProgress);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
@@ -100,6 +115,14 @@ namespace margelo::nitro::mlxreactnative {
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+    }
+    inline GenerationStats getLastGenerationStats() override {
+      auto __result = _swiftPart.getLastGenerationStats();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:

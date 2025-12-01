@@ -8,6 +8,8 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `GenerationStats` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 // Forward declaration of `HybridLLMSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridLLMSpec; }
 // Forward declaration of `HybridModelManagerSpec` to properly resolve imports.
@@ -20,6 +22,7 @@ namespace MLXReactNative { class HybridLLMSpec_cxx; }
 namespace MLXReactNative { class HybridModelManagerSpec_cxx; }
 
 // Include C++ defined types
+#include "GenerationStats.hpp"
 #include "HybridLLMSpec.hpp"
 #include "HybridModelManagerSpec.hpp"
 #include <NitroModules/Promise.hpp>
@@ -91,6 +94,28 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
   Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* NON_NULL swiftClosureWrapper) noexcept;
   inline Func_void_std__exception_ptr_Wrapper wrap_Func_void_std__exception_ptr(Func_void_std__exception_ptr value) noexcept {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::function<void(double /* progress */)>
+  /**
+   * Specialized version of `std::function<void(double)>`.
+   */
+  using Func_void_double = std::function<void(double /* progress */)>;
+  /**
+   * Wrapper class for a `std::function<void(double / * progress * /)>`, this can be used from Swift.
+   */
+  class Func_void_double_Wrapper final {
+  public:
+    explicit Func_void_double_Wrapper(std::function<void(double /* progress */)>&& func): _function(std::make_unique<std::function<void(double /* progress */)>>(std::move(func))) {}
+    inline void call(double progress) const noexcept {
+      _function->operator()(progress);
+    }
+  private:
+    std::unique_ptr<std::function<void(double /* progress */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept;
+  inline Func_void_double_Wrapper wrap_Func_void_double(Func_void_double value) noexcept {
+    return Func_void_double_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<Promise<std::string>>
@@ -166,26 +191,13 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
     return Result<void>::withError(error);
   }
   
-  // pragma MARK: std::function<void(double /* progress */)>
-  /**
-   * Specialized version of `std::function<void(double)>`.
-   */
-  using Func_void_double = std::function<void(double /* progress */)>;
-  /**
-   * Wrapper class for a `std::function<void(double / * progress * /)>`, this can be used from Swift.
-   */
-  class Func_void_double_Wrapper final {
-  public:
-    explicit Func_void_double_Wrapper(std::function<void(double /* progress */)>&& func): _function(std::make_unique<std::function<void(double /* progress */)>>(std::move(func))) {}
-    inline void call(double progress) const noexcept {
-      _function->operator()(progress);
-    }
-  private:
-    std::unique_ptr<std::function<void(double /* progress */)>> _function;
-  } SWIFT_NONCOPYABLE;
-  Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept;
-  inline Func_void_double_Wrapper wrap_Func_void_double(Func_void_double value) noexcept {
-    return Func_void_double_Wrapper(std::move(value));
+  // pragma MARK: Result<GenerationStats>
+  using Result_GenerationStats_ = Result<GenerationStats>;
+  inline Result_GenerationStats_ create_Result_GenerationStats_(const GenerationStats& value) noexcept {
+    return Result<GenerationStats>::withValue(value);
+  }
+  inline Result_GenerationStats_ create_Result_GenerationStats_(const std::exception_ptr& error) noexcept {
+    return Result<GenerationStats>::withError(error);
   }
   
   // pragma MARK: std::shared_ptr<Promise<bool>>

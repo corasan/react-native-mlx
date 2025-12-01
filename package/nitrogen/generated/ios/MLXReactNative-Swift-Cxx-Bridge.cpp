@@ -31,6 +31,14 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(double /* progress */)>
+  Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = MLXReactNative::Func_void_double::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](double progress) mutable -> void {
+      swiftClosure.call(progress);
+    };
+  }
+  
   // pragma MARK: std::function<void(const std::string& /* result */)>
   Func_void_std__string create_Func_void_std__string(void* NON_NULL swiftClosureWrapper) noexcept {
     auto swiftClosure = MLXReactNative::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
@@ -53,14 +61,6 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
     #endif
     MLXReactNative::HybridLLMSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
     return swiftPart.toUnsafe();
-  }
-  
-  // pragma MARK: std::function<void(double /* progress */)>
-  Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept {
-    auto swiftClosure = MLXReactNative::Func_void_double::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)](double progress) mutable -> void {
-      swiftClosure.call(progress);
-    };
   }
   
   // pragma MARK: std::function<void(bool /* result */)>

@@ -14,8 +14,9 @@ import {
   View,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { createLLM, createModelManager } from 'react-native-mlx'
+import { LLM, ModelManager } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useBenchmark } from '../components/benchmark-context'
 
 const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
 
@@ -58,7 +59,7 @@ const MessageItem = ({ content, thinking, isThinking, isUser }: Message) => {
   if (isUser) {
     return (
       <View style={styles.userMessage}>
-        <Text style={[styles.messageText, { color: textColor }]}>{content}</Text>
+        <Text style={[styles.messageText, { color: 'white' }]}>{content}</Text>
       </View>
     )
   }
@@ -85,6 +86,7 @@ export default function ChatScreen() {
   const [isChecking, setIsChecking] = useState(true)
   const [isDownloaded, setIsDownloaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [loadProgress, setLoadProgress] = useState(0)
   const [isReady, setIsReady] = useState(false)
   const [prompt, setPrompt] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
@@ -94,13 +96,18 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([])
   const listRef = useRef<LegendListRef>(null)
   const inputRef = useRef<TextInput>(null)
-  const llmRef = useRef(createLLM())
-  const modelManagerRef = useRef(createModelManager())
+  const { addResult } = useBenchmark()
+
+  LLM.debug = true
+
+  const openSettings = () => {
+    router.push('/settings-modal')
+  }
 
   const checkDownloaded = useCallback(async () => {
     setIsChecking(true)
     try {
-      const downloaded = await modelManagerRef.current.isDownloaded(MODEL_ID)
+      const downloaded = await ModelManager.isDownloaded(MODEL_ID)
       setIsDownloaded(downloaded)
     } catch (error) {
       console.error('Error checking download:', error)
@@ -120,8 +127,9 @@ export default function ChatScreen() {
 
     const loadModel = async () => {
       setIsLoading(true)
+      setLoadProgress(0)
       try {
-        await llmRef.current.load(MODEL_ID)
+        await LLM.load(MODEL_ID, setLoadProgress)
         setIsReady(true)
       } catch (error) {
         console.error('Error loading model:', error)
@@ -160,7 +168,7 @@ export default function ChatScreen() {
     let isInThinkingBlock = false
 
     try {
-      await llmRef.current.stream(prompt, token => {
+      await LLM.stream(prompt, token => {
         fullText += token
 
         const thinkStart = fullText.indexOf('<think>')
@@ -195,6 +203,15 @@ export default function ChatScreen() {
           ),
         )
       })
+
+      const stats = LLM.getLastGenerationStats()
+      addResult({
+        tokensPerSecond: stats.tokensPerSecond,
+        timeToFirstToken: stats.timeToFirstToken,
+        totalTokens: stats.tokenCount,
+        totalTime: stats.totalTime,
+        timestamp: new Date(),
+      })
     } catch (error) {
       console.error('Error generating:', error)
     } finally {
@@ -208,7 +225,7 @@ export default function ChatScreen() {
 
   const deleteModel = async () => {
     try {
-      await modelManagerRef.current.deleteModel(MODEL_ID)
+      await ModelManager.deleteModel(MODEL_ID)
       setIsDownloaded(false)
       setIsReady(false)
       setMessages([])
@@ -245,7 +262,9 @@ export default function ChatScreen() {
     return (
       <SafeAreaView style={[styles.centered, { backgroundColor: bgColor }]}>
         <ActivityIndicator size="large" />
-        <Text style={[styles.statusText, { color: textColor }]}>Loading model...</Text>
+        <Text style={[styles.statusText, { color: textColor }]}>
+          Loading model... {(loadProgress * 100).toFixed(0)}%
+        </Text>
       </SafeAreaView>
     )
   }
@@ -266,9 +285,12 @@ export default function ChatScreen() {
             { borderBottomColor: colorScheme === 'dark' ? '#333' : '#eee' },
           ]}
         >
+          <TouchableOpacity onPress={openSettings}>
+            <Text style={[styles.headerButton, { color: '#007AFF' }]}>Benchmark</Text>
+          </TouchableOpacity>
           <Text style={[styles.headerTitle, { color: textColor }]}>MLX Chat</Text>
           <TouchableOpacity style={styles.deleteButton} onPress={deleteModel}>
-            <Text style={styles.deleteButtonText}>Delete Model</Text>
+            <Text style={styles.deleteButtonText}>Delete</Text>
           </TouchableOpacity>
         </View>
 
@@ -331,6 +353,10 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
+  },
+  headerButton: {
+    fontSize: 14,
+    fontWeight: '500',
   },
   deleteButton: {
     paddingHorizontal: 12,

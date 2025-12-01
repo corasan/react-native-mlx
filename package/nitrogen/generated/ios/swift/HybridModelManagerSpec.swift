@@ -11,7 +11,7 @@ import NitroModules
 /// See ``HybridModelManagerSpec``
 public protocol HybridModelManagerSpec_protocol: HybridObject {
   // Properties
-  
+  var debug: Bool { get set }
 
   // Methods
   func download(modelId: String, progressCallback: @escaping (_ progress: Double) -> Void) throws -> Promise<String>

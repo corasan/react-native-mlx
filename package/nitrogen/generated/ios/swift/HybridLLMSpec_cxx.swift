@@ -134,12 +134,39 @@ open class HybridLLMSpec_cxx {
       return std.string(self.__implementation.modelId)
     }
   }
+  
+  public final var debug: Bool {
+    @inline(__always)
+    get {
+      return self.__implementation.debug
+    }
+    @inline(__always)
+    set {
+      self.__implementation.debug = newValue
+    }
+  }
+  
+  public final var systemPrompt: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.systemPrompt)
+    }
+    @inline(__always)
+    set {
+      self.__implementation.systemPrompt = String(newValue)
+    }
+  }
 
   // Methods
   @inline(__always)
-  public final func load(modelId: std.string) -> bridge.Result_std__shared_ptr_Promise_void___ {
+  public final func load(modelId: std.string, onProgress: bridge.Func_void_double) -> bridge.Result_std__shared_ptr_Promise_void___ {
     do {
-      let __result = try self.__implementation.load(modelId: String(modelId))
+      let __result = try self.__implementation.load(modelId: String(modelId), onProgress: { () -> (Double) -> Void in
+        let __wrappedFunction = bridge.wrap_Func_void_double(onProgress)
+        return { (__progress: Double) -> Void in
+          __wrappedFunction.call(__progress)
+        }
+      }())
       let __resultCpp = { () -> bridge.std__shared_ptr_Promise_void__ in
         let __promise = bridge.create_std__shared_ptr_Promise_void__()
         let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_void__(__promise)
@@ -206,6 +233,18 @@ open class HybridLLMSpec_cxx {
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
       return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func getLastGenerationStats() -> bridge.Result_GenerationStats_ {
+    do {
+      let __result = try self.__implementation.getLastGenerationStats()
+      let __resultCpp = __result
+      return bridge.create_Result_GenerationStats_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_GenerationStats_(__exceptionPtr)
     }
   }
 }

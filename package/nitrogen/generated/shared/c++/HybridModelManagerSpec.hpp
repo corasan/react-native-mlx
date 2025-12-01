@@ -47,7 +47,8 @@ namespace margelo::nitro::mlxreactnative {
 
     public:
       // Properties
-      
+      virtual bool getDebug() = 0;
+      virtual void setDebug(bool debug) = 0;
 
     public:
       // Methods

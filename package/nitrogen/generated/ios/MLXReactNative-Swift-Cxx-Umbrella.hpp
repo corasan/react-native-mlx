@@ -8,12 +8,15 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `GenerationStats` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 // Forward declaration of `HybridLLMSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridLLMSpec; }
 // Forward declaration of `HybridModelManagerSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridModelManagerSpec; }
 
 // Include C++ defined types
+#include "GenerationStats.hpp"
 #include "HybridLLMSpec.hpp"
 #include "HybridModelManagerSpec.hpp"
 #include <NitroModules/Promise.hpp>

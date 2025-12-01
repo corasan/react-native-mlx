@@ -1,12 +1,66 @@
 import type { HybridObject } from 'react-native-nitro-modules'
 
+/**
+ * Statistics from the last text generation.
+ */
+export interface GenerationStats {
+  /** Total number of tokens generated */
+  tokenCount: number
+  /** Generation speed in tokens per second */
+  tokensPerSecond: number
+  /** Time in milliseconds until the first token was generated */
+  timeToFirstToken: number
+  /** Total generation time in milliseconds */
+  totalTime: number
+}
+
+/**
+ * Low-level LLM interface for text generation using MLX.
+ * @internal Use the `LLM` export from `react-native-mlx` instead.
+ */
 export interface LLM extends HybridObject<{ ios: 'swift' }> {
-  load(modelId: string): Promise<void>
+  /**
+   * Load a model into memory. Downloads from HuggingFace if not already cached.
+   * @param modelId - HuggingFace model ID (e.g., 'mlx-community/Qwen3-0.6B-4bit')
+   * @param onProgress - Callback invoked with loading progress (0-1)
+   */
+  load(modelId: string, onProgress: (progress: number) => void): Promise<void>
+
+  /**
+   * Generate a complete response for a prompt.
+   * @param prompt - The input text to generate a response for
+   * @returns The generated text
+   */
   generate(prompt: string): Promise<string>
+
+  /**
+   * Stream a response token by token.
+   * @param prompt - The input text to generate a response for
+   * @param onToken - Callback invoked for each generated token
+   * @returns The complete generated text
+   */
   stream(prompt: string, onToken: (token: string) => void): Promise<string>
+
+  /**
+   * Stop the current generation.
+   */
   stop(): void
 
+  /**
+   * Get statistics from the last generation.
+   * @returns Statistics including token count, speed, and timing
+   */
+  getLastGenerationStats(): GenerationStats
+
+  /** Whether a model is currently loaded */
   readonly isLoaded: boolean
+  /** Whether text is currently being generated */
   readonly isGenerating: boolean
+  /** The ID of the currently loaded model */
   readonly modelId: string
+
+  /** Enable debug logging */
+  debug: boolean
+  /** System prompt used when loading the model */
+  systemPrompt: string
 }

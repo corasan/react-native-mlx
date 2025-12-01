@@ -7,26 +7,41 @@ internal import MLXLMCommon
 class HybridLLM: HybridLLMSpec {
     private var session: ChatSession?
     private var currentTask: Task<String, Error>?
+    private var lastStats: GenerationStats = GenerationStats(
+        tokenCount: 0,
+        tokensPerSecond: 0,
+        timeToFirstToken: 0,
+        totalTime: 0
+    )
+    private var modelFactory: ModelFactory = LLMModelFactory.shared
 
     var isLoaded: Bool { session != nil }
     var isGenerating: Bool { currentTask != nil }
     var modelId: String = ""
+    var debug: Bool = false
+    var systemPrompt: String = "You are a helpful assistant."
 
-    func load(modelId: String) throws -> Promise<Void> {
+    private func log(_ message: String) {
+        if debug {
+            print("[MLXReactNative.HybridLLM] \(message)")
+        }
+    }
+
+    func load(modelId: String, onProgress: @escaping (Double) -> Void) throws -> Promise<Void> {
         return Promise.async { [self] in
             let modelDir = await ModelDownloader.shared.getModelDirectory(modelId: modelId)
-            print("[LLM] Loading from directory: \(modelDir.path)")
+            log("Loading from directory: \(modelDir.path)")
 
             let config = ModelConfiguration(directory: modelDir)
-            let container = try await LLMModelFactory.shared.loadContainer(
+            let container = try await modelFactory.loadContainer(
                 configuration: config
             ) { progress in
-                print("[LLM] Load progress: \(progress.fractionCompleted)")
+                onProgress(progress.fractionCompleted)
             }
 
-            self.session = ChatSession(container)
+            self.session = ChatSession(container, instructions: self.systemPrompt)
             self.modelId = modelId
-            print("[LLM] Model loaded successfully")
+            log("Model loaded with system prompt: \(self.systemPrompt.prefix(50))...")
         }
     }
 
@@ -37,9 +52,9 @@ class HybridLLM: HybridLLMSpec {
 
         return Promise.async { [self] in
             let task = Task<String, Error> {
-                print("[LLM] Generating response for: \(prompt.prefix(50))...")
+                log("Generating response for: \(prompt.prefix(50))...")
                 let result = try await session.respond(to: prompt)
-                print("[LLM] Generation complete")
+                log("Generation complete")
                 return result
             }
 
@@ -64,13 +79,35 @@ class HybridLLM: HybridLLMSpec {
         return Promise.async { [self] in
             let task = Task<String, Error> {
                 var result = ""
-                print("[LLM] Streaming response for: \(prompt.prefix(50))...")
+                var tokenCount = 0
+                let startTime = Date()
+                var firstTokenTime: Date?
+
+                log("Streaming response for: \(prompt.prefix(50))...")
                 for try await chunk in session.streamResponse(to: prompt) {
                     if Task.isCancelled { break }
+
+                    if firstTokenTime == nil {
+                        firstTokenTime = Date()
+                    }
+                    tokenCount += 1
                     result += chunk
                     onToken(chunk)
                 }
-                print("[LLM] Stream complete")
+
+                let endTime = Date()
+                let totalTime = endTime.timeIntervalSince(startTime) * 1000
+                let timeToFirstToken = (firstTokenTime ?? endTime).timeIntervalSince(startTime) * 1000
+                let tokensPerSecond = totalTime > 0 ? Double(tokenCount) / (totalTime / 1000) : 0
+
+                self.lastStats = GenerationStats(
+                    tokenCount: Double(tokenCount),
+                    tokensPerSecond: tokensPerSecond,
+                    timeToFirstToken: timeToFirstToken,
+                    totalTime: totalTime
+                )
+
+                log("Stream complete - \(tokenCount) tokens, \(String(format: "%.1f", tokensPerSecond)) tokens/s")
                 return result
             }
 
@@ -90,5 +127,9 @@ class HybridLLM: HybridLLMSpec {
     func stop() throws {
         currentTask?.cancel()
         currentTask = nil
+    }
+
+    func getLastGenerationStats() throws -> GenerationStats {
+        return lastStats
     }
 }

@@ -2,8 +2,15 @@ import Foundation
 
 actor ModelDownloader: NSObject {
     static let shared = ModelDownloader()
+    static var debug: Bool = false
 
     private let fileManager = FileManager.default
+
+    private func log(_ message: String) {
+        if Self.debug {
+            print("[Downloader] \(message)")
+        }
+    }
 
     func download(
         modelId: String,
@@ -19,8 +26,8 @@ actor ModelDownloader: NSObject {
         let modelDir = getModelDirectory(modelId: modelId)
         try fileManager.createDirectory(at: modelDir, withIntermediateDirectories: true)
 
-        print("[Downloader] Model directory: \(modelDir.path)")
-        print("[Downloader] Files to download: \(requiredFiles)")
+        log("Model directory: \(modelDir.path)")
+        log("Files to download: \(requiredFiles)")
 
         var downloaded = 0
 
@@ -28,7 +35,7 @@ actor ModelDownloader: NSObject {
             let destURL = modelDir.appendingPathComponent(file)
 
             if fileManager.fileExists(atPath: destURL.path) {
-                print("[Downloader] File exists, skipping: \(file)")
+                log("File exists, skipping: \(file)")
                 downloaded += 1
                 progressCallback(Double(downloaded) / Double(requiredFiles.count))
                 continue
@@ -36,29 +43,29 @@ actor ModelDownloader: NSObject {
 
             let urlString = "https://huggingface.co/\(modelId)/resolve/main/\(file)"
             guard let url = URL(string: urlString) else {
-                print("[Downloader] Invalid URL: \(urlString)")
+                log("Invalid URL: \(urlString)")
                 continue
             }
 
-            print("[Downloader] Downloading: \(file)")
+            log("Downloading: \(file)")
 
             let (tempURL, response) = try await URLSession.shared.download(from: url)
 
             guard let httpResponse = response as? HTTPURLResponse else {
-                print("[Downloader] Invalid response for: \(file)")
+                log("Invalid response for: \(file)")
                 continue
             }
 
-            print("[Downloader] Response status: \(httpResponse.statusCode) for \(file)")
+            log("Response status: \(httpResponse.statusCode) for \(file)")
 
             if httpResponse.statusCode == 200 {
                 if fileManager.fileExists(atPath: destURL.path) {
                     try fileManager.removeItem(at: destURL)
                 }
                 try fileManager.moveItem(at: tempURL, to: destURL)
-                print("[Downloader] Saved: \(file)")
+                log("Saved: \(file)")
             } else {
-                print("[Downloader] Failed to download: \(file) - Status: \(httpResponse.statusCode)")
+                log("Failed to download: \(file) - Status: \(httpResponse.statusCode)")
             }
 
             downloaded += 1
@@ -76,7 +83,7 @@ actor ModelDownloader: NSObject {
             fileManager.fileExists(atPath: modelDir.appendingPathComponent(file).path)
         }
 
-        print("[Downloader] isDownloaded(\(modelId)): \(allExist)")
+        log("isDownloaded(\(modelId)): \(allExist)")
         return allExist
     }
 
