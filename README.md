@@ -1,4 +1,4 @@
-# react-native-mlx
+# react-native-nitro-mlx
 
 Run LLMs on-device in React Native using [MLX Swift](https://github.com/ml-explore/mlx-swift).
 
@@ -9,7 +9,7 @@ Run LLMs on-device in React Native using [MLX Swift](https://github.com/ml-explo
 ## Installation
 
 ```bash
-npm install react-native-mlx react-native-nitro-modules
+npm install react-native-nitro-mlx react-native-nitro-modules
 ```
 
 Then run pod install:
@@ -23,7 +23,7 @@ cd ios && pod install
 ### Download a Model
 
 ```typescript
-import { ModelManager } from 'react-native-mlx'
+import { ModelManager } from 'react-native-nitro-mlx'
 
 await ModelManager.download('mlx-community/Qwen3-0.6B-4bit', (progress) => {
   console.log(`Download progress: ${(progress * 100).toFixed(1)}%`)
@@ -33,7 +33,7 @@ await ModelManager.download('mlx-community/Qwen3-0.6B-4bit', (progress) => {
 ### Load and Generate
 
 ```typescript
-import { LLM } from 'react-native-mlx'
+import { LLM } from 'react-native-nitro-mlx'
 
 await LLM.load('mlx-community/Qwen3-0.6B-4bit', (progress) => {
   console.log(`Loading: ${(progress * 100).toFixed(0)}%`)

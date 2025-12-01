@@ -14,7 +14,7 @@ import {
   View,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { LLM, MLXModel, ModelManager } from 'react-native-mlx'
+import { LLM, MLXModel, ModelManager } from 'react-native-nitro-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useBenchmark } from '../components/benchmark-context'
 

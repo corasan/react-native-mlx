@@ -16,7 +16,7 @@ export interface GenerationStats {
 
 /**
  * Low-level LLM interface for text generation using MLX.
- * @internal Use the `LLM` export from `react-native-mlx` instead.
+ * @internal Use the `LLM` export from `react-native-nitro-mlx` instead.
  */
 export interface LLM extends HybridObject<{ ios: 'swift' }> {
   /**
