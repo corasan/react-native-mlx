@@ -41,7 +41,7 @@
     "ios/**/*.m",
     "ios/**/*.mm",
     "ios/**/*.cpp",
-    "ios/specs/**/*.swift",
+    "ios/**/*.swift",
     "app.plugin.js",
     "*.podspec",
     "README.md"
@@ -63,21 +63,67 @@
     "react-native-builder-bob": "^0.40.13"
   },
   "peerDependencies": {
+    "@release-it-plugins/workspaces": "^5.0.3",
+    "@release-it/bumper": "^7.0.5",
+    "@release-it/conventional-changelog": "^10.0.1",
     "react": "*",
     "react-native": "*",
-    "react-native-nitro-modules": "*"
+    "react-native-nitro-modules": "*",
+    "release-it": "^19.0.4"
   },
   "release-it": {
     "npm": {
       "publish": true
     },
-    "git": false,
     "github": {
-      "release": false
+      "release": true,
+      "releaseName": "v${version}"
     },
     "hooks": {
-      "before:init": "bun typecheck",
-      "after:bump": "bun build"
+      "after:bump": "bun specs",
+      "before:release": "bun run build"
+    },
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}",
+      "requireCleanWorkingDir": false
+    },
+    "plugins": {
+      "@release-it/bumper": {
+        "out": [
+          {
+            "file": "package/package.json",
+            "path": "version"
+          }
+        ]
+      },
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "fix",
+              "section": "🐞 Fixes"
+            },
+            {
+              "type": "chore(deps)",
+              "section": "🛠️ Dependency Upgrades"
+            },
+            {
+              "type": "perf",
+              "section": "🏎️ Performance Improvements"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            }
+          ]
+        }
+      }
     }
   },
   "react-native-builder-bob": {
