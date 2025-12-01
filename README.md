@@ -93,13 +93,57 @@ LLM.stop()
 
 ## Supported Models
 
-Any MLX-compatible model from Hugging Face should work. Some tested models:
+Any MLX-compatible model from Hugging Face should work. The package exports an `MLXModel` enum with pre-defined models for convenience that are more likely to run well on-device:
 
-- `mlx-community/Qwen3-0.6B-4bit`
-- `mlx-community/Llama-3.2-1B-Instruct-4bit`
-- `mlx-community/Mistral-7B-Instruct-v0.3-4bit`
+```typescript
+import { MLXModel } from 'react-native-nitro-mlx'
 
-Browse more at [huggingface.co/mlx-community](https://huggingface.co/mlx-community).
+await ModelManager.download(MLXModel.Llama_3_2_1B_Instruct_4bit, (progress) => {
+  console.log(`Download progress: ${(progress * 100).toFixed(1)}%`)
+})
+```
+
+### Available Models
+
+| Model | Enum Key | Hugging Face ID |
+|-------|----------|-----------------|
+| **Llama 3.2 (Meta)** | | |
+| Llama 3.2 1B 4-bit | `Llama_3_2_1B_Instruct_4bit` | `mlx-community/Llama-3.2-1B-Instruct-4bit` |
+| Llama 3.2 1B 8-bit | `Llama_3_2_1B_Instruct_8bit` | `mlx-community/Llama-3.2-1B-Instruct-8bit` |
+| Llama 3.2 3B 4-bit | `Llama_3_2_3B_Instruct_4bit` | `mlx-community/Llama-3.2-3B-Instruct-4bit` |
+| Llama 3.2 3B 8-bit | `Llama_3_2_3B_Instruct_8bit` | `mlx-community/Llama-3.2-3B-Instruct-8bit` |
+| **Qwen 2.5 (Alibaba)** | | |
+| Qwen 2.5 0.5B 4-bit | `Qwen2_5_0_5B_Instruct_4bit` | `mlx-community/Qwen2.5-0.5B-Instruct-4bit` |
+| Qwen 2.5 0.5B 8-bit | `Qwen2_5_0_5B_Instruct_8bit` | `mlx-community/Qwen2.5-0.5B-Instruct-8bit` |
+| Qwen 2.5 1.5B 4-bit | `Qwen2_5_1_5B_Instruct_4bit` | `mlx-community/Qwen2.5-1.5B-Instruct-4bit` |
+| Qwen 2.5 1.5B 8-bit | `Qwen2_5_1_5B_Instruct_8bit` | `mlx-community/Qwen2.5-1.5B-Instruct-8bit` |
+| Qwen 2.5 3B 4-bit | `Qwen2_5_3B_Instruct_4bit` | `mlx-community/Qwen2.5-3B-Instruct-4bit` |
+| Qwen 2.5 3B 8-bit | `Qwen2_5_3B_Instruct_8bit` | `mlx-community/Qwen2.5-3B-Instruct-8bit` |
+| **Qwen 3** | | |
+| Qwen 3 1.7B 4-bit | `Qwen3_1_7B_4bit` | `mlx-community/Qwen3-1.7B-4bit` |
+| Qwen 3 1.7B 8-bit | `Qwen3_1_7B_8bit` | `mlx-community/Qwen3-1.7B-8bit` |
+| **Gemma 3 (Google)** | | |
+| Gemma 3 1B 4-bit | `Gemma_3_1B_IT_4bit` | `mlx-community/gemma-3-1b-it-4bit` |
+| Gemma 3 1B 8-bit | `Gemma_3_1B_IT_8bit` | `mlx-community/gemma-3-1b-it-8bit` |
+| **Phi 3.5 Mini (Microsoft)** | | |
+| Phi 3.5 Mini 4-bit | `Phi_3_5_Mini_Instruct_4bit` | `mlx-community/Phi-3.5-mini-instruct-4bit` |
+| Phi 3.5 Mini 8-bit | `Phi_3_5_Mini_Instruct_8bit` | `mlx-community/Phi-3.5-mini-instruct-8bit` |
+| **Phi 4 Mini (Microsoft)** | | |
+| Phi 4 Mini 4-bit | `Phi_4_Mini_Instruct_4bit` | `mlx-community/Phi-4-mini-instruct-4bit` |
+| Phi 4 Mini 8-bit | `Phi_4_Mini_Instruct_8bit` | `mlx-community/Phi-4-mini-instruct-8bit` |
+| **SmolLM (HuggingFace)** | | |
+| SmolLM 1.7B 4-bit | `SmolLM_1_7B_Instruct_4bit` | `mlx-community/SmolLM-1.7B-Instruct-4bit` |
+| SmolLM 1.7B 8-bit | `SmolLM_1_7B_Instruct_8bit` | `mlx-community/SmolLM-1.7B-Instruct-8bit` |
+| **SmolLM2 (HuggingFace)** | | |
+| SmolLM2 1.7B 4-bit | `SmolLM2_1_7B_Instruct_4bit` | `mlx-community/SmolLM2-1.7B-Instruct-4bit` |
+| SmolLM2 1.7B 8-bit | `SmolLM2_1_7B_Instruct_8bit` | `mlx-community/SmolLM2-1.7B-Instruct-8bit` |
+| **OpenELM (Apple)** | | |
+| OpenELM 1.1B 4-bit | `OpenELM_1_1B_4bit` | `mlx-community/OpenELM-1_1B-4bit` |
+| OpenELM 1.1B 8-bit | `OpenELM_1_1B_8bit` | `mlx-community/OpenELM-1_1B-8bit` |
+| OpenELM 3B 4-bit | `OpenELM_3B_4bit` | `mlx-community/OpenELM-3B-4bit` |
+| OpenELM 3B 8-bit | `OpenELM_3B_8bit` | `mlx-community/OpenELM-3B-8bit` |
+
+Browse more models at [huggingface.co/mlx-community](https://huggingface.co/mlx-community).
 
 ## License
 

@@ -1,11 +1,5 @@
 {
-  "name": "react-native-nitro-mlx",
-  "version": "0.1.0",
-  "description": "Nitro module package",
-  "main": "./lib/commonjs/index.js",
-  "module": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.d.ts",
-  "react-native": "src/index",
+  "name": "react-native-nitro-mlx-monorepo",
   "source": "src/index",
   "author": "Henry Paulino <me@henrypl.com> (https://github.com/corasan)",
   "scripts": {
@@ -15,114 +9,14 @@
     "specs": "bun --cwd ./package specs",
     "specs:pod": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
     "build": "bun --cwd package build",
-    "release": "release-it",
-    "build-framework": "sh ./scripts/build-framework.sh"
+    "release": "bun --cwd package release"
   },
-  "keywords": [
-    "react-native"
-  ],
   "workspaces": [
     "package",
     "example"
   ],
-  "files": [
-    "src",
-    "react-native.config.js",
-    "lib",
-    "nitrogen",
-    "cpp",
-    "android/build.gradle",
-    "android/gradle.properties",
-    "android/CMakeLists.txt",
-    "android/src",
-    "ios/**/*.h",
-    "ios/**/*.m",
-    "ios/**/*.mm",
-    "ios/**/*.cpp",
-    "ios/**/*.swift",
-    "app.plugin.js",
-    "*.podspec",
-    "README.md"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/corasan/react-native-nitro-mlx.git"
-  },
-  "license": "MIT",
-  "bugs": "https://github.com/corasan/react-native-nitro-mlx/issues",
-  "homepage": "https://github.com/corasan/react-native-nitro-mlx#readme",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
-    "@release-it-plugins/workspaces": "^5.0.3",
-    "@release-it/bumper": "^7.0.5",
-    "@release-it/conventional-changelog": "^10.0.1",
-    "release-it": "^19.0.4",
     "typescript": "^5.9.3"
-  },
-  "release-it": {
-    "npm": {
-      "publish": false,
-      "versionArgs": [
-        "--allow-same-version"
-      ]
-    },
-    "github": {
-      "release": true,
-      "releaseName": "${version}"
-    },
-    "hooks": {
-      "after:bump": "bun specs",
-      "before:release": "bun run build"
-    },
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}",
-      "requireCleanWorkingDir": false
-    },
-    "plugins": {
-      "@release-it/bumper": {
-        "out": [
-          {
-            "file": "package/package.json",
-            "path": "version"
-          },
-          {
-            "file": "example/package.json",
-            "path": "version"
-          }
-        ]
-      },
-      "@release-it-plugins/workspaces": true,
-      "@release-it/conventional-changelog": {
-        "preset": {
-          "name": "conventionalcommits",
-          "types": [
-            {
-              "type": "feat",
-              "section": "✨ Features"
-            },
-            {
-              "type": "fix",
-              "section": "🐞 Fixes"
-            },
-            {
-              "type": "chore(deps)",
-              "section": "🛠️ Dependency Upgrades"
-            },
-            {
-              "type": "perf",
-              "section": "🏎️ Performance Improvements"
-            },
-            {
-              "type": "docs",
-              "section": "📚 Documentation"
-            }
-          ]
-        }
-      }
-    }
   }
 }
