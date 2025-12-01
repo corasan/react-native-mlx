@@ -48,15 +48,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/henrypaulino/react-native-nitro-mlx.git"
+    "url": "git+https://github.com/corasan/react-native-nitro-mlx.git"
   },
   "author": "Henry Paulino",
   "license": "MIT",
-  "bugs": "https://github.com/henrypaulino/react-native-nitro-mlx/issues",
-  "homepage": "https://github.com/henrypaulino/react-native-nitro-mlx#readme",
+  "bugs": "https://github.com/corasan/react-native-nitro-mlx/issues",
+  "homepage": "https://github.com/corasan/react-native-nitro-mlx#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
+    "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
     "@expo/config-plugins": "^9.0.10",
