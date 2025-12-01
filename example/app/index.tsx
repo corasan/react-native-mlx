@@ -14,11 +14,11 @@ import {
   View,
 } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { LLM, ModelManager } from 'react-native-mlx'
+import { LLM, MLXModel, ModelManager } from 'react-native-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useBenchmark } from '../components/benchmark-context'
 
-const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
+const MODEL_ID = MLXModel.Llama_3_2_1B_Instruct_4bit
 
 type Message = {
   id: string

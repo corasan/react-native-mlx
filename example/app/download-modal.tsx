@@ -1,9 +1,9 @@
 import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, useColorScheme, View } from 'react-native'
-import { ModelManager } from 'react-native-mlx'
+import { MLXModel, ModelManager } from 'react-native-mlx'
 
-const MODEL_ID = 'mlx-community/Qwen3-0.6B-4bit'
+const MODEL_ID = MLXModel.Llama_3_2_1B_Instruct_4bit
 
 export default function DownloadModal() {
   const [progress, setProgress] = useState(0)
