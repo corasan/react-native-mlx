@@ -92,7 +92,7 @@
       "@release-it/bumper": {
         "out": [
           {
-            "file": "package/package.json",
+            "file": "./package.json",
             "path": "version"
           }
         ]
