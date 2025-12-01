@@ -41,20 +41,20 @@
     },
     "package": {
       "name": "react-native-nitro-mlx",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "devDependencies": {
         "@expo/config-plugins": "^9.0.10",
-        "nitrogen": "^0.31.10",
-        "react-native-builder-bob": "^0.40.13",
-      },
-      "peerDependencies": {
         "@release-it-plugins/workspaces": "^5.0.3",
         "@release-it/bumper": "^7.0.5",
         "@release-it/conventional-changelog": "^10.0.1",
+        "nitrogen": "^0.31.10",
+        "react-native-builder-bob": "^0.40.13",
+        "release-it": "^19.0.4",
+      },
+      "peerDependencies": {
         "react": "*",
         "react-native": "*",
         "react-native-nitro-modules": "*",
-        "release-it": "^19.0.4",
       },
     },
   },
