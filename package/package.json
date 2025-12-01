@@ -1,5 +1,5 @@
 {
-  "name": "react-native-mlx",
+  "name": "react-native-nitro-mlx",
   "version": "0.1.0",
   "description": "Nitro module package",
   "main": "./lib/module/index.js",
@@ -24,7 +24,7 @@
     "mlx",
     "mlx-swift",
     "apple",
-    "react-native-mlx",
+    "react-native-nitro-mlx",
     "ai"
   ],
   "files": [
@@ -46,11 +46,11 @@
     "*.podspec",
     "README.md"
   ],
-  "repository": "https://github.com/henrypaulino/react-native-mlx.git",
+  "repository": "https://github.com/henrypaulino/react-native-nitro-mlx.git",
   "author": "Henry Paulino",
   "license": "MIT",
-  "bugs": "https://github.com/henrypaulino/react-native-mlx/issues",
-  "homepage": "https://github.com/henrypaulino/react-native-mlx#readme",
+  "bugs": "https://github.com/henrypaulino/react-native-nitro-mlx/issues",
+  "homepage": "https://github.com/henrypaulino/react-native-nitro-mlx#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "provenance": true

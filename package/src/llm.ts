@@ -15,7 +15,7 @@ function getInstance(): LLMSpec {
  *
  * @example
  * ```ts
- * import { LLM } from 'react-native-mlx'
+ * import { LLM } from 'react-native-nitro-mlx'
  *
  * // Load a model
  * await LLM.load('mlx-community/Qwen3-0.6B-4bit', progress => {

@@ -9,7 +9,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native'
-import { LLM } from 'react-native-mlx'
+import { LLM } from 'react-native-nitro-mlx'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { type BenchmarkResult, useBenchmark } from '../components/benchmark-context'
 

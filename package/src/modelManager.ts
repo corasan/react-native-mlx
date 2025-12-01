@@ -15,7 +15,7 @@ function getInstance(): ModelManagerSpec {
  *
  * @example
  * ```ts
- * import { ModelManager } from 'react-native-mlx'
+ * import { ModelManager } from 'react-native-nitro-mlx'
  *
  * // Download a model
  * await ModelManager.download('mlx-community/Qwen3-0.6B-4bit', progress => {

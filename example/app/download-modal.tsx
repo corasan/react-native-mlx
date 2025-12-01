@@ -1,7 +1,7 @@
 import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, useColorScheme, View } from 'react-native'
-import { MLXModel, ModelManager } from 'react-native-mlx'
+import { MLXModel, ModelManager } from 'react-native-nitro-mlx'
 
 const MODEL_ID = MLXModel.Llama_3_2_1B_Instruct_4bit
 

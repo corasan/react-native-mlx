@@ -6,7 +6,7 @@
       "@/*": [
         "./*"
       ],
-      "react-native-mlx": [
+      "react-native-nitro-mlx": [
         "../package/src/index"
       ]
     }

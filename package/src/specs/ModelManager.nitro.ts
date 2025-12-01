@@ -2,7 +2,7 @@ import type { HybridObject } from 'react-native-nitro-modules'
 
 /**
  * Low-level interface for managing MLX model downloads.
- * @internal Use the `ModelManager` export from `react-native-mlx` instead.
+ * @internal Use the `ModelManager` export from `react-native-nitro-mlx` instead.
  */
 export interface ModelManager extends HybridObject<{ ios: 'swift' }> {
   /**

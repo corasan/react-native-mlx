@@ -31,7 +31,7 @@
         "react": "19.1.0",
         "react-native": "0.81.5",
         "react-native-keyboard-controller": "1.18.5",
-        "react-native-mlx": "*",
+        "react-native-nitro-mlx": "*",
         "react-native-nitro-modules": "^0.31.10",
         "react-native-reanimated": "~4.1.1",
         "react-native-safe-area-context": "~5.6.0",
@@ -44,7 +44,7 @@
       },
     },
     "package": {
-      "name": "react-native-mlx",
+      "name": "react-native-nitro-mlx",
       "version": "0.1.0",
       "devDependencies": {
         "@expo/config-plugins": "^9.0.10",
@@ -1511,9 +1511,9 @@
 
     "react-native-keyboard-controller": ["react-native-keyboard-controller@1.18.5", "", { "dependencies": { "react-native-is-edge-to-edge": "^1.2.1" }, "peerDependencies": { "react": "*", "react-native": "*", "react-native-reanimated": ">=3.0.0" } }, "sha512-wbYN6Tcu3G5a05dhRYBgjgd74KqoYWuUmroLpigRg9cXy5uYo7prTMIvMgvLtARQtUF7BOtFggUnzgoBOgk0TQ=="],
 
-    "react-native-mlx": ["react-native-mlx@workspace:package"],
-
     "react-native-monorepo-config": ["react-native-monorepo-config@0.1.10", "", { "dependencies": { "escape-string-regexp": "^5.0.0", "fast-glob": "^3.3.3" } }, "sha512-v0rlaLZiCUg95Mpw6xNRQce5k9yio0qscKjNQaPtFYMNL75YugS2UPUItIPLIRbZubK+s2/LRzBjX+mdyUgh4g=="],
+
+    "react-native-nitro-mlx": ["react-native-nitro-mlx@workspace:package"],
 
     "react-native-nitro-modules": ["react-native-nitro-modules@0.31.10", "", { "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-hcvjTu9YJE9fMmnAUvhG8CxvYLpOuMQ/2eyi/S6GyrecezF6Rmk/uRQEL6v09BRFWA/xRVZNQVulQPS+2HS3mQ=="],
 
