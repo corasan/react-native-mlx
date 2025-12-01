@@ -1,6 +1,6 @@
 {
   "name": "react-native-nitro-mlx",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Nitro module package",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -44,7 +44,10 @@
     "*.podspec",
     "README.md"
   ],
-  "repository": "https://github.com/henrypaulino/react-native-nitro-mlx.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henrypaulino/react-native-nitro-mlx.git"
+  },
   "license": "MIT",
   "bugs": "https://github.com/henrypaulino/react-native-nitro-mlx/issues",
   "homepage": "https://github.com/henrypaulino/react-native-nitro-mlx#readme",
