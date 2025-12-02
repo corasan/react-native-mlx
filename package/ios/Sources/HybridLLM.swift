@@ -20,6 +20,7 @@ class HybridLLM: HybridLLMSpec {
     var modelId: String = ""
     var debug: Bool = false
     var systemPrompt: String = "You are a helpful assistant."
+    var additionalContext: LLMMessage = LLMMessage()
 
     private func log(_ message: String) {
         if debug {
@@ -38,13 +39,15 @@ class HybridLLM: HybridLLMSpec {
             ) { progress in
                 options?.onProgress?(progress.fractionCompleted)
             }
-            
-            // Convert LLMMessage array to dictionary format expected by ChatSession
-            let contextDict: [String: Any]? = options?.additionalContext.map { messages in
+
+            // Convert [LLMMessage]? to [String: Any]?
+            let additionalContextDict: [String: Any]? = if let messages = options?.additionalContext {
                 ["messages": messages.map { ["role": $0.role, "content": $0.content] }]
+            } else {
+                nil
             }
-            
-            self.session = ChatSession(container, instructions: self.systemPrompt, additionalContext: contextDict)
+
+            self.session = ChatSession(container, instructions: self.systemPrompt, additionalContext: additionalContextDict)
             self.modelId = modelId
             log("Model loaded with system prompt: \(self.systemPrompt.prefix(50))...")
         }
