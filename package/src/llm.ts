@@ -1,7 +1,12 @@
 import { NitroModules } from 'react-native-nitro-modules'
-import type { GenerationStats, LLM as LLMSpec } from './specs/LLM.nitro'
+import type { GenerationStats, LLMLoadOptions, LLM as LLMSpec } from './specs/LLM.nitro'
 
 let instance: LLMSpec | null = null
+
+export type Message = {
+  role: 'user' | 'assistant' | 'system'
+  content: string
+}
 
 function getInstance(): LLMSpec {
   if (!instance) {
@@ -36,10 +41,10 @@ export const LLM = {
   /**
    * Load a model into memory. Downloads the model from HuggingFace if not already cached.
    * @param modelId - HuggingFace model ID (e.g., 'mlx-community/Qwen3-0.6B-4bit')
-   * @param onProgress - Callback invoked with loading progress (0-1)
+   * @param options - Callback invoked with loading progress (0-1)
    */
-  load(modelId: string, onProgress: (progress: number) => void): Promise<void> {
-    return getInstance().load(modelId, onProgress)
+  load(modelId: string, options: LLMLoadOptions): Promise<void> {
+    return getInstance().load(modelId, options)
   },
 
   /**

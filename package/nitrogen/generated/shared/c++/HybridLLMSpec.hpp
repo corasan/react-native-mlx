@@ -13,11 +13,15 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
+// Forward declaration of `LLMLoadOptions` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMLoadOptions; }
 // Forward declaration of `GenerationStats` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 
 #include <string>
 #include <NitroModules/Promise.hpp>
+#include "LLMLoadOptions.hpp"
+#include <optional>
 #include <functional>
 #include "GenerationStats.hpp"
 
@@ -58,7 +62,7 @@ namespace margelo::nitro::mlxreactnative {
 
     public:
       // Methods
-      virtual std::shared_ptr<Promise<void>> load(const std::string& modelId, const std::function<void(double /* progress */)>& onProgress) = 0;
+      virtual std::shared_ptr<Promise<void>> load(const std::string& modelId, const std::optional<LLMLoadOptions>& options) = 0;
       virtual std::shared_ptr<Promise<std::string>> generate(const std::string& prompt) = 0;
       virtual std::shared_ptr<Promise<std::string>> stream(const std::string& prompt, const std::function<void(const std::string& /* token */)>& onToken) = 0;
       virtual void stop() = 0;

@@ -12,12 +12,20 @@
 // Forward declaration of `HybridLLMSpec_cxx` to properly resolve imports.
 namespace MLXReactNative { class HybridLLMSpec_cxx; }
 
+// Forward declaration of `LLMLoadOptions` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMLoadOptions; }
+// Forward declaration of `LLMMessage` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMMessage; }
 // Forward declaration of `GenerationStats` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 
 #include <string>
 #include <NitroModules/Promise.hpp>
+#include "LLMLoadOptions.hpp"
+#include <optional>
 #include <functional>
+#include "LLMMessage.hpp"
+#include <vector>
 #include "GenerationStats.hpp"
 
 #include "MLXReactNative-Swift-Cxx-Umbrella.hpp"
@@ -86,8 +94,8 @@ namespace margelo::nitro::mlxreactnative {
 
   public:
     // Methods
-    inline std::shared_ptr<Promise<void>> load(const std::string& modelId, const std::function<void(double /* progress */)>& onProgress) override {
-      auto __result = _swiftPart.load(modelId, onProgress);
+    inline std::shared_ptr<Promise<void>> load(const std::string& modelId, const std::optional<LLMLoadOptions>& options) override {
+      auto __result = _swiftPart.load(modelId, options);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

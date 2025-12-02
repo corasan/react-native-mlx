@@ -14,16 +14,23 @@ namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 namespace margelo::nitro::mlxreactnative { class HybridLLMSpec; }
 // Forward declaration of `HybridModelManagerSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridModelManagerSpec; }
+// Forward declaration of `LLMLoadOptions` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMLoadOptions; }
+// Forward declaration of `LLMMessage` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMMessage; }
 
 // Include C++ defined types
 #include "GenerationStats.hpp"
 #include "HybridLLMSpec.hpp"
 #include "HybridModelManagerSpec.hpp"
+#include "LLMLoadOptions.hpp"
+#include "LLMMessage.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 

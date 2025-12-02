@@ -14,6 +14,20 @@ export interface GenerationStats {
   totalTime: number
 }
 
+export interface LLMMessage {
+  role: string
+  content: string
+}
+
+/** Options for loading a model.
+ */
+export interface LLMLoadOptions {
+  /** Callback invoked with loading progress (0-1) */
+  onProgress?: (progress: number) => void
+  /** Additional context to provide to the model */
+  additionalContext?: LLMMessage[]
+}
+
 /**
  * Low-level LLM interface for text generation using MLX.
  * @internal Use the `LLM` export from `react-native-nitro-mlx` instead.
@@ -22,9 +36,9 @@ export interface LLM extends HybridObject<{ ios: 'swift' }> {
   /**
    * Load a model into memory. Downloads from HuggingFace if not already cached.
    * @param modelId - HuggingFace model ID (e.g., 'mlx-community/Qwen3-0.6B-4bit')
-   * @param onProgress - Callback invoked with loading progress (0-1)
+   * @param options - Callback invoked with loading progress (0-1)
    */
-  load(modelId: string, onProgress: (progress: number) => void): Promise<void>
+  load(modelId: string, options?: LLMLoadOptions): Promise<void>
 
   /**
    * Generate a complete response for a prompt.
