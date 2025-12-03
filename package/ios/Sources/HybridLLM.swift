@@ -20,6 +20,7 @@ class HybridLLM: HybridLLMSpec {
     var modelId: String = ""
     var debug: Bool = false
     var systemPrompt: String = "You are a helpful assistant."
+    var additionalContext: LLMMessage = LLMMessage()
 
     private func log(_ message: String) {
         if debug {
@@ -27,7 +28,7 @@ class HybridLLM: HybridLLMSpec {
         }
     }
 
-    func load(modelId: String, onProgress: @escaping (Double) -> Void) throws -> Promise<Void> {
+    func load(modelId: String, options: LLMLoadOptions?) throws -> Promise<Void> {
         return Promise.async { [self] in
             let modelDir = await ModelDownloader.shared.getModelDirectory(modelId: modelId)
             log("Loading from directory: \(modelDir.path)")
@@ -36,10 +37,17 @@ class HybridLLM: HybridLLMSpec {
             let container = try await modelFactory.loadContainer(
                 configuration: config
             ) { progress in
-                onProgress(progress.fractionCompleted)
+                options?.onProgress?(progress.fractionCompleted)
             }
 
-            self.session = ChatSession(container, instructions: self.systemPrompt)
+            // Convert [LLMMessage]? to [String: Any]?
+            let additionalContextDict: [String: Any]? = if let messages = options?.additionalContext {
+                ["messages": messages.map { ["role": $0.role, "content": $0.content] }]
+            } else {
+                nil
+            }
+
+            self.session = ChatSession(container, instructions: self.systemPrompt, additionalContext: additionalContextDict)
             self.modelId = modelId
             log("Model loaded with system prompt: \(self.systemPrompt.prefix(50))...")
         }

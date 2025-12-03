@@ -14,6 +14,10 @@ namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 namespace margelo::nitro::mlxreactnative { class HybridLLMSpec; }
 // Forward declaration of `HybridModelManagerSpec` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { class HybridModelManagerSpec; }
+// Forward declaration of `LLMLoadOptions` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMLoadOptions; }
+// Forward declaration of `LLMMessage` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMMessage; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridLLMSpec_cxx` to properly resolve imports.
@@ -25,12 +29,15 @@ namespace MLXReactNative { class HybridModelManagerSpec_cxx; }
 #include "GenerationStats.hpp"
 #include "HybridLLMSpec.hpp"
 #include "HybridModelManagerSpec.hpp"
+#include "LLMLoadOptions.hpp"
+#include "LLMMessage.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -116,6 +123,62 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
   Func_void_double create_Func_void_double(void* NON_NULL swiftClosureWrapper) noexcept;
   inline Func_void_double_Wrapper wrap_Func_void_double(Func_void_double value) noexcept {
     return Func_void_double_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(double /* progress */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(double / * progress * /)>>`.
+   */
+  using std__optional_std__function_void_double____progress______ = std::optional<std::function<void(double /* progress */)>>;
+  inline std::optional<std::function<void(double /* progress */)>> create_std__optional_std__function_void_double____progress______(const std::function<void(double /* progress */)>& value) noexcept {
+    return std::optional<std::function<void(double /* progress */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_double____progress______(const std::optional<std::function<void(double /* progress */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(double /* progress */)> get_std__optional_std__function_void_double____progress______(const std::optional<std::function<void(double /* progress */)>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::vector<LLMMessage>
+  /**
+   * Specialized version of `std::vector<LLMMessage>`.
+   */
+  using std__vector_LLMMessage_ = std::vector<LLMMessage>;
+  inline std::vector<LLMMessage> create_std__vector_LLMMessage_(size_t size) noexcept {
+    std::vector<LLMMessage> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: std::optional<std::vector<LLMMessage>>
+  /**
+   * Specialized version of `std::optional<std::vector<LLMMessage>>`.
+   */
+  using std__optional_std__vector_LLMMessage__ = std::optional<std::vector<LLMMessage>>;
+  inline std::optional<std::vector<LLMMessage>> create_std__optional_std__vector_LLMMessage__(const std::vector<LLMMessage>& value) noexcept {
+    return std::optional<std::vector<LLMMessage>>(value);
+  }
+  inline bool has_value_std__optional_std__vector_LLMMessage__(const std::optional<std::vector<LLMMessage>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::vector<LLMMessage> get_std__optional_std__vector_LLMMessage__(const std::optional<std::vector<LLMMessage>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<LLMLoadOptions>
+  /**
+   * Specialized version of `std::optional<LLMLoadOptions>`.
+   */
+  using std__optional_LLMLoadOptions_ = std::optional<LLMLoadOptions>;
+  inline std::optional<LLMLoadOptions> create_std__optional_LLMLoadOptions_(const LLMLoadOptions& value) noexcept {
+    return std::optional<LLMLoadOptions>(value);
+  }
+  inline bool has_value_std__optional_LLMLoadOptions_(const std::optional<LLMLoadOptions>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline LLMLoadOptions get_std__optional_LLMLoadOptions_(const std::optional<LLMLoadOptions>& optional) noexcept {
+    return *optional;
   }
   
   // pragma MARK: std::shared_ptr<Promise<std::string>>

@@ -129,7 +129,10 @@ export default function ChatScreen() {
       setIsLoading(true)
       setLoadProgress(0)
       try {
-        await LLM.load(MODEL_ID, setLoadProgress)
+        await LLM.load(MODEL_ID, {
+          onProgress: setLoadProgress,
+          additionalContext: [{ role: 'user', content: 'What is quantum computing?' }],
+        })
         setIsReady(true)
       } catch (error) {
         console.error('Error loading model:', error)
