@@ -35,12 +35,31 @@ await ModelManager.download('mlx-community/Qwen3-0.6B-4bit', (progress) => {
 ```typescript
 import { LLM } from 'react-native-nitro-mlx'
 
-await LLM.load('mlx-community/Qwen3-0.6B-4bit', (progress) => {
-  console.log(`Loading: ${(progress * 100).toFixed(0)}%`)
+await LLM.load('mlx-community/Qwen3-0.6B-4bit', {
+  onProgress: (progress) => {
+    console.log(`Loading: ${(progress * 100).toFixed(0)}%`)
+  }
 })
 
 const response = await LLM.generate('What is the capital of France?')
 console.log(response)
+```
+
+### Load with Additional Context
+
+You can provide conversation history or few-shot examples when loading the model:
+
+```typescript
+await LLM.load('mlx-community/Qwen3-0.6B-4bit', {
+  onProgress: (progress) => {
+    console.log(`Loading: ${(progress * 100).toFixed(0)}%`)
+  },
+  additionalContext: [
+    { role: 'user', content: 'What is machine learning?' },
+    { role: 'assistant', content: 'Machine learning is...' },
+    { role: 'user', content: 'Can you explain neural networks?' }
+  ]
+})
 ```
 
 ### Streaming
@@ -65,10 +84,24 @@ LLM.stop()
 
 | Method | Description |
 |--------|-------------|
-| `load(modelId: string, onProgress: (progress: number) => void): Promise<void>` | Load a model into memory |
+| `load(modelId: string, options?: LLMLoadOptions): Promise<void>` | Load a model into memory |
 | `generate(prompt: string): Promise<string>` | Generate a complete response |
 | `stream(prompt: string, onToken: (token: string) => void): Promise<string>` | Stream tokens as they're generated |
 | `stop(): void` | Stop the current generation |
+
+#### LLMLoadOptions
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `onProgress` | `(progress: number) => void` | Optional callback invoked with loading progress (0-1) |
+| `additionalContext` | `LLMMessage[]` | Optional conversation history or few-shot examples to provide to the model |
+
+#### LLMMessage
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `role` | `'user' \| 'assistant' \| 'system'` | The role of the message sender |
+| `content` | `string` | The message content |
 
 | Property | Description |
 |----------|-------------|
