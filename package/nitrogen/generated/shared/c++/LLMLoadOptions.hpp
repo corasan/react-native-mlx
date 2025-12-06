@@ -40,10 +40,11 @@ namespace margelo::nitro::mlxreactnative {
   public:
     std::optional<std::function<void(double /* progress */)>> onProgress     SWIFT_PRIVATE;
     std::optional<std::vector<LLMMessage>> additionalContext     SWIFT_PRIVATE;
+    std::optional<bool> manageHistory     SWIFT_PRIVATE;
 
   public:
     LLMLoadOptions() = default;
-    explicit LLMLoadOptions(std::optional<std::function<void(double /* progress */)>> onProgress, std::optional<std::vector<LLMMessage>> additionalContext): onProgress(onProgress), additionalContext(additionalContext) {}
+    explicit LLMLoadOptions(std::optional<std::function<void(double /* progress */)>> onProgress, std::optional<std::vector<LLMMessage>> additionalContext, std::optional<bool> manageHistory): onProgress(onProgress), additionalContext(additionalContext), manageHistory(manageHistory) {}
   };
 
 } // namespace margelo::nitro::mlxreactnative
@@ -57,13 +58,15 @@ namespace margelo::nitro {
       jsi::Object obj = arg.asObject(runtime);
       return margelo::nitro::mlxreactnative::LLMLoadOptions(
         JSIConverter<std::optional<std::function<void(double)>>>::fromJSI(runtime, obj.getProperty(runtime, "onProgress")),
-        JSIConverter<std::optional<std::vector<margelo::nitro::mlxreactnative::LLMMessage>>>::fromJSI(runtime, obj.getProperty(runtime, "additionalContext"))
+        JSIConverter<std::optional<std::vector<margelo::nitro::mlxreactnative::LLMMessage>>>::fromJSI(runtime, obj.getProperty(runtime, "additionalContext")),
+        JSIConverter<std::optional<bool>>::fromJSI(runtime, obj.getProperty(runtime, "manageHistory"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::mlxreactnative::LLMLoadOptions& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "onProgress", JSIConverter<std::optional<std::function<void(double)>>>::toJSI(runtime, arg.onProgress));
       obj.setProperty(runtime, "additionalContext", JSIConverter<std::optional<std::vector<margelo::nitro::mlxreactnative::LLMMessage>>>::toJSI(runtime, arg.additionalContext));
+      obj.setProperty(runtime, "manageHistory", JSIConverter<std::optional<bool>>::toJSI(runtime, arg.manageHistory));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -76,6 +79,7 @@ namespace margelo::nitro {
       }
       if (!JSIConverter<std::optional<std::function<void(double)>>>::canConvert(runtime, obj.getProperty(runtime, "onProgress"))) return false;
       if (!JSIConverter<std::optional<std::vector<margelo::nitro::mlxreactnative::LLMMessage>>>::canConvert(runtime, obj.getProperty(runtime, "additionalContext"))) return false;
+      if (!JSIConverter<std::optional<bool>>::canConvert(runtime, obj.getProperty(runtime, "manageHistory"))) return false;
       return true;
     }
   };

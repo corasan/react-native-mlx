@@ -14,6 +14,8 @@ class HybridLLM: HybridLLMSpec {
         totalTime: 0
     )
     private var modelFactory: ModelFactory = LLMModelFactory.shared
+    private var manageHistory: Bool = false
+    private var messageHistory: [LLMMessage] = []
 
     var isLoaded: Bool { session != nil }
     var isGenerating: Bool { currentTask != nil }
@@ -49,7 +51,14 @@ class HybridLLM: HybridLLMSpec {
 
             self.session = ChatSession(container, instructions: self.systemPrompt, additionalContext: additionalContextDict)
             self.modelId = modelId
+
+            self.manageHistory = options?.manageHistory ?? false
+            self.messageHistory = options?.additionalContext ?? []
+
             log("Model loaded with system prompt: \(self.systemPrompt.prefix(50))...")
+            if self.manageHistory {
+                log("History management enabled with \(self.messageHistory.count) initial messages")
+            }
         }
     }
 
@@ -59,6 +68,10 @@ class HybridLLM: HybridLLMSpec {
         }
 
         return Promise.async { [self] in
+            if self.manageHistory {
+                self.messageHistory.append(LLMMessage(role: "user", content: prompt))
+            }
+
             let task = Task<String, Error> {
                 log("Generating response for: \(prompt.prefix(50))...")
                 let result = try await session.respond(to: prompt)
@@ -71,6 +84,11 @@ class HybridLLM: HybridLLMSpec {
             do {
                 let result = try await task.value
                 self.currentTask = nil
+
+                if self.manageHistory {
+                    self.messageHistory.append(LLMMessage(role: "assistant", content: result))
+                }
+
                 return result
             } catch {
                 self.currentTask = nil
@@ -85,6 +103,10 @@ class HybridLLM: HybridLLMSpec {
         }
 
         return Promise.async { [self] in
+            if self.manageHistory {
+                self.messageHistory.append(LLMMessage(role: "user", content: prompt))
+            }
+
             let task = Task<String, Error> {
                 var result = ""
                 var tokenCount = 0
@@ -124,6 +146,11 @@ class HybridLLM: HybridLLMSpec {
             do {
                 let result = try await task.value
                 self.currentTask = nil
+
+                if self.manageHistory {
+                    self.messageHistory.append(LLMMessage(role: "assistant", content: result))
+                }
+
                 return result
             } catch {
                 self.currentTask = nil
@@ -139,5 +166,14 @@ class HybridLLM: HybridLLMSpec {
 
     func getLastGenerationStats() throws -> GenerationStats {
         return lastStats
+    }
+
+    func getHistory() throws -> [LLMMessage] {
+        return messageHistory
+    }
+
+    func clearHistory() throws {
+        messageHistory = []
+        log("Message history cleared")
     }
 }

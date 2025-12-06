@@ -166,6 +166,21 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
     return *optional;
   }
   
+  // pragma MARK: std::optional<bool>
+  /**
+   * Specialized version of `std::optional<bool>`.
+   */
+  using std__optional_bool_ = std::optional<bool>;
+  inline std::optional<bool> create_std__optional_bool_(const bool& value) noexcept {
+    return std::optional<bool>(value);
+  }
+  inline bool has_value_std__optional_bool_(const std::optional<bool>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline bool get_std__optional_bool_(const std::optional<bool>& optional) noexcept {
+    return *optional;
+  }
+  
   // pragma MARK: std::optional<LLMLoadOptions>
   /**
    * Specialized version of `std::optional<LLMLoadOptions>`.
@@ -261,6 +276,15 @@ namespace margelo::nitro::mlxreactnative::bridge::swift {
   }
   inline Result_GenerationStats_ create_Result_GenerationStats_(const std::exception_ptr& error) noexcept {
     return Result<GenerationStats>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::vector<LLMMessage>>
+  using Result_std__vector_LLMMessage__ = Result<std::vector<LLMMessage>>;
+  inline Result_std__vector_LLMMessage__ create_Result_std__vector_LLMMessage__(const std::vector<LLMMessage>& value) noexcept {
+    return Result<std::vector<LLMMessage>>::withValue(value);
+  }
+  inline Result_std__vector_LLMMessage__ create_Result_std__vector_LLMMessage__(const std::exception_ptr& error) noexcept {
+    return Result<std::vector<LLMMessage>>::withError(error);
   }
   
   // pragma MARK: std::shared_ptr<Promise<bool>>

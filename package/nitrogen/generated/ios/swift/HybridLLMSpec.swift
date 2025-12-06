@@ -23,6 +23,8 @@ public protocol HybridLLMSpec_protocol: HybridObject {
   func stream(prompt: String, onToken: @escaping (_ token: String) -> Void) throws -> Promise<String>
   func stop() throws -> Void
   func getLastGenerationStats() throws -> GenerationStats
+  func getHistory() throws -> [LLMMessage]
+  func clearHistory() throws -> Void
 }
 
 public extension HybridLLMSpec_protocol {

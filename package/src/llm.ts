@@ -82,6 +82,21 @@ export const LLM = {
     return getInstance().getLastGenerationStats()
   },
 
+  /**
+   * Get the message history if management is enabled.
+   * @returns Array of messages in the history
+   */
+  getHistory(): Message[] {
+    return getInstance().getHistory() as Message[]
+  },
+
+  /**
+   * Clear the message history.
+   */
+  clearHistory(): void {
+    getInstance().clearHistory()
+  },
+
   /** Whether a model is currently loaded and ready for generation */
   get isLoaded(): boolean {
     return getInstance().isLoaded

@@ -242,4 +242,33 @@ open class HybridLLMSpec_cxx {
       return bridge.create_Result_GenerationStats_(__exceptionPtr)
     }
   }
+  
+  @inline(__always)
+  public final func getHistory() -> bridge.Result_std__vector_LLMMessage__ {
+    do {
+      let __result = try self.__implementation.getHistory()
+      let __resultCpp = { () -> bridge.std__vector_LLMMessage_ in
+        var __vector = bridge.create_std__vector_LLMMessage_(__result.count)
+        for __item in __result {
+          __vector.push_back(__item)
+        }
+        return __vector
+      }()
+      return bridge.create_Result_std__vector_LLMMessage__(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__vector_LLMMessage__(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func clearHistory() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.clearHistory()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
 }

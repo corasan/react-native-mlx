@@ -26,6 +26,8 @@ export interface LLMLoadOptions {
   onProgress?: (progress: number) => void
   /** Additional context to provide to the model */
   additionalContext?: LLMMessage[]
+  /** Whether to automatically manage message history */
+  manageHistory?: boolean
 }
 
 /**
@@ -65,6 +67,17 @@ export interface LLM extends HybridObject<{ ios: 'swift' }> {
    * @returns Statistics including token count, speed, and timing
    */
   getLastGenerationStats(): GenerationStats
+
+  /**
+   * Get the message history if management is enabled.
+   * @returns Array of messages in the history
+   */
+  getHistory(): LLMMessage[]
+
+  /**
+   * Clear the message history.
+   */
+  clearHistory(): void
 
   /** Whether a model is currently loaded */
   readonly isLoaded: boolean

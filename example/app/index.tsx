@@ -132,6 +132,7 @@ export default function ChatScreen() {
         await LLM.load(MODEL_ID, {
           onProgress: setLoadProgress,
           additionalContext: [{ role: 'user', content: 'What is quantum computing?' }],
+          manageHistory: true,
         })
         setIsReady(true)
       } catch (error) {
@@ -237,6 +238,25 @@ export default function ChatScreen() {
     }
   }
 
+  const logHistory = () => {
+    try {
+      const history = LLM.getHistory()
+      console.log('Message History:', history)
+      console.log('Total messages:', history.length)
+    } catch (error) {
+      console.error('Error getting history:', error)
+    }
+  }
+
+  const handleClearHistory = () => {
+    try {
+      LLM.clearHistory()
+      console.log('History cleared')
+    } catch (error) {
+      console.error('Error clearing history:', error)
+    }
+  }
+
   if (isChecking) {
     return (
       <SafeAreaView style={[styles.centered, { backgroundColor: bgColor }]}>
@@ -292,9 +312,17 @@ export default function ChatScreen() {
             <Text style={[styles.headerButton, { color: '#007AFF' }]}>Benchmark</Text>
           </TouchableOpacity>
           <Text style={[styles.headerTitle, { color: textColor }]}>MLX Chat</Text>
-          <TouchableOpacity style={styles.deleteButton} onPress={deleteModel}>
-            <Text style={styles.deleteButtonText}>Delete</Text>
-          </TouchableOpacity>
+          <View style={styles.headerButtons}>
+            <TouchableOpacity style={styles.historyButton} onPress={logHistory}>
+              <Text style={styles.historyButtonText}>Log</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.clearButton} onPress={handleClearHistory}>
+              <Text style={styles.clearButtonText}>Clear</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.deleteButton} onPress={deleteModel}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <LegendList<Message>
@@ -360,6 +388,32 @@ const styles = StyleSheet.create({
   headerButton: {
     fontSize: 14,
     fontWeight: '500',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  historyButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: '#34C759',
+  },
+  historyButtonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  clearButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: '#FF9500',
+  },
+  clearButtonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
   },
   deleteButton: {
     paddingHorizontal: 12,

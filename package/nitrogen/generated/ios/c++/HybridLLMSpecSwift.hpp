@@ -132,6 +132,20 @@ namespace margelo::nitro::mlxreactnative {
       auto __value = std::move(__result.value());
       return __value;
     }
+    inline std::vector<LLMMessage> getHistory() override {
+      auto __result = _swiftPart.getHistory();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline void clearHistory() override {
+      auto __result = _swiftPart.clearHistory();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
 
   private:
     MLXReactNative::HybridLLMSpec_cxx _swiftPart;

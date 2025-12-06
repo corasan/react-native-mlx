@@ -19,7 +19,7 @@ public extension LLMLoadOptions {
   /**
    * Create a new instance of `LLMLoadOptions`.
    */
-  init(onProgress: ((_ progress: Double) -> Void)?, additionalContext: [LLMMessage]?) {
+  init(onProgress: ((_ progress: Double) -> Void)?, additionalContext: [LLMMessage]?, manageHistory: Bool?) {
     self.init({ () -> bridge.std__optional_std__function_void_double____progress______ in
       if let __unwrappedValue = onProgress {
         return bridge.create_std__optional_std__function_void_double____progress______({ () -> bridge.Func_void_double in
@@ -38,6 +38,12 @@ public extension LLMLoadOptions {
           }
           return __vector
         }())
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_bool_ in
+      if let __unwrappedValue = manageHistory {
+        return bridge.create_std__optional_bool_(__unwrappedValue)
       } else {
         return .init()
       }
@@ -99,6 +105,30 @@ public extension LLMLoadOptions {
             }
             return __vector
           }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var manageHistory: Bool? {
+    @inline(__always)
+    get {
+      return { () -> Bool? in
+        if bridge.has_value_std__optional_bool_(self.__manageHistory) {
+          let __unwrapped = bridge.get_std__optional_bool_(self.__manageHistory)
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__manageHistory = { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
         } else {
           return .init()
         }
