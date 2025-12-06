@@ -70,6 +70,7 @@ namespace margelo::nitro::mlxreactnative {
       virtual std::shared_ptr<Promise<std::string>> generate(const std::string& prompt) = 0;
       virtual std::shared_ptr<Promise<std::string>> stream(const std::string& prompt, const std::function<void(const std::string& /* token */)>& onToken) = 0;
       virtual void stop() = 0;
+      virtual void unload() = 0;
       virtual GenerationStats getLastGenerationStats() = 0;
       virtual std::vector<LLMMessage> getHistory() = 0;
       virtual void clearHistory() = 0;

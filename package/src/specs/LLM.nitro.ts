@@ -63,6 +63,11 @@ export interface LLM extends HybridObject<{ ios: 'swift' }> {
   stop(): void
 
   /**
+   * Unload the current model and release memory.
+   */
+  unload(): void
+
+  /**
    * Get statistics from the last generation.
    * @returns Statistics including token count, speed, and timing
    */

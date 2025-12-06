@@ -124,6 +124,12 @@ namespace margelo::nitro::mlxreactnative {
         std::rethrow_exception(__result.error());
       }
     }
+    inline void unload() override {
+      auto __result = _swiftPart.unload();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
     inline GenerationStats getLastGenerationStats() override {
       auto __result = _swiftPart.getLastGenerationStats();
       if (__result.hasError()) [[unlikely]] {

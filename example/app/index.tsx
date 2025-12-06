@@ -96,9 +96,16 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([])
   const listRef = useRef<LegendListRef>(null)
   const inputRef = useRef<TextInput>(null)
+  const isLoadingRef = useRef(false)
   const { addResult } = useBenchmark()
 
   LLM.debug = true
+
+  useEffect(() => {
+    return () => {
+      LLM.unload()
+    }
+  }, [])
 
   const openSettings = () => {
     router.push('/settings-modal')
@@ -123,9 +130,10 @@ export default function ChatScreen() {
   )
 
   useEffect(() => {
-    if (!isDownloaded || isReady) return
+    if (!isDownloaded || isReady || isLoadingRef.current) return
 
     const loadModel = async () => {
+      isLoadingRef.current = true
       setIsLoading(true)
       setLoadProgress(0)
       try {
@@ -139,6 +147,7 @@ export default function ChatScreen() {
         console.error('Error loading model:', error)
       } finally {
         setIsLoading(false)
+        isLoadingRef.current = false
       }
     }
 
@@ -230,10 +239,12 @@ export default function ChatScreen() {
 
   const deleteModel = async () => {
     try {
+      LLM.unload()
       await ModelManager.deleteModel(MODEL_ID)
       setIsDownloaded(false)
       setIsReady(false)
       setMessages([])
+      isLoadingRef.current = false
     } catch (error) {
       console.error('Error deleting model:', error)
     }

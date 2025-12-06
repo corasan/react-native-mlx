@@ -7,6 +7,7 @@ internal import MLXLMCommon
 class HybridLLM: HybridLLMSpec {
     private var session: ChatSession?
     private var currentTask: Task<String, Error>?
+    private var container: Any?
     private var lastStats: GenerationStats = GenerationStats(
         tokenCount: 0,
         tokensPerSecond: 0,
@@ -30,17 +31,62 @@ class HybridLLM: HybridLLMSpec {
         }
     }
 
+    private func getMemoryUsage() -> String {
+        var taskInfo = mach_task_basic_info()
+        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size)/4
+        let result: kern_return_t = withUnsafeMutablePointer(to: &taskInfo) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                task_info(mach_task_self_,
+                         task_flavor_t(MACH_TASK_BASIC_INFO),
+                         $0,
+                         &count)
+            }
+        }
+
+        if result == KERN_SUCCESS {
+            let usedMB = Float(taskInfo.resident_size) / 1024.0 / 1024.0
+            return String(format: "%.1f MB", usedMB)
+        } else {
+            return "unknown"
+        }
+    }
+
+    private func getGPUMemoryUsage() -> String {
+        let snapshot = GPU.snapshot()
+        let allocatedMB = Float(snapshot.activeMemory) / 1024.0 / 1024.0
+        let cacheMB = Float(snapshot.cacheMemory) / 1024.0 / 1024.0
+        let peakMB = Float(snapshot.peakMemory) / 1024.0 / 1024.0
+        return String(format: "Allocated: %.1f MB, Cache: %.1f MB, Peak: %.1f MB",
+                     allocatedMB, cacheMB, peakMB)
+    }
+
     func load(modelId: String, options: LLMLoadOptions?) throws -> Promise<Void> {
         return Promise.async { [self] in
+            MLX.GPU.set(cacheLimit: 2000000)
+
+            self.currentTask?.cancel()
+            self.currentTask = nil
+            self.session = nil
+            self.container = nil
+            MLX.GPU.clearCache()
+
+            let memoryAfterCleanup = self.getMemoryUsage()
+            let gpuAfterCleanup = self.getGPUMemoryUsage()
+            log("After cleanup - Host: \(memoryAfterCleanup), GPU: \(gpuAfterCleanup)")
+
             let modelDir = await ModelDownloader.shared.getModelDirectory(modelId: modelId)
             log("Loading from directory: \(modelDir.path)")
 
             let config = ModelConfiguration(directory: modelDir)
-            let container = try await modelFactory.loadContainer(
+            let loadedContainer = try await modelFactory.loadContainer(
                 configuration: config
             ) { progress in
                 options?.onProgress?(progress.fractionCompleted)
             }
+
+            let memoryAfterContainer = self.getMemoryUsage()
+            let gpuAfterContainer = self.getGPUMemoryUsage()
+            log("Model loaded - Host: \(memoryAfterContainer), GPU: \(gpuAfterContainer)")
 
             // Convert [LLMMessage]? to [String: Any]?
             let additionalContextDict: [String: Any]? = if let messages = options?.additionalContext {
@@ -49,13 +95,13 @@ class HybridLLM: HybridLLMSpec {
                 nil
             }
 
-            self.session = ChatSession(container, instructions: self.systemPrompt, additionalContext: additionalContextDict)
+            self.container = loadedContainer
+            self.session = ChatSession(loadedContainer, instructions: self.systemPrompt, additionalContext: additionalContextDict)
             self.modelId = modelId
 
             self.manageHistory = options?.manageHistory ?? false
             self.messageHistory = options?.additionalContext ?? []
 
-            log("Model loaded with system prompt: \(self.systemPrompt.prefix(50))...")
             if self.manageHistory {
                 log("History management enabled with \(self.messageHistory.count) initial messages")
             }
@@ -162,6 +208,26 @@ class HybridLLM: HybridLLMSpec {
     func stop() throws {
         currentTask?.cancel()
         currentTask = nil
+    }
+
+    func unload() throws {
+        let memoryBefore = getMemoryUsage()
+        let gpuBefore = getGPUMemoryUsage()
+        log("Before unload - Host: \(memoryBefore), GPU: \(gpuBefore)")
+
+        currentTask?.cancel()
+        currentTask = nil
+        session = nil
+        container = nil
+        messageHistory = []
+        manageHistory = false
+        modelId = ""
+
+        MLX.GPU.clearCache()
+
+        let memoryAfter = getMemoryUsage()
+        let gpuAfter = getGPUMemoryUsage()
+        log("After unload - Host: \(memoryAfter), GPU: \(gpuAfter)")
     }
 
     func getLastGenerationStats() throws -> GenerationStats {
