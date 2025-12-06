@@ -75,11 +75,34 @@ export const LLM = {
   },
 
   /**
+   * Unload the current model and release memory.
+   * Call this when you're done with the model to free up memory.
+   */
+  unload(): void {
+    getInstance().unload()
+  },
+
+  /**
    * Get statistics from the last generation.
    * @returns Statistics including token count, tokens/sec, TTFT, and total time
    */
   getLastGenerationStats(): GenerationStats {
     return getInstance().getLastGenerationStats()
+  },
+
+  /**
+   * Get the message history if management is enabled.
+   * @returns Array of messages in the history
+   */
+  getHistory(): Message[] {
+    return getInstance().getHistory() as Message[]
+  },
+
+  /**
+   * Clear the message history.
+   */
+  clearHistory(): void {
+    getInstance().clearHistory()
   },
 
   /** Whether a model is currently loaded and ready for generation */

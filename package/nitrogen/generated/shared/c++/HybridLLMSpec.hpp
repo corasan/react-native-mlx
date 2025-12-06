@@ -17,6 +17,8 @@
 namespace margelo::nitro::mlxreactnative { struct LLMLoadOptions; }
 // Forward declaration of `GenerationStats` to properly resolve imports.
 namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
+// Forward declaration of `LLMMessage` to properly resolve imports.
+namespace margelo::nitro::mlxreactnative { struct LLMMessage; }
 
 #include <string>
 #include <NitroModules/Promise.hpp>
@@ -24,6 +26,8 @@ namespace margelo::nitro::mlxreactnative { struct GenerationStats; }
 #include <optional>
 #include <functional>
 #include "GenerationStats.hpp"
+#include "LLMMessage.hpp"
+#include <vector>
 
 namespace margelo::nitro::mlxreactnative {
 
@@ -66,7 +70,10 @@ namespace margelo::nitro::mlxreactnative {
       virtual std::shared_ptr<Promise<std::string>> generate(const std::string& prompt) = 0;
       virtual std::shared_ptr<Promise<std::string>> stream(const std::string& prompt, const std::function<void(const std::string& /* token */)>& onToken) = 0;
       virtual void stop() = 0;
+      virtual void unload() = 0;
       virtual GenerationStats getLastGenerationStats() = 0;
+      virtual std::vector<LLMMessage> getHistory() = 0;
+      virtual void clearHistory() = 0;
 
     protected:
       // Hybrid Setup

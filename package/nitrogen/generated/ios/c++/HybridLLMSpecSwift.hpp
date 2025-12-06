@@ -124,6 +124,12 @@ namespace margelo::nitro::mlxreactnative {
         std::rethrow_exception(__result.error());
       }
     }
+    inline void unload() override {
+      auto __result = _swiftPart.unload();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
     inline GenerationStats getLastGenerationStats() override {
       auto __result = _swiftPart.getLastGenerationStats();
       if (__result.hasError()) [[unlikely]] {
@@ -131,6 +137,20 @@ namespace margelo::nitro::mlxreactnative {
       }
       auto __value = std::move(__result.value());
       return __value;
+    }
+    inline std::vector<LLMMessage> getHistory() override {
+      auto __result = _swiftPart.getHistory();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline void clearHistory() override {
+      auto __result = _swiftPart.clearHistory();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
 
   private:

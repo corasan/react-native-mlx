@@ -96,9 +96,16 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([])
   const listRef = useRef<LegendListRef>(null)
   const inputRef = useRef<TextInput>(null)
+  const isLoadingRef = useRef(false)
   const { addResult } = useBenchmark()
 
   LLM.debug = true
+
+  useEffect(() => {
+    return () => {
+      LLM.unload()
+    }
+  }, [])
 
   const openSettings = () => {
     router.push('/settings-modal')
@@ -123,21 +130,24 @@ export default function ChatScreen() {
   )
 
   useEffect(() => {
-    if (!isDownloaded || isReady) return
+    if (!isDownloaded || isReady || isLoadingRef.current) return
 
     const loadModel = async () => {
+      isLoadingRef.current = true
       setIsLoading(true)
       setLoadProgress(0)
       try {
         await LLM.load(MODEL_ID, {
           onProgress: setLoadProgress,
-          additionalContext: [{ role: 'user', content: 'What is quantum computing?' }],
+          // additionalContext: [{ role: 'user', content: 'What is quantum computing?' }],
+          manageHistory: true,
         })
         setIsReady(true)
       } catch (error) {
         console.error('Error loading model:', error)
       } finally {
         setIsLoading(false)
+        isLoadingRef.current = false
       }
     }
 
@@ -147,14 +157,9 @@ export default function ChatScreen() {
   const sendPrompt = async () => {
     if (!isReady || !prompt.trim() || isGenerating) return
 
-    const userMessage: Message = {
-      id: Crypto.randomUUID(),
-      content: prompt,
-      isUser: true,
-    }
-
+    const currentPrompt = prompt
     const assistantMessageId = Crypto.randomUUID()
-    const assistantMessage: Message = {
+    const tempAssistantMessage: Message = {
       id: assistantMessageId,
       content: '',
       thinking: '',
@@ -162,7 +167,11 @@ export default function ChatScreen() {
       isUser: false,
     }
 
-    setMessages(prev => [...prev, userMessage, assistantMessage])
+    setMessages(prev => [
+      ...prev,
+      { id: Crypto.randomUUID(), content: currentPrompt, isUser: true },
+      tempAssistantMessage,
+    ])
     setPrompt('')
     inputRef.current?.blur()
     setIsGenerating(true)
@@ -171,7 +180,7 @@ export default function ChatScreen() {
     let isInThinkingBlock = false
 
     try {
-      await LLM.stream(prompt, token => {
+      await LLM.stream(currentPrompt, token => {
         fullText += token
 
         const thinkStart = fullText.indexOf('<think>')
@@ -207,6 +216,8 @@ export default function ChatScreen() {
         )
       })
 
+      syncFromHistory()
+
       const stats = LLM.getLastGenerationStats()
       addResult({
         tokensPerSecond: stats.tokensPerSecond,
@@ -228,14 +239,79 @@ export default function ChatScreen() {
 
   const deleteModel = async () => {
     try {
+      LLM.unload()
       await ModelManager.deleteModel(MODEL_ID)
       setIsDownloaded(false)
       setIsReady(false)
       setMessages([])
+      isLoadingRef.current = false
     } catch (error) {
       console.error('Error deleting model:', error)
     }
   }
+
+  const syncFromHistory = useCallback(() => {
+    try {
+      const history = LLM.getHistory()
+      const uiMessages: Message[] = history.map((msg, index) => {
+        if (msg.role === 'user') {
+          return {
+            id: `history-${index}`,
+            content: msg.content,
+            isUser: true,
+          }
+        }
+
+        const fullText = msg.content
+        const thinkStart = fullText.indexOf('<think>')
+        const thinkEnd = fullText.indexOf('</think>')
+
+        let thinking = ''
+        let content = fullText
+
+        if (thinkStart !== -1 && thinkEnd !== -1) {
+          thinking = fullText.slice(thinkStart + 7, thinkEnd).trim()
+          content = fullText.slice(thinkEnd + 8).trim()
+        }
+
+        return {
+          id: `history-${index}`,
+          content,
+          thinking,
+          isUser: false,
+        }
+      })
+      setMessages(uiMessages)
+    } catch (error) {
+      console.error('Error syncing from history:', error)
+    }
+  }, [])
+
+  const logHistory = () => {
+    try {
+      const history = LLM.getHistory()
+      console.log('Message History:', history)
+      console.log('Total messages:', history.length)
+    } catch (error) {
+      console.error('Error getting history:', error)
+    }
+  }
+
+  const handleClearHistory = () => {
+    try {
+      LLM.clearHistory()
+      setMessages([])
+      console.log('History cleared')
+    } catch (error) {
+      console.error('Error clearing history:', error)
+    }
+  }
+
+  useEffect(() => {
+    if (isReady) {
+      syncFromHistory()
+    }
+  }, [isReady, syncFromHistory])
 
   if (isChecking) {
     return (
@@ -292,9 +368,17 @@ export default function ChatScreen() {
             <Text style={[styles.headerButton, { color: '#007AFF' }]}>Benchmark</Text>
           </TouchableOpacity>
           <Text style={[styles.headerTitle, { color: textColor }]}>MLX Chat</Text>
-          <TouchableOpacity style={styles.deleteButton} onPress={deleteModel}>
-            <Text style={styles.deleteButtonText}>Delete</Text>
-          </TouchableOpacity>
+          <View style={styles.headerButtons}>
+            <TouchableOpacity style={styles.historyButton} onPress={logHistory}>
+              <Text style={styles.historyButtonText}>Log</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.clearButton} onPress={handleClearHistory}>
+              <Text style={styles.clearButtonText}>Clear</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.deleteButton} onPress={deleteModel}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <LegendList<Message>
@@ -360,6 +444,32 @@ const styles = StyleSheet.create({
   headerButton: {
     fontSize: 14,
     fontWeight: '500',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  historyButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: '#34C759',
+  },
+  historyButtonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  clearButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: '#FF9500',
+  },
+  clearButtonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
   },
   deleteButton: {
     paddingHorizontal: 12,
