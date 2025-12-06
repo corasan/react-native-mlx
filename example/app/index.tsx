@@ -131,7 +131,7 @@ export default function ChatScreen() {
       try {
         await LLM.load(MODEL_ID, {
           onProgress: setLoadProgress,
-          additionalContext: [{ role: 'user', content: 'What is quantum computing?' }],
+          // additionalContext: [{ role: 'user', content: 'What is quantum computing?' }],
           manageHistory: true,
         })
         setIsReady(true)
@@ -148,14 +148,9 @@ export default function ChatScreen() {
   const sendPrompt = async () => {
     if (!isReady || !prompt.trim() || isGenerating) return
 
-    const userMessage: Message = {
-      id: Crypto.randomUUID(),
-      content: prompt,
-      isUser: true,
-    }
-
+    const currentPrompt = prompt
     const assistantMessageId = Crypto.randomUUID()
-    const assistantMessage: Message = {
+    const tempAssistantMessage: Message = {
       id: assistantMessageId,
       content: '',
       thinking: '',
@@ -163,7 +158,11 @@ export default function ChatScreen() {
       isUser: false,
     }
 
-    setMessages(prev => [...prev, userMessage, assistantMessage])
+    setMessages(prev => [
+      ...prev,
+      { id: Crypto.randomUUID(), content: currentPrompt, isUser: true },
+      tempAssistantMessage,
+    ])
     setPrompt('')
     inputRef.current?.blur()
     setIsGenerating(true)
@@ -172,7 +171,7 @@ export default function ChatScreen() {
     let isInThinkingBlock = false
 
     try {
-      await LLM.stream(prompt, token => {
+      await LLM.stream(currentPrompt, token => {
         fullText += token
 
         const thinkStart = fullText.indexOf('<think>')
@@ -208,6 +207,8 @@ export default function ChatScreen() {
         )
       })
 
+      syncFromHistory()
+
       const stats = LLM.getLastGenerationStats()
       addResult({
         tokensPerSecond: stats.tokensPerSecond,
@@ -238,6 +239,43 @@ export default function ChatScreen() {
     }
   }
 
+  const syncFromHistory = useCallback(() => {
+    try {
+      const history = LLM.getHistory()
+      const uiMessages: Message[] = history.map((msg, index) => {
+        if (msg.role === 'user') {
+          return {
+            id: `history-${index}`,
+            content: msg.content,
+            isUser: true,
+          }
+        }
+
+        const fullText = msg.content
+        const thinkStart = fullText.indexOf('<think>')
+        const thinkEnd = fullText.indexOf('</think>')
+
+        let thinking = ''
+        let content = fullText
+
+        if (thinkStart !== -1 && thinkEnd !== -1) {
+          thinking = fullText.slice(thinkStart + 7, thinkEnd).trim()
+          content = fullText.slice(thinkEnd + 8).trim()
+        }
+
+        return {
+          id: `history-${index}`,
+          content,
+          thinking,
+          isUser: false,
+        }
+      })
+      setMessages(uiMessages)
+    } catch (error) {
+      console.error('Error syncing from history:', error)
+    }
+  }, [])
+
   const logHistory = () => {
     try {
       const history = LLM.getHistory()
@@ -251,11 +289,18 @@ export default function ChatScreen() {
   const handleClearHistory = () => {
     try {
       LLM.clearHistory()
+      setMessages([])
       console.log('History cleared')
     } catch (error) {
       console.error('Error clearing history:', error)
     }
   }
+
+  useEffect(() => {
+    if (isReady) {
+      syncFromHistory()
+    }
+  }, [isReady, syncFromHistory])
 
   if (isChecking) {
     return (
